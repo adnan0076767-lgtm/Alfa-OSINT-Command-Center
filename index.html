@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ALFA OSINT COMMAND CENTER V5.0</title>
+<title>ALFA OSINT COMMAND CENTER V5.1</title>
 
-<meta name="description" content="ALFA OSINT Command Center - Cyber Intelligence Dashboard Demo">
-<meta name="theme-color" content="#020617">
+<meta name="description" content="ALFA OSINT Command Center - Black Neon Green Cyber Intelligence Dashboard Demo">
+<meta name="theme-color" content="#000000">
 
 <style>
 *{
@@ -23,13 +23,13 @@ html{
 body{
     min-height:100vh;
     overflow-x:hidden;
-    background:#020617;
-    color:#67e8f9;
+    background:#000;
+    color:#39ff14;
     font-family:"Courier New",monospace;
 }
 
 /* =========================
-   MATRIX BACKGROUND
+   MATRIX
 ========================= */
 
 #matrix{
@@ -38,8 +38,8 @@ body{
     width:100%;
     height:100%;
     z-index:-5;
-    opacity:.20;
-    background:#020617;
+    opacity:.30;
+    background:#000;
 }
 
 .scanlines{
@@ -50,15 +50,15 @@ body{
     background:
         repeating-linear-gradient(
             to bottom,
-            rgba(255,255,255,.025) 0px,
-            rgba(255,255,255,.025) 1px,
+            rgba(57,255,20,.025) 0px,
+            rgba(57,255,20,.025) 1px,
             transparent 2px,
             transparent 5px
         );
 }
 
 /* =========================
-   MAIN
+   WRAPPER
 ========================= */
 
 .wrapper{
@@ -73,11 +73,11 @@ body{
 
 .header{
     position:relative;
-    border:1px solid rgba(34,211,238,.55);
-    background:rgba(2,6,23,.88);
+    border:1px solid rgba(57,255,20,.65);
+    background:rgba(0,0,0,.92);
     box-shadow:
-        0 0 20px rgba(6,182,212,.18),
-        inset 0 0 30px rgba(6,182,212,.04);
+        0 0 20px rgba(57,255,20,.16),
+        inset 0 0 30px rgba(57,255,20,.035);
     padding:20px;
     margin-bottom:18px;
     overflow:hidden;
@@ -90,8 +90,8 @@ body{
     top:0;
     width:100%;
     height:2px;
-    background:#22d3ee;
-    box-shadow:0 0 15px #22d3ee;
+    background:#39ff14;
+    box-shadow:0 0 15px #39ff14;
 }
 
 .header-top{
@@ -105,21 +105,28 @@ body{
     font-size:clamp(20px,3vw,34px);
     font-weight:bold;
     letter-spacing:3px;
-    color:#67e8f9;
+    color:#39ff14;
     text-shadow:
-        0 0 5px #22d3ee,
-        0 0 15px #0891b2;
+        0 0 5px #39ff14,
+        0 0 15px #39ff14,
+        0 0 30px rgba(57,255,20,.55);
 }
 
 .logo span{
-    color:#a78bfa;
+    color:#b6ff00;
+}
+
+.subtitle{
+    margin-top:10px;
+    color:#73ff57;
+    font-size:13px;
 }
 
 .status{
     display:flex;
     align-items:center;
     gap:8px;
-    color:#4ade80;
+    color:#39ff14;
     font-size:13px;
 }
 
@@ -127,19 +134,16 @@ body{
     width:10px;
     height:10px;
     border-radius:50%;
-    background:#4ade80;
-    box-shadow:0 0 12px #4ade80;
+    background:#39ff14;
+    box-shadow:0 0 12px #39ff14;
     animation:pulse 1.2s infinite;
 }
 
 @keyframes pulse{
-    50%{opacity:.35;transform:scale(.7);}
-}
-
-.subtitle{
-    margin-top:10px;
-    color:#94a3b8;
-    font-size:13px;
+    50%{
+        opacity:.3;
+        transform:scale(.7);
+    }
 }
 
 /* =========================
@@ -154,9 +158,9 @@ body{
 }
 
 .nav button{
-    border:1px solid rgba(34,211,238,.35);
-    background:rgba(8,47,73,.35);
-    color:#67e8f9;
+    border:1px solid rgba(57,255,20,.45);
+    background:rgba(10,30,5,.55);
+    color:#39ff14;
     padding:9px 14px;
     font-family:inherit;
     cursor:pointer;
@@ -164,9 +168,10 @@ body{
 }
 
 .nav button:hover{
-    background:rgba(34,211,238,.15);
-    border-color:#22d3ee;
-    box-shadow:0 0 12px rgba(34,211,238,.3);
+    background:rgba(57,255,20,.12);
+    border-color:#39ff14;
+    color:#b6ff00;
+    box-shadow:0 0 14px rgba(57,255,20,.4);
 }
 
 /* =========================
@@ -181,15 +186,17 @@ body{
 }
 
 .stat{
-    border:1px solid rgba(34,211,238,.35);
-    background:rgba(2,6,23,.85);
+    border:1px solid rgba(57,255,20,.4);
+    background:rgba(0,0,0,.9);
     padding:15px;
     position:relative;
     overflow:hidden;
+    box-shadow:
+        inset 0 0 20px rgba(57,255,20,.025);
 }
 
 .stat-label{
-    color:#64748b;
+    color:#4d9f42;
     font-size:11px;
     letter-spacing:1px;
 }
@@ -198,8 +205,10 @@ body{
     margin-top:7px;
     font-size:24px;
     font-weight:bold;
-    color:#e0f2fe;
-    text-shadow:0 0 8px rgba(34,211,238,.7);
+    color:#b6ff00;
+    text-shadow:
+        0 0 8px #39ff14,
+        0 0 18px rgba(57,255,20,.4);
 }
 
 .stat-line{
@@ -208,12 +217,12 @@ body{
     left:0;
     height:2px;
     width:100%;
-    background:#22d3ee;
-    box-shadow:0 0 10px #22d3ee;
+    background:#39ff14;
+    box-shadow:0 0 10px #39ff14;
 }
 
 /* =========================
-   GRID
+   DASHBOARD
 ========================= */
 
 .dashboard{
@@ -223,31 +232,32 @@ body{
 }
 
 .panel{
-    border:1px solid rgba(34,211,238,.38);
-    background:rgba(2,6,23,.88);
+    border:1px solid rgba(57,255,20,.4);
+    background:rgba(0,0,0,.91);
     box-shadow:
-        inset 0 0 25px rgba(8,145,178,.04),
-        0 0 15px rgba(6,182,212,.08);
+        inset 0 0 25px rgba(57,255,20,.035),
+        0 0 15px rgba(57,255,20,.08);
     min-width:0;
 }
 
 .panel-title{
     padding:11px 14px;
-    border-bottom:1px solid rgba(34,211,238,.25);
-    color:#e0f2fe;
+    border-bottom:1px solid rgba(57,255,20,.28);
+    color:#b6ff00;
     font-size:13px;
     letter-spacing:1px;
-    background:rgba(8,47,73,.25);
+    background:rgba(20,60,5,.2);
+    text-shadow:0 0 8px rgba(57,255,20,.45);
 }
 
 .panel-title:before{
     content:"[ ";
-    color:#a78bfa;
+    color:#39ff14;
 }
 
 .panel-title:after{
     content:" ]";
-    color:#a78bfa;
+    color:#39ff14;
 }
 
 .panel-body{
@@ -265,28 +275,38 @@ body{
     align-items:center;
     justify-content:center;
     overflow:hidden;
+
     background:
-        linear-gradient(rgba(34,211,238,.04) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(34,211,238,.04) 1px,transparent 1px);
+        linear-gradient(
+            rgba(57,255,20,.045) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(57,255,20,.045) 1px,
+            transparent 1px
+        );
+
     background-size:30px 30px;
 }
 
 .radar{
     width:250px;
     height:250px;
-    border:1px solid rgba(34,211,238,.5);
+    border:1px solid rgba(57,255,20,.65);
     border-radius:50%;
     position:relative;
+
     box-shadow:
-        0 0 25px rgba(34,211,238,.15),
-        inset 0 0 25px rgba(34,211,238,.05);
+        0 0 25px rgba(57,255,20,.16),
+        inset 0 0 30px rgba(57,255,20,.08);
 }
 
 .radar:before,
 .radar:after{
     content:"";
     position:absolute;
-    background:rgba(34,211,238,.3);
+    background:rgba(57,255,20,.45);
 }
 
 .radar:before{
@@ -306,7 +326,7 @@ body{
 .circle2,
 .circle3{
     position:absolute;
-    border:1px solid rgba(34,211,238,.25);
+    border:1px solid rgba(57,255,20,.32);
     border-radius:50%;
     inset:20%;
 }
@@ -322,21 +342,38 @@ body{
     left:50%;
     top:50%;
     transform-origin:left center;
-    background:linear-gradient(90deg,#22d3ee,transparent);
+
+    background:
+        linear-gradient(
+            90deg,
+            #39ff14,
+            transparent
+        );
+
+    box-shadow:0 0 10px #39ff14;
+
     animation:sweep 3s linear infinite;
 }
 
 @keyframes sweep{
-    from{transform:rotate(0deg);}
-    to{transform:rotate(360deg);}
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
 }
 
 .target{
     position:absolute;
     width:16px;
     height:16px;
-    border:2px solid #f43f5e;
-    box-shadow:0 0 15px #f43f5e;
+    border:2px solid #b6ff00;
+    box-shadow:
+        0 0 10px #39ff14,
+        0 0 20px #39ff14;
+
     animation:targetBlink 1s infinite;
 }
 
@@ -344,7 +381,7 @@ body{
 .target:after{
     content:"";
     position:absolute;
-    background:#f43f5e;
+    background:#39ff14;
 }
 
 .target:before{
@@ -362,7 +399,9 @@ body{
 }
 
 @keyframes targetBlink{
-    50%{opacity:.35;}
+    50%{
+        opacity:.35;
+    }
 }
 
 .target-label{
@@ -370,7 +409,8 @@ body{
     top:18px;
     left:18px;
     font-size:11px;
-    color:#fb7185;
+    color:#b6ff00;
+    text-shadow:0 0 8px #39ff14;
 }
 
 /* =========================
@@ -387,7 +427,8 @@ body{
 }
 
 .activity::-webkit-scrollbar-thumb{
-    background:#164e63;
+    background:#39ff14;
+    box-shadow:0 0 8px #39ff14;
 }
 
 .log{
@@ -395,20 +436,20 @@ body{
     grid-template-columns:80px 80px 1fr;
     gap:8px;
     padding:8px 4px;
-    border-bottom:1px dashed rgba(148,163,184,.12);
+    border-bottom:1px dashed rgba(57,255,20,.12);
     font-size:11px;
 }
 
 .log-time{
-    color:#64748b;
+    color:#4d9f42;
 }
 
 .log-type{
-    color:#a78bfa;
+    color:#b6ff00;
 }
 
 .log-message{
-    color:#cbd5e1;
+    color:#9cff8a;
 }
 
 /* =========================
@@ -419,8 +460,13 @@ body{
     position:relative;
     height:330px;
     overflow:hidden;
+
     background:
-        radial-gradient(circle at center,rgba(8,145,178,.10),transparent 45%);
+        radial-gradient(
+            circle at center,
+            rgba(57,255,20,.10),
+            transparent 45%
+        );
 }
 
 .node{
@@ -428,38 +474,124 @@ body{
     width:13px;
     height:13px;
     border-radius:50%;
-    background:#22d3ee;
-    box-shadow:0 0 15px #22d3ee;
+    background:#39ff14;
+    box-shadow:
+        0 0 10px #39ff14,
+        0 0 22px rgba(57,255,20,.6);
+
     animation:nodePulse 1.7s infinite;
 }
 
 @keyframes nodePulse{
-    50%{transform:scale(1.7);opacity:.55;}
+    50%{
+        transform:scale(1.7);
+        opacity:.5;
+    }
 }
 
-.node.n1{left:15%;top:22%;}
-.node.n2{left:48%;top:15%;}
-.node.n3{left:78%;top:30%;}
-.node.n4{left:28%;top:65%;}
-.node.n5{left:65%;top:72%;}
-.node.n6{left:88%;top:58%;}
-.node.n7{left:48%;top:47%;background:#a78bfa;box-shadow:0 0 20px #a78bfa;}
+.node.n1{
+    left:15%;
+    top:22%;
+}
+
+.node.n2{
+    left:48%;
+    top:15%;
+}
+
+.node.n3{
+    left:78%;
+    top:30%;
+}
+
+.node.n4{
+    left:28%;
+    top:65%;
+}
+
+.node.n5{
+    left:65%;
+    top:72%;
+}
+
+.node.n6{
+    left:88%;
+    top:58%;
+}
+
+.node.n7{
+    left:48%;
+    top:47%;
+    background:#b6ff00;
+    box-shadow:
+        0 0 15px #39ff14,
+        0 0 30px #39ff14;
+}
 
 .connection{
     position:absolute;
     height:1px;
-    background:linear-gradient(90deg,transparent,#22d3ee,transparent);
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #39ff14,
+            transparent
+        );
+
+    box-shadow:0 0 5px #39ff14;
     transform-origin:left center;
-    opacity:.45;
+    opacity:.55;
 }
 
-.c1{width:35%;left:17%;top:25%;transform:rotate(-14deg);}
-.c2{width:34%;left:50%;top:18%;transform:rotate(15deg);}
-.c3{width:34%;left:30%;top:66%;transform:rotate(-25deg);}
-.c4{width:30%;left:50%;top:50%;transform:rotate(40deg);}
-.c5{width:28%;left:66%;top:72%;transform:rotate(-28deg);}
-.c6{width:39%;left:49%;top:48%;transform:rotate(-160deg);}
-.c7{width:35%;left:49%;top:48%;transform:rotate(-65deg);}
+.c1{
+    width:35%;
+    left:17%;
+    top:25%;
+    transform:rotate(-14deg);
+}
+
+.c2{
+    width:34%;
+    left:50%;
+    top:18%;
+    transform:rotate(15deg);
+}
+
+.c3{
+    width:34%;
+    left:30%;
+    top:66%;
+    transform:rotate(-25deg);
+}
+
+.c4{
+    width:30%;
+    left:50%;
+    top:50%;
+    transform:rotate(40deg);
+}
+
+.c5{
+    width:28%;
+    left:66%;
+    top:72%;
+    transform:rotate(-28deg);
+}
+
+.c6{
+    width:39%;
+    left:49%;
+    top:48%;
+    transform:rotate(-160deg);
+}
+
+.c7{
+    width:35%;
+    left:49%;
+    top:48%;
+    transform:rotate(-65deg);
+}
 
 /* =========================
    CYBER STREAM
@@ -474,20 +606,146 @@ body{
 .stream-row{
     padding:7px 4px;
     font-size:11px;
-    color:#94a3b8;
-    border-bottom:1px solid rgba(148,163,184,.07);
+    color:#73ff57;
+    border-bottom:1px solid rgba(57,255,20,.08);
 }
 
 .stream-row b{
-    color:#22d3ee;
+    color:#b6ff00;
 }
 
 .stream-row .ok{
-    color:#4ade80;
+    color:#39ff14;
 }
 
 .stream-row .warn{
-    color:#facc15;
+    color:#dfff00;
+}
+
+/* =========================
+   MAP
+========================= */
+
+.cyber-map{
+    height:270px;
+    position:relative;
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            rgba(57,255,20,.08) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(57,255,20,.08) 1px,
+            transparent 1px
+        );
+
+    background-size:40px 40px;
+}
+
+.map-line{
+    position:absolute;
+    background:rgba(57,255,20,.22);
+}
+
+.map-line.h{
+    width:100%;
+    height:1px;
+}
+
+.map-line.v{
+    height:100%;
+    width:1px;
+}
+
+.map-point{
+    position:absolute;
+    width:9px;
+    height:9px;
+    border-radius:50%;
+    background:#b6ff00;
+
+    box-shadow:
+        0 0 10px #39ff14,
+        0 0 22px rgba(57,255,20,.7);
+
+    animation:point 1.5s infinite;
+}
+
+@keyframes point{
+    50%{
+        box-shadow:
+            0 0 20px #39ff14,
+            0 0 35px rgba(57,255,20,.8);
+    }
+}
+
+.map-point.p1{
+    left:18%;
+    top:30%;
+}
+
+.map-point.p2{
+    left:44%;
+    top:52%;
+}
+
+.map-point.p3{
+    left:70%;
+    top:28%;
+}
+
+.map-point.p4{
+    left:82%;
+    top:70%;
+}
+
+.map-point.p5{
+    left:33%;
+    top:78%;
+}
+
+.map-label{
+    position:absolute;
+    font-size:9px;
+    color:#73ff57;
+    text-shadow:0 0 6px #39ff14;
+}
+
+/* =========================
+   ALERT
+========================= */
+
+.alert-box{
+    border:1px solid rgba(57,255,20,.38);
+    background:rgba(20,60,5,.10);
+    padding:12px;
+    margin-bottom:12px;
+}
+
+.alert-head{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    color:#b6ff00;
+    font-size:12px;
+}
+
+.alert-text{
+    margin-top:7px;
+    color:#73ff57;
+    font-size:11px;
+    line-height:1.5;
+}
+
+.alert-critical{
+    border-color:rgba(170,255,0,.5);
+}
+
+.alert-critical .alert-head{
+    color:#dfff00;
 }
 
 /* =========================
@@ -513,17 +771,18 @@ body{
 }
 
 .prompt{
-    color:#4ade80;
+    color:#39ff14;
+    text-shadow:0 0 7px #39ff14;
 }
 
 .console-form{
     display:flex;
-    border-top:1px solid rgba(34,211,238,.25);
+    border-top:1px solid rgba(57,255,20,.3);
 }
 
 .console-form span{
     padding:12px 8px 12px 12px;
-    color:#4ade80;
+    color:#39ff14;
 }
 
 .console-input{
@@ -531,99 +790,13 @@ body{
     border:0;
     outline:0;
     background:transparent;
-    color:#e0f2fe;
+    color:#b6ff00;
     font-family:inherit;
     padding:12px 8px;
 }
 
-/* =========================
-   ALERT
-========================= */
-
-.alert-box{
-    border:1px solid rgba(250,204,21,.35);
-    background:rgba(113,63,18,.12);
-    padding:12px;
-    margin-bottom:12px;
-}
-
-.alert-head{
-    display:flex;
-    justify-content:space-between;
-    gap:10px;
-    color:#facc15;
-    font-size:12px;
-}
-
-.alert-text{
-    margin-top:7px;
-    color:#94a3b8;
-    font-size:11px;
-    line-height:1.5;
-}
-
-.alert-critical{
-    border-color:rgba(244,63,94,.45);
-    background:rgba(127,29,29,.12);
-}
-
-.alert-critical .alert-head{
-    color:#fb7185;
-}
-
-/* =========================
-   MAP
-========================= */
-
-.cyber-map{
-    height:270px;
-    position:relative;
-    overflow:hidden;
-    background:
-        linear-gradient(rgba(34,211,238,.08) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(34,211,238,.08) 1px,transparent 1px);
-    background-size:40px 40px;
-}
-
-.map-line{
-    position:absolute;
-    background:rgba(34,211,238,.18);
-}
-
-.map-line.h{
-    width:100%;
-    height:1px;
-}
-
-.map-line.v{
-    height:100%;
-    width:1px;
-}
-
-.map-point{
-    position:absolute;
-    width:9px;
-    height:9px;
-    border-radius:50%;
-    background:#a78bfa;
-    box-shadow:0 0 12px #a78bfa;
-    animation:point 1.5s infinite;
-}
-
-@keyframes point{
-    50%{box-shadow:0 0 25px #a78bfa;}
-}
-
-.map-point.p1{left:18%;top:30%;}
-.map-point.p2{left:44%;top:52%;}
-.map-point.p3{left:70%;top:28%;}
-.map-point.p4{left:82%;top:70%;}
-.map-point.p5{left:33%;top:78%;}
-
-.map-label{
-    position:absolute;
-    font-size:9px;
-    color:#67e8f9;
+.console-input::placeholder{
+    color:#397a32;
 }
 
 /* =========================
@@ -632,10 +805,10 @@ body{
 
 .footer{
     margin-top:18px;
-    border:1px solid rgba(34,211,238,.25);
+    border:1px solid rgba(57,255,20,.25);
     padding:14px;
     text-align:center;
-    color:#475569;
+    color:#397a32;
     font-size:10px;
 }
 
@@ -648,11 +821,26 @@ body{
 }
 
 @keyframes glitch{
-    0%{transform:translate(0);}
-    25%{transform:translate(2px,-1px);}
-    50%{transform:translate(-2px,1px);}
-    75%{transform:translate(1px,2px);}
-    100%{transform:translate(0);}
+
+    0%{
+        transform:translate(0);
+    }
+
+    25%{
+        transform:translate(2px,-1px);
+    }
+
+    50%{
+        transform:translate(-2px,1px);
+    }
+
+    75%{
+        transform:translate(1px,2px);
+    }
+
+    100%{
+        transform:translate(0);
+    }
 }
 
 /* =========================
@@ -660,6 +848,7 @@ body{
 ========================= */
 
 @media(max-width:1000px){
+
     .stats{
         grid-template-columns:repeat(2,1fr);
     }
@@ -670,6 +859,7 @@ body{
 }
 
 @media(max-width:600px){
+
     .wrapper{
         width:96%;
         padding-top:10px;
@@ -698,13 +888,13 @@ body{
         height:200px;
     }
 
+    .network{
+        height:270px;
+    }
+
     .log{
         grid-template-columns:65px 60px 1fr;
         font-size:9px;
-    }
-
-    .network{
-        height:270px;
     }
 }
 </style>
@@ -713,353 +903,472 @@ body{
 <body>
 
 <canvas id="matrix"></canvas>
+
 <div class="scanlines"></div>
 
 <div class="wrapper">
 
-    <!-- HEADER -->
-    <header class="header" id="home">
+<header class="header" id="home">
 
-        <div class="header-top">
+    <div class="header-top">
+
+        <div>
+
+            <div class="logo">
+                ALFA <span>OSINT</span> COMMAND CENTER
+            </div>
+
+            <div class="subtitle">
+                BLACK × NEON GREEN CYBER INTELLIGENCE // V5.1
+            </div>
+
+        </div>
+
+        <div class="status">
+
+            <span class="status-dot"></span>
+
+            SYSTEM ONLINE
+
+        </div>
+
+    </div>
+
+
+    <nav class="nav">
+
+        <button onclick="scrollToPanel('home')">
+            HOME
+        </button>
+
+        <button onclick="scrollToPanel('activityPanel')">
+            ACTIVITY
+        </button>
+
+        <button onclick="scrollToPanel('networkPanel')">
+            NETWORK
+        </button>
+
+        <button onclick="scrollToPanel('consolePanel')">
+            CONSOLE
+        </button>
+
+        <button onclick="runScan()">
+            RUN SCAN
+        </button>
+
+    </nav>
+
+</header>
+
+
+<section class="stats">
+
+    <div class="stat">
+
+        <div class="stat-label">
+            ACTIVE TARGETS
+        </div>
+
+        <div class="stat-value" id="targets">
+            07
+        </div>
+
+        <div class="stat-line"></div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-label">
+            NETWORK NODES
+        </div>
+
+        <div class="stat-value" id="nodes">
+            128
+        </div>
+
+        <div class="stat-line"></div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-label">
+            EVENTS / MIN
+        </div>
+
+        <div class="stat-value" id="events">
+            42
+        </div>
+
+        <div class="stat-line"></div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-label">
+            SYSTEM UPTIME
+        </div>
+
+        <div class="stat-value" id="uptime">
+            00:00:00
+        </div>
+
+        <div class="stat-line"></div>
+
+    </div>
+
+</section>
+
+
+<main class="dashboard">
+
+
+<section class="panel" id="homePanel">
+
+    <div class="panel-title">
+        DIGITAL TARGET HUD
+    </div>
+
+    <div class="panel-body hud">
+
+        <div class="radar">
+
+            <div class="circle2"></div>
+
+            <div class="circle3"></div>
+
+            <div class="sweep"></div>
+
+            <div class="target" id="targetMarker"></div>
+
+            <div class="target-label">
+                TARGET-07
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="panel" id="activityPanel">
+
+    <div class="panel-title">
+        LIVE CYBER ACTIVITY
+    </div>
+
+    <div class="panel-body activity" id="activityLog"></div>
+
+</section>
+
+
+<section class="panel" id="networkPanel">
+
+    <div class="panel-title">
+        CYBER NETWORK NODES
+    </div>
+
+    <div class="panel-body network">
+
+        <div class="connection c1"></div>
+        <div class="connection c2"></div>
+        <div class="connection c3"></div>
+        <div class="connection c4"></div>
+        <div class="connection c5"></div>
+        <div class="connection c6"></div>
+        <div class="connection c7"></div>
+
+        <div class="node n1"></div>
+        <div class="node n2"></div>
+        <div class="node n3"></div>
+        <div class="node n4"></div>
+        <div class="node n5"></div>
+        <div class="node n6"></div>
+        <div class="node n7"></div>
+
+    </div>
+
+</section>
+
+
+<section class="panel">
+
+    <div class="panel-title">
+        LIVE CYBER STREAM
+    </div>
+
+    <div class="panel-body stream" id="stream"></div>
+
+</section>
+
+
+<section class="panel">
+
+    <div class="panel-title">
+        CYBER MAP GRID
+    </div>
+
+    <div class="panel-body cyber-map">
+
+        <div class="map-line h" style="top:25%"></div>
+        <div class="map-line h" style="top:50%"></div>
+        <div class="map-line h" style="top:75%"></div>
+
+        <div class="map-line v" style="left:25%"></div>
+        <div class="map-line v" style="left:50%"></div>
+        <div class="map-line v" style="left:75%"></div>
+
+        <div class="map-point p1"></div>
+        <div class="map-point p2"></div>
+        <div class="map-point p3"></div>
+        <div class="map-point p4"></div>
+        <div class="map-point p5"></div>
+
+        <div class="map-label" style="left:14%;top:35%">
+            NODE-A
+        </div>
+
+        <div class="map-label" style="left:40%;top:57%">
+            NODE-B
+        </div>
+
+        <div class="map-label" style="left:66%;top:33%">
+            NODE-C
+        </div>
+
+        <div class="map-label" style="left:77%;top:76%">
+            NODE-D
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="panel">
+
+    <div class="panel-title">
+        CYBER ALERT MONITOR
+    </div>
+
+    <div class="panel-body">
+
+        <div class="alert-box alert-critical">
+
+            <div class="alert-head">
+
+                <span>
+                    ⚠ ANOMALY DETECTED
+                </span>
+
+                <span id="alertTime">
+                    --:--:--
+                </span>
+
+            </div>
+
+            <div class="alert-text">
+                Simulated security event detected by
+                the visual monitoring engine.
+            </div>
+
+        </div>
+
+
+        <div class="alert-box">
+
+            <div class="alert-head">
+
+                <span>
+                    ◆ NETWORK MONITOR
+                </span>
+
+                <span>
+                    ACTIVE
+                </span>
+
+            </div>
+
+            <div class="alert-text">
+                Dashboard telemetry is running in
+                demonstration mode.
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="panel" id="consolePanel">
+
+    <div class="panel-title">
+        COMMAND CONSOLE
+    </div>
+
+    <div class="panel-body console">
+
+        <div class="console-output" id="consoleOutput">
 
             <div>
-                <div class="logo">
-                    ALFA <span>OSINT</span> COMMAND CENTER
-                </div>
-
-                <div class="subtitle">
-                    CYBER INTELLIGENCE DASHBOARD // V5.0
-                </div>
+                <span class="prompt">
+                    ALFA@OSINT:~$
+                </span>
+                system boot
             </div>
 
-            <div class="status">
-                <span class="status-dot"></span>
-                SYSTEM ONLINE
+            <div>
+                Cyber Intelligence Interface initialized.
+            </div>
+
+            <div>
+                Simulation engine: ONLINE
+            </div>
+
+            <div>
+                Type <b>help</b> for commands.
             </div>
 
         </div>
 
-        <nav class="nav">
-            <button onclick="scrollToPanel('home')">HOME</button>
-            <button onclick="scrollToPanel('activityPanel')">ACTIVITY</button>
-            <button onclick="scrollToPanel('networkPanel')">NETWORK</button>
-            <button onclick="scrollToPanel('consolePanel')">CONSOLE</button>
-            <button onclick="runScan()">RUN SCAN</button>
-        </nav>
 
-    </header>
+        <form class="console-form" id="consoleForm">
 
+            <span>&gt;</span>
 
-    <!-- STATS -->
-    <section class="stats">
+            <input
+                id="consoleInput"
+                class="console-input"
+                type="text"
+                autocomplete="off"
+                spellcheck="false"
+                placeholder="type command..."
+            >
 
-        <div class="stat">
-            <div class="stat-label">ACTIVE TARGETS</div>
-            <div class="stat-value" id="targets">07</div>
-            <div class="stat-line"></div>
-        </div>
+        </form>
 
-        <div class="stat">
-            <div class="stat-label">NETWORK NODES</div>
-            <div class="stat-value" id="nodes">128</div>
-            <div class="stat-line"></div>
-        </div>
+    </div>
 
-        <div class="stat">
-            <div class="stat-label">EVENTS / MIN</div>
-            <div class="stat-value" id="events">42</div>
-            <div class="stat-line"></div>
-        </div>
+</section>
 
-        <div class="stat">
-            <div class="stat-label">SYSTEM UPTIME</div>
-            <div class="stat-value" id="uptime">00:00:00</div>
-            <div class="stat-line"></div>
-        </div>
+</main>
 
-    </section>
 
+<footer class="footer">
 
-    <!-- DASHBOARD -->
-    <main class="dashboard">
+    ALFA OSINT COMMAND CENTER V5.1 //
+    BLACK × NEON GREEN CYBER //
+    VISUAL SIMULATION DASHBOARD //
+    GITHUB PAGES READY
 
-        <!-- TARGET HUD -->
-        <section class="panel" id="homePanel">
-
-            <div class="panel-title">
-                DIGITAL TARGET HUD
-            </div>
-
-            <div class="panel-body hud">
-
-                <div class="radar">
-                    <div class="circle2"></div>
-                    <div class="circle3"></div>
-                    <div class="sweep"></div>
-
-                    <div class="target" id="targetMarker"></div>
-
-                    <div class="target-label">
-                        TARGET-07
-                    </div>
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- LIVE ACTIVITY -->
-        <section class="panel" id="activityPanel">
-
-            <div class="panel-title">
-                LIVE CYBER ACTIVITY
-            </div>
-
-            <div class="panel-body activity" id="activityLog">
-
-            </div>
-
-        </section>
-
-
-        <!-- NETWORK -->
-        <section class="panel" id="networkPanel">
-
-            <div class="panel-title">
-                CYBER NETWORK NODES
-            </div>
-
-            <div class="panel-body network">
-
-                <div class="connection c1"></div>
-                <div class="connection c2"></div>
-                <div class="connection c3"></div>
-                <div class="connection c4"></div>
-                <div class="connection c5"></div>
-                <div class="connection c6"></div>
-                <div class="connection c7"></div>
-
-                <div class="node n1"></div>
-                <div class="node n2"></div>
-                <div class="node n3"></div>
-                <div class="node n4"></div>
-                <div class="node n5"></div>
-                <div class="node n6"></div>
-                <div class="node n7"></div>
-
-            </div>
-
-        </section>
-
-
-        <!-- CYBER STREAM -->
-        <section class="panel">
-
-            <div class="panel-title">
-                LIVE CYBER STREAM
-            </div>
-
-            <div class="panel-body stream" id="stream">
-
-            </div>
-
-        </section>
-
-
-        <!-- CYBER MAP -->
-        <section class="panel">
-
-            <div class="panel-title">
-                CYBER MAP GRID
-            </div>
-
-            <div class="panel-body cyber-map">
-
-                <div class="map-line h" style="top:25%"></div>
-                <div class="map-line h" style="top:50%"></div>
-                <div class="map-line h" style="top:75%"></div>
-
-                <div class="map-line v" style="left:25%"></div>
-                <div class="map-line v" style="left:50%"></div>
-                <div class="map-line v" style="left:75%"></div>
-
-                <div class="map-point p1"></div>
-                <div class="map-point p2"></div>
-                <div class="map-point p3"></div>
-                <div class="map-point p4"></div>
-                <div class="map-point p5"></div>
-
-                <div class="map-label" style="left:14%;top:35%;">
-                    NODE-A
-                </div>
-
-                <div class="map-label" style="left:40%;top:57%;">
-                    NODE-B
-                </div>
-
-                <div class="map-label" style="left:66%;top:33%;">
-                    NODE-C
-                </div>
-
-                <div class="map-label" style="left:77%;top:76%;">
-                    NODE-D
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ALERT -->
-        <section class="panel">
-
-            <div class="panel-title">
-                CYBER ALERT MONITOR
-            </div>
-
-            <div class="panel-body">
-
-                <div class="alert-box alert-critical">
-
-                    <div class="alert-head">
-                        <span>⚠ ANOMALY DETECTED</span>
-                        <span id="alertTime">--:--:--</span>
-                    </div>
-
-                    <div class="alert-text">
-                        Simulated security event detected by the visual monitoring engine.
-                    </div>
-
-                </div>
-
-                <div class="alert-box">
-
-                    <div class="alert-head">
-                        <span>◆ NETWORK MONITOR</span>
-                        <span>ACTIVE</span>
-                    </div>
-
-                    <div class="alert-text">
-                        Dashboard telemetry is running in demonstration mode.
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- CONSOLE -->
-        <section class="panel" id="consolePanel">
-
-            <div class="panel-title">
-                COMMAND CONSOLE
-            </div>
-
-            <div class="panel-body console">
-
-                <div class="console-output" id="consoleOutput">
-
-                    <div>
-                        <span class="prompt">ALFA@OSINT:~$</span>
-                        system boot
-                    </div>
-
-                    <div>
-                        Cyber Intelligence Interface initialized.
-                    </div>
-
-                    <div>
-                        Simulation engine: ONLINE
-                    </div>
-
-                    <div>
-                        Type <b>help</b> for commands.
-                    </div>
-
-                </div>
-
-                <form class="console-form" id="consoleForm">
-
-                    <span>&gt;</span>
-
-                    <input
-                        id="consoleInput"
-                        class="console-input"
-                        type="text"
-                        autocomplete="off"
-                        spellcheck="false"
-                        placeholder="type command..."
-                    >
-
-                </form>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <footer class="footer">
-        ALFA OSINT COMMAND CENTER V5.0 //
-        VISUAL SIMULATION DASHBOARD //
-        GITHUB PAGES READY
-    </footer>
+</footer>
 
 </div>
 
 
 <script>
+
 /* ==========================================
    MATRIX RAIN
 ========================================== */
 
-const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
+const canvas =
+document.getElementById("matrix");
+
+const ctx =
+canvas.getContext("2d");
 
 let fontSize = 14;
+
 let columns;
+
 let drops;
+
 
 function resizeMatrix(){
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.width =
+        window.innerWidth;
 
-    columns = Math.floor(canvas.width / fontSize);
+    canvas.height =
+        window.innerHeight;
+
+    columns =
+        Math.floor(
+            canvas.width / fontSize
+        );
 
     drops = [];
 
-    for(let i = 0; i < columns; i++){
-        drops[i] = Math.random() * -100;
+    for(
+        let i = 0;
+        i < columns;
+        i++
+    ){
+
+        drops[i] =
+            Math.random() * -100;
+
     }
+
 }
+
 
 resizeMatrix();
 
-window.addEventListener("resize", resizeMatrix);
+
+window.addEventListener(
+    "resize",
+    resizeMatrix
+);
+
 
 const matrixChars =
 "01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&@<>[]{}";
 
+
 function drawMatrix(){
 
-    ctx.fillStyle = "rgba(2,6,23,0.08)";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle =
+        "rgba(0,0,0,0.08)";
 
-    ctx.font = fontSize + "px monospace";
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
 
-    for(let i = 0; i < drops.length; i++){
+    ctx.font =
+        fontSize + "px monospace";
+
+
+    for(
+        let i = 0;
+        i < drops.length;
+        i++
+    ){
 
         const char =
             matrixChars[
-                Math.floor(Math.random() * matrixChars.length)
+                Math.floor(
+                    Math.random() *
+                    matrixChars.length
+                )
             ];
 
-        ctx.fillStyle = "#22d3ee";
+
+        ctx.fillStyle =
+            "#39ff14";
+
 
         ctx.fillText(
             char,
@@ -1067,57 +1376,106 @@ function drawMatrix(){
             drops[i] * fontSize
         );
 
+
         if(
-            drops[i] * fontSize > canvas.height &&
-            Math.random() > 0.975
+            drops[i] * fontSize >
+            canvas.height &&
+            Math.random() > .975
         ){
+
             drops[i] = 0;
+
         }
 
-        drops[i] += 0.75;
+
+        drops[i] += .75;
+
     }
+
 }
 
-setInterval(drawMatrix,45);
+
+setInterval(
+    drawMatrix,
+    45
+);
+
+
+/* ==========================================
+   UPTIME
+========================================== */
+
+const startTime =
+Date.now();
+
+
+function updateUptime(){
+
+    const diff =
+        Math.floor(
+            (Date.now() - startTime) / 1000
+        );
+
+
+    const h =
+        String(
+            Math.floor(diff / 3600)
+        ).padStart(2,"0");
+
+
+    const m =
+        String(
+            Math.floor(
+                (diff % 3600) / 60
+            )
+        ).padStart(2,"0");
+
+
+    const s =
+        String(
+            diff % 60
+        ).padStart(2,"0");
+
+
+    document.getElementById(
+        "uptime"
+    ).textContent =
+        `${h}:${m}:${s}`;
+
+}
+
+
+setInterval(
+    updateUptime,
+    1000
+);
 
 
 /* ==========================================
    TIME
 ========================================== */
 
-const startTime = Date.now();
+function getTime(){
 
-function updateUptime(){
-
-    const diff = Math.floor(
-        (Date.now() - startTime) / 1000
+    return new Date().toLocaleTimeString(
+        "id-ID",
+        {
+            hour12:false
+        }
     );
 
-    const h = String(
-        Math.floor(diff / 3600)
-    ).padStart(2,"0");
-
-    const m = String(
-        Math.floor((diff % 3600) / 60)
-    ).padStart(2,"0");
-
-    const s = String(
-        diff % 60
-    ).padStart(2,"0");
-
-    document.getElementById("uptime").textContent =
-        `${h}:${m}:${s}`;
 }
-
-setInterval(updateUptime,1000);
 
 
 /* ==========================================
-   ACTIVITY LOG
+   ACTIVITY
 ========================================== */
 
 const activityLog =
-document.getElementById("activityLog");
+document.getElementById(
+    "activityLog"
+);
+
 
 const activityTypes = [
     "SCAN",
@@ -1126,6 +1484,7 @@ const activityTypes = [
     "MONITOR",
     "SIGNAL"
 ];
+
 
 const activityMessages = [
     "Telemetry packet simulated",
@@ -1138,62 +1497,94 @@ const activityMessages = [
     "Network topology updated"
 ];
 
-function getTime(){
-
-    return new Date().toLocaleTimeString(
-        "id-ID",
-        {hour12:false}
-    );
-}
 
 function addActivity(){
 
     const type =
         activityTypes[
             Math.floor(
-                Math.random() * activityTypes.length
+                Math.random() *
+                activityTypes.length
             )
         ];
+
 
     const message =
         activityMessages[
             Math.floor(
-                Math.random() * activityMessages.length
+                Math.random() *
+                activityMessages.length
             )
         ];
 
-    const row = document.createElement("div");
 
-    row.className = "log";
+    const row =
+        document.createElement(
+            "div"
+        );
+
+
+    row.className =
+        "log";
+
 
     row.innerHTML = `
-        <span class="log-time">${getTime()}</span>
-        <span class="log-type">${type}</span>
-        <span class="log-message">${message}</span>
+        <span class="log-time">
+            ${getTime()}
+        </span>
+
+        <span class="log-type">
+            ${type}
+        </span>
+
+        <span class="log-message">
+            ${message}
+        </span>
     `;
+
 
     activityLog.prepend(row);
 
-    while(activityLog.children.length > 35){
+
+    while(
+        activityLog.children.length > 35
+    ){
+
         activityLog.removeChild(
             activityLog.lastChild
         );
+
     }
+
 }
 
-for(let i=0;i<10;i++){
+
+for(
+    let i = 0;
+    i < 10;
+    i++
+){
+
     addActivity();
+
 }
 
-setInterval(addActivity,1200);
+
+setInterval(
+    addActivity,
+    1200
+);
 
 
 /* ==========================================
-   CYBER STREAM
+   LIVE STREAM
 ========================================== */
 
 const stream =
-document.getElementById("stream");
+document.getElementById(
+    "stream"
+);
+
 
 const streamMessages = [
     "telemetry channel synchronized",
@@ -1206,32 +1597,47 @@ const streamMessages = [
     "dashboard event queue updated"
 ];
 
+
 function addStream(){
 
     const message =
         streamMessages[
             Math.floor(
-                Math.random() * streamMessages.length
+                Math.random() *
+                streamMessages.length
             )
         ];
 
-    const row =
-        document.createElement("div");
-
-    row.className = "stream-row";
 
     const statuses = [
+
         '<span class="ok">[OK]</span>',
+
         '<span class="warn">[INFO]</span>',
+
         '<span class="ok">[LIVE]</span>'
+
     ];
+
 
     const status =
         statuses[
             Math.floor(
-                Math.random() * statuses.length
+                Math.random() *
+                statuses.length
             )
         ];
+
+
+    const row =
+        document.createElement(
+            "div"
+        );
+
+
+    row.className =
+        "stream-row";
+
 
     row.innerHTML = `
         <b>${getTime()}</b>
@@ -1239,20 +1645,38 @@ function addStream(){
         ${message}
     `;
 
+
     stream.prepend(row);
 
-    while(stream.children.length > 18){
+
+    while(
+        stream.children.length > 18
+    ){
+
         stream.removeChild(
             stream.lastChild
         );
+
     }
+
 }
 
-for(let i=0;i<8;i++){
+
+for(
+    let i = 0;
+    i < 8;
+    i++
+){
+
     addStream();
+
 }
 
-setInterval(addStream,900);
+
+setInterval(
+    addStream,
+    900
+);
 
 
 /* ==========================================
@@ -1260,31 +1684,48 @@ setInterval(addStream,900);
 ========================================== */
 
 const target =
-document.getElementById("targetMarker");
+document.getElementById(
+    "targetMarker"
+);
+
 
 function moveTarget(){
 
     const positions = [
+
         [25,25],
         [68,25],
         [35,65],
         [72,65],
         [50,45],
         [20,55]
+
     ];
+
 
     const p =
         positions[
             Math.floor(
-                Math.random() * positions.length
+                Math.random() *
+                positions.length
             )
         ];
 
-    target.style.left = p[0] + "%";
-    target.style.top = p[1] + "%";
+
+    target.style.left =
+        p[0] + "%";
+
+
+    target.style.top =
+        p[1] + "%";
+
 }
 
-setInterval(moveTarget,1800);
+
+setInterval(
+    moveTarget,
+    1800
+);
 
 
 /* ==========================================
@@ -1294,28 +1735,53 @@ setInterval(moveTarget,1800);
 function updateStats(){
 
     const targets =
-        5 + Math.floor(Math.random() * 8);
+        5 +
+        Math.floor(
+            Math.random() * 8
+        );
+
 
     const nodes =
-        100 + Math.floor(Math.random() * 80);
+        100 +
+        Math.floor(
+            Math.random() * 80
+        );
+
 
     const events =
-        20 + Math.floor(Math.random() * 60);
+        20 +
+        Math.floor(
+            Math.random() * 60
+        );
 
-    document.getElementById("targets")
-        .textContent =
-        String(targets).padStart(2,"0");
 
-    document.getElementById("nodes")
-        .textContent =
+    document.getElementById(
+        "targets"
+    ).textContent =
+        String(targets).padStart(
+            2,
+            "0"
+        );
+
+
+    document.getElementById(
+        "nodes"
+    ).textContent =
         nodes;
 
-    document.getElementById("events")
-        .textContent =
+
+    document.getElementById(
+        "events"
+    ).textContent =
         events;
+
 }
 
-setInterval(updateStats,2500);
+
+setInterval(
+    updateStats,
+    2500
+);
 
 
 /* ==========================================
@@ -1324,35 +1790,55 @@ setInterval(updateStats,2500);
 
 function updateAlertTime(){
 
-    document.getElementById("alertTime")
-        .textContent = getTime();
+    document.getElementById(
+        "alertTime"
+    ).textContent =
+        getTime();
+
 }
 
-setInterval(updateAlertTime,1000);
+
+setInterval(
+    updateAlertTime,
+    1000
+);
+
 
 updateAlertTime();
 
 
 /* ==========================================
-   RANDOM GLITCH
+   GLITCH
 ========================================== */
 
 const panels =
-document.querySelectorAll(".panel");
+document.querySelectorAll(
+    ".panel"
+);
 
-setInterval(() => {
+
+setInterval(()=>{
 
     const panel =
         panels[
             Math.floor(
-                Math.random() * panels.length
+                Math.random() *
+                panels.length
             )
         ];
 
-    panel.classList.add("glitch");
 
-    setTimeout(() => {
-        panel.classList.remove("glitch");
+    panel.classList.add(
+        "glitch"
+    );
+
+
+    setTimeout(()=>{
+
+        panel.classList.remove(
+            "glitch"
+        );
+
     },220);
 
 },5000);
@@ -1367,12 +1853,16 @@ function scrollToPanel(id){
     const element =
         document.getElementById(id);
 
+
     if(element){
+
         element.scrollIntoView({
             behavior:"smooth",
             block:"center"
         });
+
     }
+
 }
 
 
@@ -1383,39 +1873,61 @@ function scrollToPanel(id){
 function runScan(){
 
     const output =
-        document.getElementById("consoleOutput");
+        document.getElementById(
+            "consoleOutput"
+        );
+
 
     const messages = [
+
         "Initializing visual scan...",
+
         "Checking simulated network nodes...",
+
         "Analyzing dashboard telemetry...",
+
         "Refreshing target HUD...",
+
         "Updating event stream...",
+
         "Scan sequence completed."
+
     ];
 
-    messages.forEach((message,index)=>{
 
-        setTimeout(()=>{
+    messages.forEach(
+        (message,index)=>{
 
-            const line =
-                document.createElement("div");
+            setTimeout(()=>{
 
-            line.innerHTML = `
-                <span class="prompt">
-                    ALFA@OSINT:~$
-                </span>
-                ${message}
-            `;
+                const line =
+                    document.createElement(
+                        "div"
+                    );
 
-            output.appendChild(line);
 
-            output.scrollTop =
-                output.scrollHeight;
+                line.innerHTML = `
+                    <span class="prompt">
+                        ALFA@OSINT:~$
+                    </span>
+                    ${message}
+                `;
 
-        },index * 450);
 
-    });
+                output.appendChild(
+                    line
+                );
+
+
+                output.scrollTop =
+                    output.scrollHeight;
+
+
+            },index * 450);
+
+        }
+    );
+
 }
 
 
@@ -1424,100 +1936,146 @@ function runScan(){
 ========================================== */
 
 const consoleForm =
-document.getElementById("consoleForm");
+document.getElementById(
+    "consoleForm"
+);
+
 
 const consoleInput =
-document.getElementById("consoleInput");
+document.getElementById(
+    "consoleInput"
+);
+
 
 const consoleOutput =
-document.getElementById("consoleOutput");
+document.getElementById(
+    "consoleOutput"
+);
+
 
 function consoleWrite(text){
 
     const line =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
-    line.innerHTML = text;
 
-    consoleOutput.appendChild(line);
+    line.innerHTML =
+        text;
+
+
+    consoleOutput.appendChild(
+        line
+    );
+
 
     consoleOutput.scrollTop =
         consoleOutput.scrollHeight;
+
 }
 
-consoleForm.addEventListener("submit",(e)=>{
 
-    e.preventDefault();
+consoleForm.addEventListener(
+    "submit",
+    (e)=>{
 
-    const command =
-        consoleInput.value
-            .trim()
-            .toLowerCase();
+        e.preventDefault();
 
-    if(!command){
-        return;
+
+        const command =
+            consoleInput.value
+                .trim()
+                .toLowerCase();
+
+
+        if(!command){
+            return;
+        }
+
+
+        consoleWrite(`
+            <span class="prompt">
+                ALFA@OSINT:~$
+            </span>
+            ${command}
+        `);
+
+
+        if(command === "help"){
+
+            consoleWrite(
+                "Available: help, status, scan, clear, matrix, nodes"
+            );
+
+        }
+
+        else if(command === "status"){
+
+            consoleWrite(
+                "SYSTEM: ONLINE // MODE: DEMO // TELEMETRY: ACTIVE"
+            );
+
+        }
+
+        else if(command === "scan"){
+
+            runScan();
+
+        }
+
+        else if(command === "nodes"){
+
+            consoleWrite(
+                "NETWORK NODES: " +
+                document.getElementById(
+                    "nodes"
+                ).textContent
+            );
+
+        }
+
+        else if(command === "matrix"){
+
+            consoleWrite(
+                "MATRIX ENGINE: ONLINE // NEON GREEN"
+            );
+
+        }
+
+        else if(command === "clear"){
+
+            consoleOutput.innerHTML =
+                "";
+
+        }
+
+        else{
+
+            consoleWrite(
+                "Unknown command. Type <b>help</b>."
+            );
+
+        }
+
+
+        consoleInput.value =
+            "";
+
     }
-
-    consoleWrite(`
-        <span class="prompt">
-            ALFA@OSINT:~$
-        </span>
-        ${command}
-    `);
-
-    if(command === "help"){
-
-        consoleWrite(
-            "Available: help, status, scan, clear, matrix, nodes"
-        );
-
-    }else if(command === "status"){
-
-        consoleWrite(
-            "SYSTEM: ONLINE // MODE: DEMO // TELEMETRY: ACTIVE"
-        );
-
-    }else if(command === "scan"){
-
-        runScan();
-
-    }else if(command === "nodes"){
-
-        consoleWrite(
-            "NETWORK NODES: " +
-            document.getElementById("nodes").textContent
-        );
-
-    }else if(command === "matrix"){
-
-        consoleWrite(
-            "MATRIX ENGINE: ONLINE"
-        );
-
-    }else if(command === "clear"){
-
-        consoleOutput.innerHTML = "";
-
-    }else{
-
-        consoleWrite(
-            "Unknown command. Type <b>help</b>."
-        );
-    }
-
-    consoleInput.value = "";
-
-});
+);
 
 
 /* ==========================================
-   INITIAL BOOT
+   BOOT
 ========================================== */
 
 setTimeout(()=>{
+
     consoleWrite(
-        '<span class="prompt">[SYSTEM]</span> V5.0 interface ready.'
+        '<span class="prompt">[SYSTEM]</span> V5.1 BLACK × NEON GREEN interface ready.'
     );
+
 },500);
 
 </script>
