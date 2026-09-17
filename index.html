@@ -1564,6 +1564,172 @@ setInterval(() => {
 
 },1200);
 </script>
+<!-- ALFA OSINT V3.5 CYBER GLITCH + ALERT SYSTEM -->
+
+<style>
+.alfa-alert{
+  position:fixed;
+  top:82px;
+  right:22px;
+  width:220px;
+  padding:12px 14px;
+  background:rgba(2,8,12,.94);
+  border:1px solid #00ff9d;
+  border-radius:8px;
+  box-shadow:0 0 20px rgba(0,255,157,.18);
+  z-index:30;
+  font-size:10px;
+  transform:translateX(280px);
+  transition:transform .35s ease;
+  pointer-events:none;
+}
+
+.alfa-alert.show{
+  transform:translateX(0);
+}
+
+.alfa-alert-title{
+  color:#00ff9d;
+  font-weight:bold;
+  letter-spacing:1px;
+  margin-bottom:5px;
+}
+
+.alfa-alert-text{
+  color:#82aaa1;
+}
+
+.alfa-signal{
+  display:flex;
+  gap:3px;
+  align-items:flex-end;
+  height:15px;
+  margin-top:8px;
+}
+
+.alfa-signal i{
+  display:block;
+  width:4px;
+  background:#00ff9d;
+  box-shadow:0 0 5px rgba(0,255,157,.6);
+  animation:signalPulse .8s infinite alternate;
+}
+
+.alfa-signal i:nth-child(1){height:5px}
+.alfa-signal i:nth-child(2){height:8px;animation-delay:.1s}
+.alfa-signal i:nth-child(3){height:11px;animation-delay:.2s}
+.alfa-signal i:nth-child(4){height:14px;animation-delay:.3s}
+.alfa-signal i:nth-child(5){height:9px;animation-delay:.4s}
+
+@keyframes signalPulse{
+  from{opacity:.25}
+  to{opacity:1}
+}
+
+/* GLITCH EFFECT */
+.alfa-glitch{
+  animation:alfaGlitch .18s linear;
+}
+
+@keyframes alfaGlitch{
+  0%{transform:translate(0)}
+  25%{transform:translate(2px,-1px)}
+  50%{transform:translate(-2px,1px)}
+  75%{transform:translate(1px,1px)}
+  100%{transform:translate(0)}
+}
+
+@media(max-width:600px){
+  .alfa-alert{
+    top:70px;
+    right:10px;
+    width:190px;
+    transform:translateX(230px);
+  }
+}
+</style>
+
+<div class="alfa-alert" id="alfaAlert">
+
+  <div class="alfa-alert-title">
+    ◉ CYBER SYSTEM
+  </div>
+
+  <div class="alfa-alert-text" id="alfaAlertText">
+    SYSTEM INITIALIZED
+  </div>
+
+  <div class="alfa-signal">
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+  </div>
+
+</div>
+
+<script>
+const alfaAlerts = [
+  "SIGNAL CHANNEL ACTIVE",
+  "RADAR SYNCHRONIZED",
+  "NETWORK PULSE DETECTED",
+  "MATRIX STREAM ACTIVE",
+  "PUBLIC SOURCE MODULE READY",
+  "HOLOGRAM SYSTEM ONLINE",
+  "DATA CHANNEL STABLE",
+  "OSINT INTERFACE READY"
+];
+
+function showAlfaAlert(){
+
+  const box =
+    document.getElementById("alfaAlert");
+
+  const text =
+    document.getElementById("alfaAlertText");
+
+  if(!box || !text) return;
+
+  text.textContent =
+    alfaAlerts[
+      Math.floor(Math.random()*alfaAlerts.length)
+    ];
+
+  box.classList.add("show");
+
+  setTimeout(()=>{
+    box.classList.remove("show");
+  },2200);
+
+}
+
+setInterval(showAlfaAlert,6500);
+
+
+/* RANDOM LIGHT GLITCH */
+setInterval(()=>{
+
+  const elements =
+    document.querySelectorAll(
+      ".panel-title,.alfa-target-hud,.logo"
+    );
+
+  if(!elements.length) return;
+
+  const element =
+    elements[
+      Math.floor(Math.random()*elements.length)
+    ];
+
+  element.classList.add("alfa-glitch");
+
+  setTimeout(()=>{
+    element.classList.remove("alfa-glitch");
+  },180);
+
+},5000);
+</script>
 </body>
 </html>
 
