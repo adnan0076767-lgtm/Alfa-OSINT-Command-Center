@@ -1383,7 +1383,48 @@ setInterval(() => {
 <script>
 ...
 </script>
+<!-- ALFA OSINT V3.3 LIVE CYBER STREAM -->
+<script>
+const cyberEvents = [
+  "SIGNAL DETECTED",
+  "NODE SYNCHRONIZED",
+  "RADAR SWEEP ACTIVE",
+  "DATA CHANNEL ACTIVE",
+  "PUBLIC SOURCE READY",
+  "NETWORK PULSE",
+  "SYSTEM CHECK COMPLETE",
+  "HOLOGRAM SYNC",
+  "MATRIX STREAM ACTIVE",
+  "OSINT MODULE READY"
+];
 
+setInterval(() => {
+  const terminal = document.getElementById("terminal");
+  if (!terminal) return;
+
+  const event =
+    cyberEvents[Math.floor(Math.random() * cyberEvents.length)];
+
+  const line = document.createElement("div");
+
+  line.textContent =
+    "[" + new Date().toLocaleTimeString("id-ID") + "] " + event;
+
+  line.style.opacity = "0";
+  terminal.appendChild(line);
+
+  setTimeout(() => {
+    line.style.transition = "opacity .5s";
+    line.style.opacity = "1";
+  }, 50);
+
+  while (terminal.children.length > 22) {
+    terminal.removeChild(terminal.firstChild);
+  }
+
+  terminal.scrollTop = terminal.scrollHeight;
+}, 1300);
+</script>
 </body>
 </html>
 
