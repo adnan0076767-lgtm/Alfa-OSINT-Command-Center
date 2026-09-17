@@ -4,16 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ALFA OSINT COMMAND CENTER V5.1</title>
+<title>ALFA OSINT COMMAND CENTER V5.5</title>
 
-<meta name="description" content="ALFA OSINT Command Center - Black Neon Green Cyber Intelligence Dashboard Demo">
+<meta name="description" content="ALFA OSINT Command Center V5.5 - Black Neon Green Cyber Interface">
 <meta name="theme-color" content="#000000">
 
 <style>
+:root{
+    --green:#39ff14;
+    --lime:#b6ff00;
+    --dark:#000000;
+    --panel:rgba(0,15,0,.82);
+    --panel2:rgba(2,25,2,.72);
+    --border:rgba(57,255,20,.55);
+    --soft:rgba(57,255,20,.12);
+    --danger:#ff3030;
+    --yellow:#d8ff00;
+}
+
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
 }
 
 html{
@@ -21,880 +33,1064 @@ html{
 }
 
 body{
+    background:#000;
+    color:var(--green);
+    font-family:"Courier New",monospace;
     min-height:100vh;
     overflow-x:hidden;
-    background:#000;
-    color:#39ff14;
-    font-family:"Courier New",monospace;
 }
 
-/* =========================
-   MATRIX
-========================= */
+/* =========================================================
+   MATRIX RAIN — PRESERVED / LOCKED
+   ========================================================= */
 
 #matrix{
     position:fixed;
     inset:0;
     width:100%;
     height:100%;
-    z-index:-5;
-    opacity:.30;
+    z-index:-10;
     background:#000;
 }
 
-.scanlines{
+/* =========================================================
+   GLOBAL CYBER ATMOSPHERE
+   ========================================================= */
+
+body::before{
+    content:"";
     position:fixed;
     inset:0;
-    z-index:20;
     pointer-events:none;
+    z-index:50;
     background:
         repeating-linear-gradient(
-            to bottom,
-            rgba(57,255,20,.025) 0px,
-            rgba(57,255,20,.025) 1px,
-            transparent 2px,
-            transparent 5px
+            0deg,
+            rgba(57,255,20,.018) 0px,
+            rgba(57,255,20,.018) 1px,
+            transparent 1px,
+            transparent 4px
         );
+    mix-blend-mode:screen;
 }
 
-/* =========================
-   WRAPPER
-========================= */
-
-.wrapper{
-    width:min(1450px,94%);
-    margin:auto;
-    padding:20px 0 40px;
-}
-
-/* =========================
-   HEADER
-========================= */
-
-.header{
-    position:relative;
-    border:1px solid rgba(57,255,20,.65);
-    background:rgba(0,0,0,.92);
-    box-shadow:
-        0 0 20px rgba(57,255,20,.16),
-        inset 0 0 30px rgba(57,255,20,.035);
-    padding:20px;
-    margin-bottom:18px;
-    overflow:hidden;
-}
-
-.header:before{
+body::after{
     content:"";
-    position:absolute;
-    left:0;
-    top:0;
-    width:100%;
-    height:2px;
-    background:#39ff14;
-    box-shadow:0 0 15px #39ff14;
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:49;
+    box-shadow:
+        inset 0 0 150px #000,
+        inset 0 0 50px rgba(57,255,20,.08);
 }
 
-.header-top{
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+
+.topbar{
+    position:sticky;
+    top:0;
+    z-index:100;
+    height:64px;
     display:flex;
-    justify-content:space-between;
     align-items:center;
-    gap:20px;
+    justify-content:space-between;
+    padding:0 22px;
+    background:rgba(0,0,0,.92);
+    border-bottom:1px solid var(--border);
+    box-shadow:
+        0 0 20px rgba(57,255,20,.15),
+        0 0 50px rgba(57,255,20,.05);
+    backdrop-filter:blur(10px);
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
 }
 
 .logo{
-    font-size:clamp(20px,3vw,34px);
+    width:38px;
+    height:38px;
+    border:1px solid var(--green);
+    display:grid;
+    place-items:center;
+    color:var(--green);
     font-weight:bold;
-    letter-spacing:3px;
-    color:#39ff14;
-    text-shadow:
-        0 0 5px #39ff14,
-        0 0 15px #39ff14,
-        0 0 30px rgba(57,255,20,.55);
+    box-shadow:
+        0 0 10px var(--green),
+        inset 0 0 12px rgba(57,255,20,.2);
+    animation:logoPulse 2s infinite;
 }
 
-.logo span{
-    color:#b6ff00;
+.brand h1{
+    font-size:17px;
+    letter-spacing:2px;
 }
 
-.subtitle{
-    margin-top:10px;
-    color:#73ff57;
-    font-size:13px;
+.brand small{
+    display:block;
+    color:#79ff62;
+    opacity:.7;
+    font-size:9px;
+    margin-top:3px;
 }
 
-.status{
+.system-status{
     display:flex;
     align-items:center;
     gap:8px;
-    color:#39ff14;
-    font-size:13px;
+    font-size:11px;
 }
 
 .status-dot{
-    width:10px;
-    height:10px;
+    width:8px;
+    height:8px;
     border-radius:50%;
-    background:#39ff14;
-    box-shadow:0 0 12px #39ff14;
-    animation:pulse 1.2s infinite;
+    background:var(--green);
+    box-shadow:0 0 12px var(--green);
+    animation:blink 1s infinite;
 }
 
-@keyframes pulse{
-    50%{
-        opacity:.3;
-        transform:scale(.7);
-    }
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+main{
+    position:relative;
+    z-index:5;
+    width:min(1500px,96%);
+    margin:auto;
+    padding:24px 0 50px;
 }
 
-/* =========================
-   NAV
-========================= */
+/* =========================================================
+   HERO
+   ========================================================= */
 
-.nav{
+.hero{
+    position:relative;
+    min-height:220px;
     display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-    margin-top:18px;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    margin-bottom:20px;
+    overflow:hidden;
 }
 
-.nav button{
-    border:1px solid rgba(57,255,20,.45);
-    background:rgba(10,30,5,.55);
-    color:#39ff14;
-    padding:9px 14px;
-    font-family:inherit;
-    cursor:pointer;
-    transition:.25s;
+.hero h2{
+    font-size:clamp(28px,5vw,62px);
+    letter-spacing:8px;
+    text-shadow:
+        0 0 5px var(--green),
+        0 0 15px var(--green),
+        0 0 35px rgba(57,255,20,.65);
+    animation:titleFlicker 4s infinite;
 }
 
-.nav button:hover{
-    background:rgba(57,255,20,.12);
-    border-color:#39ff14;
-    color:#b6ff00;
-    box-shadow:0 0 14px rgba(57,255,20,.4);
+.hero p{
+    margin-top:10px;
+    font-size:12px;
+    letter-spacing:4px;
+    color:#9cff8b;
 }
 
-/* =========================
-   STATS
-========================= */
+.hero-line{
+    position:absolute;
+    width:100%;
+    height:1px;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        var(--green),
+        transparent
+    );
+    bottom:20px;
+    box-shadow:0 0 12px var(--green);
+}
+
+/* =========================================================
+   HUD STATS
+   ========================================================= */
 
 .stats{
     display:grid;
     grid-template-columns:repeat(4,1fr);
     gap:12px;
-    margin-bottom:18px;
+    margin-bottom:14px;
 }
 
 .stat{
-    border:1px solid rgba(57,255,20,.4);
-    background:rgba(0,0,0,.9);
+    background:var(--panel);
+    border:1px solid var(--border);
     padding:15px;
     position:relative;
     overflow:hidden;
     box-shadow:
-        inset 0 0 20px rgba(57,255,20,.025);
+        inset 0 0 25px rgba(57,255,20,.04),
+        0 0 12px rgba(57,255,20,.06);
+}
+
+.stat::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:1px;
+    background:var(--green);
+    box-shadow:0 0 10px var(--green);
+    animation:scanStat 3s linear infinite;
 }
 
 .stat-label{
-    color:#4d9f42;
-    font-size:11px;
-    letter-spacing:1px;
+    font-size:9px;
+    color:#7aff68;
+    letter-spacing:2px;
 }
 
 .stat-value{
-    margin-top:7px;
-    font-size:24px;
+    font-size:25px;
     font-weight:bold;
-    color:#b6ff00;
-    text-shadow:
-        0 0 8px #39ff14,
-        0 0 18px rgba(57,255,20,.4);
+    margin-top:7px;
+    text-shadow:0 0 10px var(--green);
 }
 
-.stat-line{
-    position:absolute;
-    bottom:0;
-    left:0;
-    height:2px;
-    width:100%;
-    background:#39ff14;
-    box-shadow:0 0 10px #39ff14;
+.stat-value span{
+    font-size:10px;
+    opacity:.65;
 }
 
-/* =========================
-   DASHBOARD
-========================= */
+/* =========================================================
+   GRID
+   ========================================================= */
 
 .dashboard{
     display:grid;
-    grid-template-columns:1.5fr 1fr;
-    gap:18px;
+    grid-template-columns:1.35fr 1fr 1fr;
+    gap:14px;
 }
 
 .panel{
-    border:1px solid rgba(57,255,20,.4);
-    background:rgba(0,0,0,.91);
+    background:var(--panel);
+    border:1px solid var(--border);
+    min-height:220px;
+    position:relative;
+    overflow:hidden;
     box-shadow:
-        inset 0 0 25px rgba(57,255,20,.035),
-        0 0 15px rgba(57,255,20,.08);
-    min-width:0;
+        inset 0 0 35px rgba(57,255,20,.035),
+        0 0 15px rgba(57,255,20,.06);
+}
+
+.panel::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    border:1px solid rgba(57,255,20,.06);
+}
+
+.panel-header{
+    height:42px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 13px;
+    border-bottom:1px solid rgba(57,255,20,.25);
+    background:rgba(57,255,20,.025);
 }
 
 .panel-title{
-    padding:11px 14px;
-    border-bottom:1px solid rgba(57,255,20,.28);
-    color:#b6ff00;
-    font-size:13px;
-    letter-spacing:1px;
-    background:rgba(20,60,5,.2);
-    text-shadow:0 0 8px rgba(57,255,20,.45);
+    font-size:11px;
+    letter-spacing:2px;
+    font-weight:bold;
 }
 
-.panel-title:before{
-    content:"[ ";
-    color:#39ff14;
+.panel-badge{
+    font-size:8px;
+    padding:4px 7px;
+    border:1px solid rgba(57,255,20,.4);
 }
 
-.panel-title:after{
-    content:" ]";
-    color:#39ff14;
-}
+/* =========================================================
+   HOLOGRAPHIC UI — PRESERVED / LOCKED
+   ========================================================= */
 
-.panel-body{
-    padding:14px;
-}
-
-/* =========================
-   TARGET HUD
-========================= */
-
-.hud{
-    position:relative;
-    height:360px;
+.hologram{
+    min-height:400px;
     display:flex;
     align-items:center;
     justify-content:center;
-    overflow:hidden;
-
+    position:relative;
     background:
-        linear-gradient(
-            rgba(57,255,20,.045) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(57,255,20,.045) 1px,
-            transparent 1px
+        radial-gradient(
+            circle at center,
+            rgba(57,255,20,.09),
+            transparent 48%
         );
+}
 
-    background-size:30px 30px;
+.holo-core{
+    width:180px;
+    height:180px;
+    border:1px solid var(--green);
+    border-radius:50%;
+    position:relative;
+    display:grid;
+    place-items:center;
+    box-shadow:
+        0 0 12px rgba(57,255,20,.8),
+        inset 0 0 25px rgba(57,255,20,.08);
+    animation:holoFloat 4s ease-in-out infinite;
+}
+
+.holo-core::before,
+.holo-core::after{
+    content:"";
+    position:absolute;
+    border:1px solid rgba(57,255,20,.65);
+    border-radius:50%;
+}
+
+.holo-core::before{
+    width:130%;
+    height:55%;
+    transform:rotate(25deg);
+    animation:holoOrbit 5s linear infinite;
+}
+
+.holo-core::after{
+    width:55%;
+    height:130%;
+    transform:rotate(-25deg);
+    animation:holoOrbitReverse 5s linear infinite;
+}
+
+.holo-inner{
+    width:80px;
+    height:80px;
+    border:1px dashed var(--lime);
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    color:var(--lime);
+    font-size:10px;
+    text-align:center;
+    box-shadow:0 0 20px rgba(57,255,20,.45);
+    animation:holoPulse 2s infinite;
+}
+
+.holo-scan{
+    position:absolute;
+    width:220px;
+    height:1px;
+    background:var(--green);
+    box-shadow:0 0 10px var(--green);
+    animation:holoScan 2.5s linear infinite;
+}
+
+/* =========================================================
+   TARGET HUD
+   ========================================================= */
+
+.target-hud{
+    height:400px;
+    position:relative;
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(57,255,20,.07),
+            transparent 50%
+        );
+    overflow:hidden;
 }
 
 .radar{
-    width:250px;
-    height:250px;
-    border:1px solid rgba(57,255,20,.65);
+    position:absolute;
+    width:270px;
+    height:270px;
+    border:1px solid rgba(57,255,20,.55);
     border-radius:50%;
-    position:relative;
-
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
     box-shadow:
-        0 0 25px rgba(57,255,20,.16),
-        inset 0 0 30px rgba(57,255,20,.08);
+        0 0 25px rgba(57,255,20,.1),
+        inset 0 0 25px rgba(57,255,20,.06);
 }
 
-.radar:before,
-.radar:after{
+.radar::before,
+.radar::after{
     content:"";
     position:absolute;
-    background:rgba(57,255,20,.45);
+    background:rgba(57,255,20,.35);
 }
 
-.radar:before{
+.radar::before{
     width:100%;
     height:1px;
     top:50%;
     left:0;
 }
 
-.radar:after{
+.radar::after{
     width:1px;
     height:100%;
     top:0;
     left:50%;
 }
 
-.circle2,
-.circle3{
+.ring{
     position:absolute;
-    border:1px solid rgba(57,255,20,.32);
+    border:1px solid rgba(57,255,20,.22);
     border-radius:50%;
     inset:20%;
 }
 
-.circle3{
+.ring.two{
     inset:40%;
 }
 
 .sweep{
     position:absolute;
     width:50%;
-    height:2px;
+    height:1px;
     left:50%;
     top:50%;
     transform-origin:left center;
-
-    background:
-        linear-gradient(
-            90deg,
-            #39ff14,
-            transparent
-        );
-
-    box-shadow:0 0 10px #39ff14;
-
+    background:linear-gradient(
+        90deg,
+        var(--green),
+        transparent
+    );
+    box-shadow:0 0 10px var(--green);
     animation:sweep 3s linear infinite;
-}
-
-@keyframes sweep{
-    from{
-        transform:rotate(0deg);
-    }
-
-    to{
-        transform:rotate(360deg);
-    }
 }
 
 .target{
     position:absolute;
-    width:16px;
-    height:16px;
-    border:2px solid #b6ff00;
-    box-shadow:
-        0 0 10px #39ff14,
-        0 0 20px #39ff14;
-
-    animation:targetBlink 1s infinite;
+    width:13px;
+    height:13px;
+    border:1px solid var(--green);
+    box-shadow:0 0 12px var(--green);
+    animation:targetPulse 1.2s infinite;
 }
 
-.target:before,
-.target:after{
+.target::before,
+.target::after{
     content:"";
     position:absolute;
-    background:#39ff14;
+    background:var(--green);
 }
 
-.target:before{
-    width:28px;
+.target::before{
+    width:24px;
     height:1px;
-    left:-8px;
+    left:-6px;
     top:5px;
 }
 
-.target:after{
+.target::after{
+    height:24px;
     width:1px;
-    height:28px;
     left:5px;
-    top:-8px;
+    top:-6px;
 }
 
-@keyframes targetBlink{
-    50%{
-        opacity:.35;
-    }
+.target.t1{
+    left:65%;
+    top:32%;
 }
 
-.target-label{
+.target.t2{
+    left:31%;
+    top:63%;
+}
+
+.target.t3{
+    left:57%;
+    top:72%;
+}
+
+.hud-label{
     position:absolute;
-    top:18px;
-    left:18px;
-    font-size:11px;
-    color:#b6ff00;
-    text-shadow:0 0 8px #39ff14;
+    font-size:8px;
+    padding:4px;
+    border-left:1px solid var(--green);
+    background:rgba(0,0,0,.65);
 }
 
-/* =========================
-   ACTIVITY
-========================= */
-
-.activity{
-    height:360px;
-    overflow:auto;
+.label1{
+    left:66%;
+    top:26%;
 }
 
-.activity::-webkit-scrollbar{
-    width:5px;
+.label2{
+    left:24%;
+    top:67%;
 }
 
-.activity::-webkit-scrollbar-thumb{
-    background:#39ff14;
-    box-shadow:0 0 8px #39ff14;
+.label3{
+    left:59%;
+    top:77%;
 }
 
-.log{
-    display:grid;
-    grid-template-columns:80px 80px 1fr;
-    gap:8px;
-    padding:8px 4px;
-    border-bottom:1px dashed rgba(57,255,20,.12);
-    font-size:11px;
-}
-
-.log-time{
-    color:#4d9f42;
-}
-
-.log-type{
-    color:#b6ff00;
-}
-
-.log-message{
-    color:#9cff8a;
-}
-
-/* =========================
+/* =========================================================
    NETWORK
-========================= */
+   ========================================================= */
 
 .network{
+    height:400px;
     position:relative;
-    height:330px;
-    overflow:hidden;
-
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(57,255,20,.10),
-            transparent 45%
-        );
-}
-
-.node{
-    position:absolute;
-    width:13px;
-    height:13px;
-    border-radius:50%;
-    background:#39ff14;
-    box-shadow:
-        0 0 10px #39ff14,
-        0 0 22px rgba(57,255,20,.6);
-
-    animation:nodePulse 1.7s infinite;
-}
-
-@keyframes nodePulse{
-    50%{
-        transform:scale(1.7);
-        opacity:.5;
-    }
-}
-
-.node.n1{
-    left:15%;
-    top:22%;
-}
-
-.node.n2{
-    left:48%;
-    top:15%;
-}
-
-.node.n3{
-    left:78%;
-    top:30%;
-}
-
-.node.n4{
-    left:28%;
-    top:65%;
-}
-
-.node.n5{
-    left:65%;
-    top:72%;
-}
-
-.node.n6{
-    left:88%;
-    top:58%;
-}
-
-.node.n7{
-    left:48%;
-    top:47%;
-    background:#b6ff00;
-    box-shadow:
-        0 0 15px #39ff14,
-        0 0 30px #39ff14;
-}
-
-.connection{
-    position:absolute;
-    height:1px;
     background:
         linear-gradient(
-            90deg,
-            transparent,
-            #39ff14,
-            transparent
-        );
-
-    box-shadow:0 0 5px #39ff14;
-    transform-origin:left center;
-    opacity:.55;
-}
-
-.c1{
-    width:35%;
-    left:17%;
-    top:25%;
-    transform:rotate(-14deg);
-}
-
-.c2{
-    width:34%;
-    left:50%;
-    top:18%;
-    transform:rotate(15deg);
-}
-
-.c3{
-    width:34%;
-    left:30%;
-    top:66%;
-    transform:rotate(-25deg);
-}
-
-.c4{
-    width:30%;
-    left:50%;
-    top:50%;
-    transform:rotate(40deg);
-}
-
-.c5{
-    width:28%;
-    left:66%;
-    top:72%;
-    transform:rotate(-28deg);
-}
-
-.c6{
-    width:39%;
-    left:49%;
-    top:48%;
-    transform:rotate(-160deg);
-}
-
-.c7{
-    width:35%;
-    left:49%;
-    top:48%;
-    transform:rotate(-65deg);
-}
-
-/* =========================
-   CYBER STREAM
-========================= */
-
-.stream{
-    height:250px;
-    overflow:hidden;
-    position:relative;
-}
-
-.stream-row{
-    padding:7px 4px;
-    font-size:11px;
-    color:#73ff57;
-    border-bottom:1px solid rgba(57,255,20,.08);
-}
-
-.stream-row b{
-    color:#b6ff00;
-}
-
-.stream-row .ok{
-    color:#39ff14;
-}
-
-.stream-row .warn{
-    color:#dfff00;
-}
-
-/* =========================
-   MAP
-========================= */
-
-.cyber-map{
-    height:270px;
-    position:relative;
-    overflow:hidden;
-
-    background:
-        linear-gradient(
-            rgba(57,255,20,.08) 1px,
+            rgba(57,255,20,.025) 1px,
             transparent 1px
         ),
         linear-gradient(
             90deg,
-            rgba(57,255,20,.08) 1px,
+            rgba(57,255,20,.025) 1px,
             transparent 1px
         );
-
-    background-size:40px 40px;
+    background-size:25px 25px;
+    overflow:hidden;
 }
 
-.map-line{
+.node{
+    width:8px;
+    height:8px;
+    border-radius:50%;
     position:absolute;
-    background:rgba(57,255,20,.22);
+    background:var(--green);
+    box-shadow:0 0 14px var(--green);
+    animation:nodePulse 1.7s infinite;
 }
 
-.map-line.h{
-    width:100%;
+.node.n1{left:15%;top:25%;}
+.node.n2{left:50%;top:18%;}
+.node.n3{left:78%;top:34%;}
+.node.n4{left:31%;top:54%;}
+.node.n5{left:64%;top:57%;}
+.node.n6{left:84%;top:78%;}
+.node.n7{left:18%;top:82%;}
+.node.n8{left:49%;top:79%;}
+
+.connection{
+    position:absolute;
     height:1px;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(57,255,20,.7),
+        transparent
+    );
+    transform-origin:left center;
+    box-shadow:0 0 6px rgba(57,255,20,.5);
+    animation:connectionFlow 2s linear infinite;
 }
 
-.map-line.v{
-    height:100%;
-    width:1px;
+.c1{
+    width:190px;
+    left:16%;
+    top:27%;
+    transform:rotate(-10deg);
+}
+
+.c2{
+    width:160px;
+    left:51%;
+    top:20%;
+    transform:rotate(20deg);
+}
+
+.c3{
+    width:210px;
+    left:32%;
+    top:56%;
+    transform:rotate(-2deg);
+}
+
+.c4{
+    width:180px;
+    left:65%;
+    top:59%;
+    transform:rotate(35deg);
+}
+
+.c5{
+    width:220px;
+    left:20%;
+    top:83%;
+    transform:rotate(-2deg);
+}
+
+/* =========================================================
+   CYBER MAP
+   ========================================================= */
+
+.map{
+    height:300px;
+    position:relative;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(57,255,20,.04) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            rgba(57,255,20,.04) 1px,
+            transparent 1px
+        );
+    background-size:20px 20px;
+    overflow:hidden;
+}
+
+.map::before{
+    content:"";
+    position:absolute;
+    inset:15%;
+    border:1px solid rgba(57,255,20,.25);
+    clip-path:polygon(
+        5% 10%,
+        35% 0%,
+        60% 12%,
+        92% 8%,
+        100% 40%,
+        85% 70%,
+        95% 100%,
+        52% 87%,
+        20% 100%,
+        0 62%
+    );
+    box-shadow:0 0 20px rgba(57,255,20,.1);
 }
 
 .map-point{
     position:absolute;
-    width:9px;
-    height:9px;
+    width:7px;
+    height:7px;
     border-radius:50%;
-    background:#b6ff00;
-
-    box-shadow:
-        0 0 10px #39ff14,
-        0 0 22px rgba(57,255,20,.7);
-
-    animation:point 1.5s infinite;
+    background:var(--lime);
+    box-shadow:0 0 15px var(--green);
 }
 
-@keyframes point{
-    50%{
-        box-shadow:
-            0 0 20px #39ff14,
-            0 0 35px rgba(57,255,20,.8);
-    }
-}
+.mp1{left:28%;top:38%;}
+.mp2{left:55%;top:30%;}
+.mp3{left:72%;top:57%;}
+.mp4{left:43%;top:70%;}
 
-.map-point.p1{
-    left:18%;
-    top:30%;
-}
-
-.map-point.p2{
-    left:44%;
-    top:52%;
-}
-
-.map-point.p3{
-    left:70%;
-    top:28%;
-}
-
-.map-point.p4{
-    left:82%;
-    top:70%;
-}
-
-.map-point.p5{
-    left:33%;
-    top:78%;
-}
-
-.map-label{
+.map-ping{
     position:absolute;
-    font-size:9px;
-    color:#73ff57;
-    text-shadow:0 0 6px #39ff14;
+    width:22px;
+    height:22px;
+    border:1px solid var(--green);
+    border-radius:50%;
+    transform:translate(-7px,-7px);
+    animation:ping 2s infinite;
 }
 
-/* =========================
-   ALERT
-========================= */
+/* =========================================================
+   LIVE STREAM
+   ========================================================= */
 
-.alert-box{
-    border:1px solid rgba(57,255,20,.38);
-    background:rgba(20,60,5,.10);
-    padding:12px;
-    margin-bottom:12px;
+.stream{
+    height:300px;
+    padding:10px;
+    overflow:hidden;
+    font-size:10px;
+    line-height:1.8;
+}
+
+.stream-row{
+    display:flex;
+    gap:8px;
+    border-bottom:1px dashed rgba(57,255,20,.08);
+    padding:2px 0;
+    animation:streamIn .25s ease-out;
+}
+
+.stream-time{
+    color:#69ff4e;
+    opacity:.55;
+}
+
+.stream-type{
+    color:var(--lime);
+    min-width:55px;
+}
+
+.stream-msg{
+    color:#9aff89;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.live-indicator{
+    color:var(--green);
+    animation:blink .8s infinite;
+}
+
+/* =========================================================
+   ALERT MONITOR
+   ========================================================= */
+
+.alerts{
+    height:300px;
+    padding:10px;
+    overflow:hidden;
+}
+
+.alert{
+    border-left:2px solid var(--green);
+    padding:8px 10px;
+    margin-bottom:8px;
+    background:rgba(57,255,20,.035);
+    font-size:10px;
+    animation:alertIn .3s ease;
+}
+
+.alert.warning{
+    border-color:var(--yellow);
+}
+
+.alert.danger{
+    border-color:var(--danger);
 }
 
 .alert-head{
     display:flex;
     justify-content:space-between;
-    gap:10px;
-    color:#b6ff00;
-    font-size:12px;
+    margin-bottom:3px;
+    font-size:8px;
+    opacity:.75;
 }
 
-.alert-text{
-    margin-top:7px;
-    color:#73ff57;
-    font-size:11px;
-    line-height:1.5;
+/* =========================================================
+   TELEMETRY
+   ========================================================= */
+
+.telemetry{
+    padding:14px;
 }
 
-.alert-critical{
-    border-color:rgba(170,255,0,.5);
+.telemetry-item{
+    margin-bottom:13px;
 }
 
-.alert-critical .alert-head{
-    color:#dfff00;
+.telemetry-top{
+    display:flex;
+    justify-content:space-between;
+    font-size:9px;
+    margin-bottom:5px;
 }
 
-/* =========================
-   CONSOLE
-========================= */
+.bar{
+    height:6px;
+    background:rgba(57,255,20,.08);
+    border:1px solid rgba(57,255,20,.2);
+    overflow:hidden;
+}
+
+.bar-fill{
+    height:100%;
+    width:50%;
+    background:var(--green);
+    box-shadow:0 0 12px var(--green);
+    transition:width .5s ease;
+}
+
+/* =========================================================
+   COMMAND CONSOLE
+   ========================================================= */
+
+.console-panel{
+    grid-column:1 / -1;
+}
 
 .console{
-    height:250px;
+    height:280px;
     display:flex;
     flex-direction:column;
 }
 
 .console-output{
     flex:1;
-    overflow:auto;
     padding:12px;
-    font-size:11px;
+    overflow-y:auto;
+    font-size:10px;
     line-height:1.7;
+    background:rgba(0,0,0,.45);
 }
 
-.console-output div{
-    margin-bottom:3px;
+.console-output::-webkit-scrollbar,
+.stream::-webkit-scrollbar,
+.alerts::-webkit-scrollbar{
+    width:5px;
 }
 
-.prompt{
-    color:#39ff14;
-    text-shadow:0 0 7px #39ff14;
+.console-output::-webkit-scrollbar-thumb,
+.stream::-webkit-scrollbar-thumb,
+.alerts::-webkit-scrollbar-thumb{
+    background:rgba(57,255,20,.35);
+}
+
+.console-line{
+    white-space:pre-wrap;
+}
+
+.console-line.system{
+    color:#76ff60;
+}
+
+.console-line.command{
+    color:var(--lime);
+}
+
+.console-line.error{
+    color:#ff5555;
 }
 
 .console-form{
     display:flex;
-    border-top:1px solid rgba(57,255,20,.3);
+    border-top:1px solid rgba(57,255,20,.25);
 }
 
-.console-form span{
-    padding:12px 8px 12px 12px;
-    color:#39ff14;
+.console-prefix{
+    padding:12px;
+    color:var(--green);
+    background:rgba(57,255,20,.03);
 }
 
-.console-input{
+#commandInput{
     flex:1;
+    background:#000;
+    color:var(--green);
     border:0;
     outline:0;
-    background:transparent;
-    color:#b6ff00;
+    padding:12px;
     font-family:inherit;
-    padding:12px 8px;
+    font-size:11px;
 }
 
-.console-input::placeholder{
-    color:#397a32;
+#commandInput::placeholder{
+    color:rgba(57,255,20,.3);
 }
 
-/* =========================
+/* =========================================================
+   QUICK COMMANDS
+   ========================================================= */
+
+.quick{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+    padding:10px;
+    border-top:1px solid rgba(57,255,20,.12);
+}
+
+.cmd-btn{
+    background:#000;
+    color:var(--green);
+    border:1px solid rgba(57,255,20,.35);
+    padding:6px 10px;
+    font-family:inherit;
+    font-size:9px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.cmd-btn:hover{
+    background:rgba(57,255,20,.12);
+    border-color:var(--green);
+    box-shadow:0 0 10px rgba(57,255,20,.3);
+    transform:translateY(-1px);
+}
+
+/* =========================================================
    FOOTER
-========================= */
+   ========================================================= */
 
 .footer{
-    margin-top:18px;
-    border:1px solid rgba(57,255,20,.25);
-    padding:14px;
     text-align:center;
-    color:#397a32;
-    font-size:10px;
+    margin-top:20px;
+    padding:15px;
+    border-top:1px solid rgba(57,255,20,.15);
+    font-size:9px;
+    color:rgba(57,255,20,.55);
+    letter-spacing:1px;
 }
 
-/* =========================
-   GLITCH
-========================= */
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
 
-.glitch{
-    animation:glitch .2s linear;
+@keyframes blink{
+    0%,100%{opacity:1}
+    50%{opacity:.25}
 }
 
-@keyframes glitch{
-
-    0%{
-        transform:translate(0);
-    }
-
-    25%{
-        transform:translate(2px,-1px);
-    }
-
-    50%{
-        transform:translate(-2px,1px);
-    }
-
-    75%{
-        transform:translate(1px,2px);
-    }
-
-    100%{
-        transform:translate(0);
-    }
+@keyframes logoPulse{
+    0%,100%{box-shadow:0 0 8px var(--green)}
+    50%{box-shadow:0 0 22px var(--green)}
 }
 
-/* =========================
+@keyframes titleFlicker{
+    0%,96%,100%{opacity:1}
+    97%{opacity:.75}
+    98%{opacity:1}
+}
+
+@keyframes scanStat{
+    0%{left:-100%}
+    100%{left:100%}
+}
+
+@keyframes holoFloat{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-8px)}
+}
+
+@keyframes holoOrbit{
+    from{transform:rotate(0deg) rotateX(65deg)}
+    to{transform:rotate(360deg) rotateX(65deg)}
+}
+
+@keyframes holoOrbitReverse{
+    from{transform:rotate(0deg) rotateY(65deg)}
+    to{transform:rotate(-360deg) rotateY(65deg)}
+}
+
+@keyframes holoPulse{
+    0%,100%{box-shadow:0 0 10px rgba(57,255,20,.3)}
+    50%{box-shadow:0 0 28px rgba(57,255,20,.8)}
+}
+
+@keyframes holoScan{
+    0%{transform:translateY(-100px);opacity:0}
+    20%{opacity:1}
+    80%{opacity:1}
+    100%{transform:translateY(100px);opacity:0}
+}
+
+@keyframes sweep{
+    from{transform:rotate(0deg)}
+    to{transform:rotate(360deg)}
+}
+
+@keyframes targetPulse{
+    0%,100%{transform:scale(1);opacity:1}
+    50%{transform:scale(1.4);opacity:.45}
+}
+
+@keyframes nodePulse{
+    0%,100%{transform:scale(1);opacity:.8}
+    50%{transform:scale(1.8);opacity:1}
+}
+
+@keyframes connectionFlow{
+    0%{opacity:.25}
+    50%{opacity:1}
+    100%{opacity:.25}
+}
+
+@keyframes ping{
+    0%{transform:translate(-7px,-7px) scale(.4);opacity:1}
+    100%{transform:translate(-7px,-7px) scale(2.4);opacity:0}
+}
+
+@keyframes streamIn{
+    from{opacity:0;transform:translateX(-8px)}
+    to{opacity:1;transform:translateX(0)}
+}
+
+@keyframes alertIn{
+    from{opacity:0;transform:translateY(-5px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+/* =========================================================
    RESPONSIVE
-========================= */
+   ========================================================= */
 
-@media(max-width:1000px){
+@media(max-width:1050px){
+    .dashboard{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .console-panel{
+        grid-column:1 / -1;
+    }
+}
+
+@media(max-width:720px){
+    .topbar{
+        padding:0 12px;
+    }
+
+    .brand h1{
+        font-size:12px;
+        letter-spacing:1px;
+    }
+
+    .brand small{
+        display:none;
+    }
+
+    .system-status{
+        font-size:8px;
+    }
+
+    main{
+        width:94%;
+        padding-top:12px;
+    }
+
+    .hero{
+        min-height:180px;
+    }
+
+    .hero h2{
+        font-size:27px;
+        letter-spacing:4px;
+    }
+
+    .hero p{
+        font-size:8px;
+        letter-spacing:2px;
+    }
 
     .stats{
-        grid-template-columns:repeat(2,1fr);
+        grid-template-columns:1fr 1fr;
     }
 
     .dashboard{
         grid-template-columns:1fr;
     }
-}
 
-@media(max-width:600px){
-
-    .wrapper{
-        width:96%;
-        padding-top:10px;
+    .console-panel{
+        grid-column:auto;
     }
 
-    .header-top{
-        flex-direction:column;
-        align-items:flex-start;
-    }
-
-    .stats{
-        grid-template-columns:1fr 1fr;
-        gap:8px;
-    }
-
-    .stat-value{
-        font-size:19px;
-    }
-
-    .hud{
-        height:290px;
+    .hologram,
+    .target-hud,
+    .network{
+        min-height:330px;
+        height:330px;
     }
 
     .radar{
-        width:200px;
-        height:200px;
+        width:220px;
+        height:220px;
     }
 
-    .network{
-        height:270px;
-    }
-
-    .log{
-        grid-template-columns:65px 60px 1fr;
-        font-size:9px;
+    .map{
+        height:260px;
     }
 }
 </style>
@@ -902,460 +1098,428 @@ body{
 
 <body>
 
+<!-- =======================================================
+     MATRIX RAIN — PRESERVED
+     ======================================================= -->
+
 <canvas id="matrix"></canvas>
 
-<div class="scanlines"></div>
+<!-- =======================================================
+     TOP BAR
+     ======================================================= -->
 
-<div class="wrapper">
+<header class="topbar">
 
-<header class="header" id="home">
-
-    <div class="header-top">
+    <div class="brand">
+        <div class="logo">A</div>
 
         <div>
-
-            <div class="logo">
-                ALFA <span>OSINT</span> COMMAND CENTER
-            </div>
-
-            <div class="subtitle">
-                BLACK × NEON GREEN CYBER INTELLIGENCE // V5.1
-            </div>
-
+            <h1>ALFA OSINT COMMAND CENTER</h1>
+            <small>ADVANCED CYBER VISUALIZATION // V5.5</small>
         </div>
-
-        <div class="status">
-
-            <span class="status-dot"></span>
-
-            SYSTEM ONLINE
-
-        </div>
-
     </div>
 
-
-    <nav class="nav">
-
-        <button onclick="scrollToPanel('home')">
-            HOME
-        </button>
-
-        <button onclick="scrollToPanel('activityPanel')">
-            ACTIVITY
-        </button>
-
-        <button onclick="scrollToPanel('networkPanel')">
-            NETWORK
-        </button>
-
-        <button onclick="scrollToPanel('consolePanel')">
-            CONSOLE
-        </button>
-
-        <button onclick="runScan()">
-            RUN SCAN
-        </button>
-
-    </nav>
+    <div class="system-status">
+        <span class="status-dot"></span>
+        SYSTEM ONLINE
+    </div>
 
 </header>
 
+<main>
+
+<!-- =======================================================
+     HERO
+     ======================================================= -->
+
+<section class="hero">
+
+    <h2>CYBER COMMAND</h2>
+
+    <p>
+        BLACK NEON GREEN // ADVANCED MONITORING INTERFACE
+    </p>
+
+    <div class="hero-line"></div>
+
+</section>
+
+<!-- =======================================================
+     LIVE STATS
+     ======================================================= -->
 
 <section class="stats">
 
     <div class="stat">
-
-        <div class="stat-label">
-            ACTIVE TARGETS
-        </div>
-
-        <div class="stat-value" id="targets">
-            07
-        </div>
-
-        <div class="stat-line"></div>
-
+        <div class="stat-label">ACTIVE TARGETS</div>
+        <div class="stat-value" id="targets">07</div>
     </div>
-
 
     <div class="stat">
-
-        <div class="stat-label">
-            NETWORK NODES
-        </div>
-
-        <div class="stat-value" id="nodes">
-            128
-        </div>
-
-        <div class="stat-line"></div>
-
+        <div class="stat-label">NETWORK NODES</div>
+        <div class="stat-value" id="nodes">48</div>
     </div>
-
 
     <div class="stat">
-
-        <div class="stat-label">
-            EVENTS / MIN
-        </div>
-
-        <div class="stat-value" id="events">
-            42
-        </div>
-
-        <div class="stat-line"></div>
-
+        <div class="stat-label">EVENTS / MIN</div>
+        <div class="stat-value" id="events">124</div>
     </div>
-
 
     <div class="stat">
-
-        <div class="stat-label">
-            SYSTEM UPTIME
-        </div>
-
-        <div class="stat-value" id="uptime">
-            00:00:00
-        </div>
-
-        <div class="stat-line"></div>
-
+        <div class="stat-label">UPTIME</div>
+        <div class="stat-value" id="uptime">00:00:00</div>
     </div>
 
 </section>
 
+<!-- =======================================================
+     MAIN DASHBOARD
+     ======================================================= -->
 
-<main class="dashboard">
+<section class="dashboard">
 
+    <!-- HOLOGRAM -->
 
-<section class="panel" id="homePanel">
+    <div class="panel">
 
-    <div class="panel-title">
-        DIGITAL TARGET HUD
+        <div class="panel-header">
+            <div class="panel-title">HOLOGRAPHIC CORE</div>
+            <div class="panel-badge">LOCKED</div>
+        </div>
+
+        <div class="hologram">
+
+            <div class="holo-core">
+
+                <div class="holo-inner">
+                    ALFA<br>
+                    CORE
+                </div>
+
+            </div>
+
+            <div class="holo-scan"></div>
+
+        </div>
+
     </div>
 
-    <div class="panel-body hud">
+    <!-- TARGET HUD -->
 
-        <div class="radar">
+    <div class="panel">
 
-            <div class="circle2"></div>
+        <div class="panel-header">
+            <div class="panel-title">DIGITAL TARGET HUD</div>
+            <div class="panel-badge">SIMULATION</div>
+        </div>
 
-            <div class="circle3"></div>
+        <div class="target-hud">
 
-            <div class="sweep"></div>
+            <div class="radar">
+                <div class="ring"></div>
+                <div class="ring two"></div>
+                <div class="sweep"></div>
+            </div>
 
-            <div class="target" id="targetMarker"></div>
+            <div class="target t1"></div>
+            <div class="target t2"></div>
+            <div class="target t3"></div>
 
-            <div class="target-label">
-                TARGET-07
+            <div class="hud-label label1">TARGET-01</div>
+            <div class="hud-label label2">TARGET-02</div>
+            <div class="hud-label label3">TARGET-03</div>
+
+        </div>
+
+    </div>
+
+    <!-- NETWORK -->
+
+    <div class="panel">
+
+        <div class="panel-header">
+            <div class="panel-title">NETWORK NODES</div>
+            <div class="panel-badge">LIVE SIM</div>
+        </div>
+
+        <div class="network">
+
+            <div class="connection c1"></div>
+            <div class="connection c2"></div>
+            <div class="connection c3"></div>
+            <div class="connection c4"></div>
+            <div class="connection c5"></div>
+
+            <div class="node n1"></div>
+            <div class="node n2"></div>
+            <div class="node n3"></div>
+            <div class="node n4"></div>
+            <div class="node n5"></div>
+            <div class="node n6"></div>
+            <div class="node n7"></div>
+            <div class="node n8"></div>
+
+        </div>
+
+    </div>
+
+    <!-- CYBER MAP -->
+
+    <div class="panel">
+
+        <div class="panel-header">
+            <div class="panel-title">CYBER MAP GRID</div>
+            <div class="panel-badge">SIMULATED</div>
+        </div>
+
+        <div class="map">
+
+            <div class="map-point mp1">
+                <div class="map-ping"></div>
+            </div>
+
+            <div class="map-point mp2">
+                <div class="map-ping"></div>
+            </div>
+
+            <div class="map-point mp3">
+                <div class="map-ping"></div>
+            </div>
+
+            <div class="map-point mp4">
+                <div class="map-ping"></div>
             </div>
 
         </div>
 
     </div>
 
-</section>
+    <!-- LIVE STREAM -->
 
+    <div class="panel">
 
-<section class="panel" id="activityPanel">
-
-    <div class="panel-title">
-        LIVE CYBER ACTIVITY
-    </div>
-
-    <div class="panel-body activity" id="activityLog"></div>
-
-</section>
-
-
-<section class="panel" id="networkPanel">
-
-    <div class="panel-title">
-        CYBER NETWORK NODES
-    </div>
-
-    <div class="panel-body network">
-
-        <div class="connection c1"></div>
-        <div class="connection c2"></div>
-        <div class="connection c3"></div>
-        <div class="connection c4"></div>
-        <div class="connection c5"></div>
-        <div class="connection c6"></div>
-        <div class="connection c7"></div>
-
-        <div class="node n1"></div>
-        <div class="node n2"></div>
-        <div class="node n3"></div>
-        <div class="node n4"></div>
-        <div class="node n5"></div>
-        <div class="node n6"></div>
-        <div class="node n7"></div>
-
-    </div>
-
-</section>
-
-
-<section class="panel">
-
-    <div class="panel-title">
-        LIVE CYBER STREAM
-    </div>
-
-    <div class="panel-body stream" id="stream"></div>
-
-</section>
-
-
-<section class="panel">
-
-    <div class="panel-title">
-        CYBER MAP GRID
-    </div>
-
-    <div class="panel-body cyber-map">
-
-        <div class="map-line h" style="top:25%"></div>
-        <div class="map-line h" style="top:50%"></div>
-        <div class="map-line h" style="top:75%"></div>
-
-        <div class="map-line v" style="left:25%"></div>
-        <div class="map-line v" style="left:50%"></div>
-        <div class="map-line v" style="left:75%"></div>
-
-        <div class="map-point p1"></div>
-        <div class="map-point p2"></div>
-        <div class="map-point p3"></div>
-        <div class="map-point p4"></div>
-        <div class="map-point p5"></div>
-
-        <div class="map-label" style="left:14%;top:35%">
-            NODE-A
+        <div class="panel-header">
+            <div class="panel-title">LIVE CYBER STREAM</div>
+            <div class="panel-badge live-indicator">● LIVE</div>
         </div>
 
-        <div class="map-label" style="left:40%;top:57%">
-            NODE-B
-        </div>
-
-        <div class="map-label" style="left:66%;top:33%">
-            NODE-C
-        </div>
-
-        <div class="map-label" style="left:77%;top:76%">
-            NODE-D
-        </div>
+        <div class="stream" id="stream"></div>
 
     </div>
 
-</section>
+    <!-- ALERT -->
 
+    <div class="panel">
 
-<section class="panel">
+        <div class="panel-header">
+            <div class="panel-title">CYBER ALERT MONITOR</div>
+            <div class="panel-badge">ACTIVE</div>
+        </div>
 
-    <div class="panel-title">
-        CYBER ALERT MONITOR
+        <div class="alerts" id="alerts"></div>
+
     </div>
 
-    <div class="panel-body">
+    <!-- TELEMETRY -->
 
-        <div class="alert-box alert-critical">
+    <div class="panel">
 
-            <div class="alert-head">
+        <div class="panel-header">
+            <div class="panel-title">SYSTEM TELEMETRY</div>
+            <div class="panel-badge">LOCAL</div>
+        </div>
 
-                <span>
-                    ⚠ ANOMALY DETECTED
-                </span>
+        <div class="telemetry">
 
-                <span id="alertTime">
-                    --:--:--
-                </span>
+            <div class="telemetry-item">
+                <div class="telemetry-top">
+                    <span>CPU LOAD</span>
+                    <span id="cpuText">32%</span>
+                </div>
 
+                <div class="bar">
+                    <div class="bar-fill" id="cpuBar"></div>
+                </div>
             </div>
 
-            <div class="alert-text">
-                Simulated security event detected by
-                the visual monitoring engine.
+            <div class="telemetry-item">
+                <div class="telemetry-top">
+                    <span>MEMORY</span>
+                    <span id="memText">54%</span>
+                </div>
+
+                <div class="bar">
+                    <div class="bar-fill" id="memBar"></div>
+                </div>
             </div>
 
-        </div>
+            <div class="telemetry-item">
+                <div class="telemetry-top">
+                    <span>NETWORK</span>
+                    <span id="netText">76%</span>
+                </div>
 
-
-        <div class="alert-box">
-
-            <div class="alert-head">
-
-                <span>
-                    ◆ NETWORK MONITOR
-                </span>
-
-                <span>
-                    ACTIVE
-                </span>
-
+                <div class="bar">
+                    <div class="bar-fill" id="netBar"></div>
+                </div>
             </div>
 
-            <div class="alert-text">
-                Dashboard telemetry is running in
-                demonstration mode.
+            <div class="telemetry-item">
+                <div class="telemetry-top">
+                    <span>SECURITY</span>
+                    <span>ACTIVE</span>
+                </div>
+
+                <div class="bar">
+                    <div class="bar-fill" style="width:94%"></div>
+                </div>
             </div>
 
         </div>
 
     </div>
 
-</section>
+    <!-- CONSOLE -->
 
+    <div class="panel console-panel">
 
-<section class="panel" id="consolePanel">
+        <div class="panel-header">
 
-    <div class="panel-title">
-        COMMAND CONSOLE
-    </div>
-
-    <div class="panel-body console">
-
-        <div class="console-output" id="consoleOutput">
-
-            <div>
-                <span class="prompt">
-                    ALFA@OSINT:~$
-                </span>
-                system boot
+            <div class="panel-title">
+                COMMAND CONSOLE
             </div>
 
-            <div>
-                Cyber Intelligence Interface initialized.
-            </div>
-
-            <div>
-                Simulation engine: ONLINE
-            </div>
-
-            <div>
-                Type <b>help</b> for commands.
+            <div class="panel-badge">
+                LOCAL SIMULATION
             </div>
 
         </div>
 
+        <div class="console">
 
-        <form class="console-form" id="consoleForm">
-
-            <span>&gt;</span>
-
-            <input
-                id="consoleInput"
-                class="console-input"
-                type="text"
-                autocomplete="off"
-                spellcheck="false"
-                placeholder="type command..."
+            <div
+                class="console-output"
+                id="consoleOutput"
             >
 
-        </form>
+                <div class="console-line system">
+                    [ALFA] CYBER COMMAND CENTER V5.5 INITIALIZED
+                </div>
+
+                <div class="console-line system">
+                    [SYSTEM] Matrix visualization: ONLINE
+                </div>
+
+                <div class="console-line system">
+                    [SYSTEM] Holographic core: ONLINE
+                </div>
+
+                <div class="console-line system">
+                    [SYSTEM] Network visualization: ONLINE
+                </div>
+
+                <div class="console-line system">
+                    [INFO] Type "help" for available commands.
+                </div>
+
+            </div>
+
+            <form class="console-form" id="consoleForm">
+
+                <div class="console-prefix">
+                    ALFA@
+                </div>
+
+                <input
+                    id="commandInput"
+                    autocomplete="off"
+                    spellcheck="false"
+                    placeholder="type command..."
+                >
+
+            </form>
+
+            <div class="quick">
+
+                <button class="cmd-btn" data-command="help">
+                    HELP
+                </button>
+
+                <button class="cmd-btn" data-command="status">
+                    STATUS
+                </button>
+
+                <button class="cmd-btn" data-command="scan">
+                    SCAN
+                </button>
+
+                <button class="cmd-btn" data-command="matrix">
+                    MATRIX
+                </button>
+
+                <button class="cmd-btn" data-command="nodes">
+                    NODES
+                </button>
+
+                <button class="cmd-btn" data-command="clear">
+                    CLEAR
+                </button>
+
+            </div>
+
+        </div>
 
     </div>
 
 </section>
+
+<div class="footer">
+    ALFA OSINT COMMAND CENTER V5.5 //
+    BLACK × NEON GREEN //
+    VISUALIZATION & DEMO MODE //
+    NO REAL-WORLD TRACKING
+</div>
 
 </main>
 
-
-<footer class="footer">
-
-    ALFA OSINT COMMAND CENTER V5.1 //
-    BLACK × NEON GREEN CYBER //
-    VISUAL SIMULATION DASHBOARD //
-    GITHUB PAGES READY
-
-</footer>
-
-</div>
-
-
 <script>
 
-/* ==========================================
-   MATRIX RAIN
-========================================== */
+/* =========================================================
+   MATRIX RAIN — PRESERVED / LOCKED
+   ========================================================= */
 
-const canvas =
-document.getElementById("matrix");
+const matrixCanvas = document.getElementById("matrix");
+const matrixCtx = matrixCanvas.getContext("2d");
 
-const ctx =
-canvas.getContext("2d");
-
-let fontSize = 14;
-
-let columns;
-
-let drops;
-
-
-function resizeMatrix(){
-
-    canvas.width =
-        window.innerWidth;
-
-    canvas.height =
-        window.innerHeight;
-
-    columns =
-        Math.floor(
-            canvas.width / fontSize
-        );
-
-    drops = [];
-
-    for(
-        let i = 0;
-        i < columns;
-        i++
-    ){
-
-        drops[i] =
-            Math.random() * -100;
-
-    }
-
-}
-
-
-resizeMatrix();
-
-
-window.addEventListener(
-    "resize",
-    resizeMatrix
-);
-
+let matrixWidth = matrixCanvas.width = window.innerWidth;
+let matrixHeight = matrixCanvas.height = window.innerHeight;
 
 const matrixChars =
-"01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&@<>[]{}";
+    "01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&*+-<>[]{}";
 
+const matrixFontSize = 15;
+let matrixColumns = Math.floor(
+    matrixWidth / matrixFontSize
+);
+
+let matrixDrops = Array(matrixColumns)
+    .fill(1);
 
 function drawMatrix(){
 
-    ctx.fillStyle =
-        "rgba(0,0,0,0.08)";
-
-    ctx.fillRect(
+    matrixCtx.fillStyle = "rgba(0,0,0,0.055)";
+    matrixCtx.fillRect(
         0,
         0,
-        canvas.width,
-        canvas.height
+        matrixWidth,
+        matrixHeight
     );
 
-    ctx.font =
-        fontSize + "px monospace";
+    matrixCtx.fillStyle = "#39ff14";
+    matrixCtx.font =
+        matrixFontSize + "px monospace";
 
-
-    for(
-        let i = 0;
-        i < drops.length;
-        i++
-    ){
+    for(let i=0;i<matrixDrops.length;i++){
 
         const char =
             matrixChars[
@@ -1365,242 +1529,238 @@ function drawMatrix(){
                 )
             ];
 
-
-        ctx.fillStyle =
-            "#39ff14";
-
-
-        ctx.fillText(
+        matrixCtx.fillText(
             char,
-            i * fontSize,
-            drops[i] * fontSize
+            i * matrixFontSize,
+            matrixDrops[i] * matrixFontSize
         );
 
-
         if(
-            drops[i] * fontSize >
-            canvas.height &&
-            Math.random() > .975
+            matrixDrops[i] * matrixFontSize >
+            matrixHeight &&
+            Math.random() > 0.975
         ){
-
-            drops[i] = 0;
-
+            matrixDrops[i] = 0;
         }
 
-
-        drops[i] += .75;
-
+        matrixDrops[i]++;
     }
-
 }
 
+setInterval(drawMatrix,35);
 
-setInterval(
-    drawMatrix,
-    45
-);
+window.addEventListener("resize",()=>{
 
+    matrixWidth =
+        matrixCanvas.width =
+        window.innerWidth;
 
-/* ==========================================
+    matrixHeight =
+        matrixCanvas.height =
+        window.innerHeight;
+
+    matrixColumns =
+        Math.floor(
+            matrixWidth /
+            matrixFontSize
+        );
+
+    matrixDrops =
+        Array(matrixColumns).fill(1);
+});
+
+/* =========================================================
    UPTIME
-========================================== */
+   ========================================================= */
 
-const startTime =
-Date.now();
-
+const bootTime = Date.now();
 
 function updateUptime(){
 
-    const diff =
+    const seconds =
         Math.floor(
-            (Date.now() - startTime) / 1000
+            (Date.now() - bootTime) / 1000
         );
-
 
     const h =
         String(
-            Math.floor(diff / 3600)
+            Math.floor(seconds / 3600)
         ).padStart(2,"0");
-
 
     const m =
         String(
             Math.floor(
-                (diff % 3600) / 60
+                (seconds % 3600) / 60
             )
         ).padStart(2,"0");
 
-
     const s =
         String(
-            diff % 60
+            seconds % 60
         ).padStart(2,"0");
-
 
     document.getElementById(
         "uptime"
     ).textContent =
         `${h}:${m}:${s}`;
-
 }
 
+setInterval(updateUptime,1000);
 
-setInterval(
-    updateUptime,
-    1000
-);
+/* =========================================================
+   LIVE STATS
+   ========================================================= */
 
+function updateStats(){
 
-/* ==========================================
-   TIME
-========================================== */
-
-function getTime(){
-
-    return new Date().toLocaleTimeString(
-        "id-ID",
-        {
-            hour12:false
-        }
-    );
-
-}
-
-
-/* ==========================================
-   ACTIVITY
-========================================== */
-
-const activityLog =
-document.getElementById(
-    "activityLog"
-);
-
-
-const activityTypes = [
-    "SCAN",
-    "NODE",
-    "EVENT",
-    "MONITOR",
-    "SIGNAL"
-];
-
-
-const activityMessages = [
-    "Telemetry packet simulated",
-    "Network node synchronized",
-    "Visual scan cycle completed",
-    "Monitoring process active",
-    "Signal pattern updated",
-    "Target HUD refreshed",
-    "Cyber stream received",
-    "Network topology updated"
-];
-
-
-function addActivity(){
-
-    const type =
-        activityTypes[
-            Math.floor(
-                Math.random() *
-                activityTypes.length
-            )
-        ];
-
-
-    const message =
-        activityMessages[
-            Math.floor(
-                Math.random() *
-                activityMessages.length
-            )
-        ];
-
-
-    const row =
-        document.createElement(
-            "div"
+    const targets =
+        5 + Math.floor(
+            Math.random() * 8
         );
 
-
-    row.className =
-        "log";
-
-
-    row.innerHTML = `
-        <span class="log-time">
-            ${getTime()}
-        </span>
-
-        <span class="log-type">
-            ${type}
-        </span>
-
-        <span class="log-message">
-            ${message}
-        </span>
-    `;
-
-
-    activityLog.prepend(row);
-
-
-    while(
-        activityLog.children.length > 35
-    ){
-
-        activityLog.removeChild(
-            activityLog.lastChild
+    const nodes =
+        38 + Math.floor(
+            Math.random() * 25
         );
 
-    }
+    const events =
+        90 + Math.floor(
+            Math.random() * 90
+        );
 
+    document.getElementById(
+        "targets"
+    ).textContent =
+        String(targets).padStart(2,"0");
+
+    document.getElementById(
+        "nodes"
+    ).textContent =
+        String(nodes).padStart(2,"0");
+
+    document.getElementById(
+        "events"
+    ).textContent =
+        events;
 }
 
+setInterval(updateStats,1800);
 
-for(
-    let i = 0;
-    i < 10;
-    i++
-){
+/* =========================================================
+   TELEMETRY
+   ========================================================= */
 
-    addActivity();
+function telemetry(){
 
+    const cpu =
+        20 + Math.floor(
+            Math.random() * 65
+        );
+
+    const mem =
+        35 + Math.floor(
+            Math.random() * 50
+        );
+
+    const net =
+        40 + Math.floor(
+            Math.random() * 55
+        );
+
+    document.getElementById(
+        "cpuBar"
+    ).style.width =
+        cpu + "%";
+
+    document.getElementById(
+        "memBar"
+    ).style.width =
+        mem + "%";
+
+    document.getElementById(
+        "netBar"
+    ).style.width =
+        net + "%";
+
+    document.getElementById(
+        "cpuText"
+    ).textContent =
+        cpu + "%";
+
+    document.getElementById(
+        "memText"
+    ).textContent =
+        mem + "%";
+
+    document.getElementById(
+        "netText"
+    ).textContent =
+        net + "%";
 }
 
+setInterval(telemetry,1500);
 
-setInterval(
-    addActivity,
-    1200
-);
-
-
-/* ==========================================
-   LIVE STREAM
-========================================== */
+/* =========================================================
+   LIVE CYBER STREAM
+   ========================================================= */
 
 const stream =
-document.getElementById(
-    "stream"
-);
-
+    document.getElementById("stream");
 
 const streamMessages = [
-    "telemetry channel synchronized",
-    "node handshake simulated",
-    "visual packet sequence updated",
-    "monitoring engine heartbeat",
-    "target interface refreshed",
-    "network graph recalculated",
-    "signal analyzer cycle complete",
-    "dashboard event queue updated"
-];
 
+    "visual node synchronized",
+    "telemetry packet simulated",
+    "target HUD refreshed",
+    "network topology updated",
+    "matrix engine running",
+    "holographic core stable",
+    "cyber grid recalculated",
+    "local event generated",
+    "visual channel synchronized",
+    "command interface ready",
+    "simulation heartbeat received",
+    "node animation cycle complete"
+
+];
 
 function addStream(){
 
-    const message =
+    const row =
+        document.createElement("div");
+
+    row.className =
+        "stream-row";
+
+    const now =
+        new Date();
+
+    const time =
+        now.toLocaleTimeString(
+            "id-ID",
+            {
+                hour12:false
+            }
+        );
+
+    const types =
+        [
+            "INFO",
+            "NODE",
+            "HUD",
+            "SYS",
+            "NET"
+        ];
+
+    const type =
+        types[
+            Math.floor(
+                Math.random() *
+                types.length
+            )
+        ];
+
+    const msg =
         streamMessages[
             Math.floor(
                 Math.random() *
@@ -1608,475 +1768,442 @@ function addStream(){
             )
         ];
 
-
-    const statuses = [
-
-        '<span class="ok">[OK]</span>',
-
-        '<span class="warn">[INFO]</span>',
-
-        '<span class="ok">[LIVE]</span>'
-
-    ];
-
-
-    const status =
-        statuses[
-            Math.floor(
-                Math.random() *
-                statuses.length
-            )
-        ];
-
-
-    const row =
-        document.createElement(
-            "div"
-        );
-
-
-    row.className =
-        "stream-row";
-
-
     row.innerHTML = `
-        <b>${getTime()}</b>
-        ${status}
-        ${message}
-    `;
+        <span class="stream-time">
+            ${time}
+        </span>
 
+        <span class="stream-type">
+            ${type}
+        </span>
+
+        <span class="stream-msg">
+            ${msg}
+        </span>
+    `;
 
     stream.prepend(row);
 
-
-    while(
-        stream.children.length > 18
-    ){
-
+    while(stream.children.length > 13){
         stream.removeChild(
             stream.lastChild
         );
-
     }
-
 }
 
-
-for(
-    let i = 0;
-    i < 8;
-    i++
-){
-
+for(let i=0;i<7;i++){
     addStream();
-
 }
 
-
-setInterval(
-    addStream,
-    900
-);
-
-
-/* ==========================================
-   TARGET MOVEMENT
-========================================== */
-
-const target =
-document.getElementById(
-    "targetMarker"
-);
-
-
-function moveTarget(){
-
-    const positions = [
-
-        [25,25],
-        [68,25],
-        [35,65],
-        [72,65],
-        [50,45],
-        [20,55]
-
-    ];
-
-
-    const p =
-        positions[
-            Math.floor(
-                Math.random() *
-                positions.length
-            )
-        ];
-
-
-    target.style.left =
-        p[0] + "%";
-
-
-    target.style.top =
-        p[1] + "%";
-
-}
-
-
-setInterval(
-    moveTarget,
-    1800
-);
-
-
-/* ==========================================
-   STATS
-========================================== */
-
-function updateStats(){
-
-    const targets =
-        5 +
-        Math.floor(
-            Math.random() * 8
-        );
-
-
-    const nodes =
-        100 +
-        Math.floor(
-            Math.random() * 80
-        );
-
-
-    const events =
-        20 +
-        Math.floor(
-            Math.random() * 60
-        );
-
-
-    document.getElementById(
-        "targets"
-    ).textContent =
-        String(targets).padStart(
-            2,
-            "0"
-        );
-
-
-    document.getElementById(
-        "nodes"
-    ).textContent =
-        nodes;
-
-
-    document.getElementById(
-        "events"
-    ).textContent =
-        events;
-
-}
-
-
-setInterval(
-    updateStats,
-    2500
-);
-
-
-/* ==========================================
-   ALERT CLOCK
-========================================== */
-
-function updateAlertTime(){
-
-    document.getElementById(
-        "alertTime"
-    ).textContent =
-        getTime();
-
-}
-
-
-setInterval(
-    updateAlertTime,
-    1000
-);
-
-
-updateAlertTime();
-
-
-/* ==========================================
-   GLITCH
-========================================== */
-
-const panels =
-document.querySelectorAll(
-    ".panel"
-);
-
-
-setInterval(()=>{
-
-    const panel =
-        panels[
-            Math.floor(
-                Math.random() *
-                panels.length
-            )
-        ];
-
-
-    panel.classList.add(
-        "glitch"
-    );
-
-
-    setTimeout(()=>{
-
-        panel.classList.remove(
-            "glitch"
-        );
-
-    },220);
-
-},5000);
-
-
-/* ==========================================
-   NAVIGATION
-========================================== */
-
-function scrollToPanel(id){
-
-    const element =
-        document.getElementById(id);
-
-
-    if(element){
-
-        element.scrollIntoView({
-            behavior:"smooth",
-            block:"center"
-        });
-
+setInterval(addStream,850);
+
+/* =========================================================
+   ALERT MONITOR
+   ========================================================= */
+
+const alerts =
+    document.getElementById("alerts");
+
+const alertMessages = [
+
+    {
+        type:"NORMAL",
+        text:"All simulated systems operating normally."
+    },
+
+    {
+        type:"WARNING",
+        text:"High visualization activity detected."
+    },
+
+    {
+        type:"NORMAL",
+        text:"Network simulation synchronized."
+    },
+
+    {
+        type:"INFO",
+        text:"Target HUD cycle refreshed."
+    },
+
+    {
+        type:"WARNING",
+        text:"Telemetry fluctuation observed."
+    },
+
+    {
+        type:"NORMAL",
+        text:"Holographic interface stable."
     }
 
-}
+];
 
+function addAlert(){
 
-/* ==========================================
-   RUN SCAN
-========================================== */
+    const data =
+        alertMessages[
+            Math.floor(
+                Math.random() *
+                alertMessages.length
+            )
+        ];
 
-function runScan(){
+    const box =
+        document.createElement("div");
 
-    const output =
-        document.getElementById(
-            "consoleOutput"
+    box.className =
+        "alert " +
+        (
+            data.type === "WARNING"
+                ? "warning"
+                : ""
         );
 
+    const now =
+        new Date()
+        .toLocaleTimeString(
+            "id-ID",
+            {
+                hour12:false
+            }
+        );
 
-    const messages = [
+    box.innerHTML = `
+        <div class="alert-head">
+            <span>${data.type}</span>
+            <span>${now}</span>
+        </div>
 
-        "Initializing visual scan...",
+        <div>${data.text}</div>
+    `;
 
-        "Checking simulated network nodes...",
+    alerts.prepend(box);
 
-        "Analyzing dashboard telemetry...",
-
-        "Refreshing target HUD...",
-
-        "Updating event stream...",
-
-        "Scan sequence completed."
-
-    ];
-
-
-    messages.forEach(
-        (message,index)=>{
-
-            setTimeout(()=>{
-
-                const line =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                line.innerHTML = `
-                    <span class="prompt">
-                        ALFA@OSINT:~$
-                    </span>
-                    ${message}
-                `;
-
-
-                output.appendChild(
-                    line
-                );
-
-
-                output.scrollTop =
-                    output.scrollHeight;
-
-
-            },index * 450);
-
-        }
-    );
-
+    while(alerts.children.length > 5){
+        alerts.removeChild(
+            alerts.lastChild
+        );
+    }
 }
 
+for(let i=0;i<3;i++){
+    addAlert();
+}
 
-/* ==========================================
+setInterval(addAlert,2600);
+
+/* =========================================================
    COMMAND CONSOLE
-========================================== */
+   ========================================================= */
 
 const consoleForm =
-document.getElementById(
-    "consoleForm"
-);
-
-
-const consoleInput =
-document.getElementById(
-    "consoleInput"
-);
-
-
-const consoleOutput =
-document.getElementById(
-    "consoleOutput"
-);
-
-
-function consoleWrite(text){
-
-    const line =
-        document.createElement(
-            "div"
-        );
-
-
-    line.innerHTML =
-        text;
-
-
-    consoleOutput.appendChild(
-        line
+    document.getElementById(
+        "consoleForm"
     );
 
+const commandInput =
+    document.getElementById(
+        "commandInput"
+    );
+
+const consoleOutput =
+    document.getElementById(
+        "consoleOutput"
+    );
+
+function printConsole(
+    text,
+    type="system"
+){
+
+    const line =
+        document.createElement("div");
+
+    line.className =
+        "console-line " +
+        type;
+
+    line.textContent =
+        text;
+
+    consoleOutput.appendChild(line);
 
     consoleOutput.scrollTop =
         consoleOutput.scrollHeight;
-
 }
 
+function runCommand(command){
 
-consoleForm.addEventListener(
-    "submit",
-    (e)=>{
+    const cmd =
+        command
+        .trim()
+        .toLowerCase();
 
-        e.preventDefault();
+    if(!cmd){
+        return;
+    }
 
+    printConsole(
+        "ALFA@command: " +
+        command,
+        "command"
+    );
 
-        const command =
-            consoleInput.value
-                .trim()
-                .toLowerCase();
+    switch(cmd){
 
+        case "help":
 
-        if(!command){
-            return;
-        }
-
-
-        consoleWrite(`
-            <span class="prompt">
-                ALFA@OSINT:~$
-            </span>
-            ${command}
-        `);
-
-
-        if(command === "help"){
-
-            consoleWrite(
-                "Available: help, status, scan, clear, matrix, nodes"
+            printConsole(
+`AVAILABLE COMMANDS
+------------------
+help    - show commands
+status  - system status
+scan    - run visual simulation scan
+matrix  - matrix engine status
+nodes   - network node status
+clear   - clear console`
             );
 
-        }
+            break;
 
-        else if(command === "status"){
+        case "status":
 
-            consoleWrite(
-                "SYSTEM: ONLINE // MODE: DEMO // TELEMETRY: ACTIVE"
+            printConsole(
+`SYSTEM STATUS
+-------------
+CORE       : ONLINE
+MATRIX     : ONLINE
+HOLOGRAM   : ONLINE
+TARGET HUD  : ONLINE
+NETWORK    : SIMULATION
+TELEMETRY  : ACTIVE`
             );
 
-        }
+            break;
 
-        else if(command === "scan"){
+        case "scan":
 
-            runScan();
+            printConsole(
+                "[SCAN] Initializing visual simulation..."
+            );
 
-        }
+            setTimeout(()=>{
+                printConsole(
+                    "[SCAN] Visual nodes analyzed: " +
+                    (20 + Math.floor(
+                        Math.random()*40
+                    ))
+                );
 
-        else if(command === "nodes"){
+                printConsole(
+                    "[SCAN] No real-world data collected."
+                );
 
-            consoleWrite(
-                "NETWORK NODES: " +
+                printConsole(
+                    "[SCAN] Simulation complete."
+                );
+            },500);
+
+            break;
+
+        case "matrix":
+
+            printConsole(
+`MATRIX ENGINE
+-------------
+STATUS : ONLINE
+MODE   : GREEN RAIN
+RENDER : ACTIVE
+SOURCE : LOCAL SIMULATION`
+            );
+
+            break;
+
+        case "nodes":
+
+            printConsole(
+`NETWORK NODES
+-------------
+ACTIVE : ${
                 document.getElementById(
                     "nodes"
                 ).textContent
+            }
+MODE   : VISUAL SIMULATION
+LINKS  : ANIMATED`
             );
 
-        }
+            break;
 
-        else if(command === "matrix"){
+        case "clear":
 
-            consoleWrite(
-                "MATRIX ENGINE: ONLINE // NEON GREEN"
+            consoleOutput.innerHTML = "";
+
+            break;
+
+        default:
+
+            printConsole(
+                "Unknown command. Type 'help'.",
+                "error"
             );
+    }
+}
 
-        }
+consoleForm.addEventListener(
+    "submit",
+    function(e){
 
-        else if(command === "clear"){
+        e.preventDefault();
 
-            consoleOutput.innerHTML =
-                "";
+        runCommand(
+            commandInput.value
+        );
 
-        }
-
-        else{
-
-            consoleWrite(
-                "Unknown command. Type <b>help</b>."
-            );
-
-        }
-
-
-        consoleInput.value =
-            "";
+        commandInput.value = "";
 
     }
 );
 
+/* =========================================================
+   QUICK COMMAND BUTTONS
+   ========================================================= */
 
-/* ==========================================
-   BOOT
-========================================== */
+document
+    .querySelectorAll(".cmd-btn")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                runCommand(
+                    button.dataset.command
+                );
+
+            }
+        );
+
+    });
+
+/* =========================================================
+   TARGET HUD RANDOM MOVEMENT
+   ========================================================= */
+
+const targetsHUD =
+    document.querySelectorAll(
+        ".target"
+    );
+
+function moveTargets(){
+
+    targetsHUD.forEach(
+        target => {
+
+            const x =
+                25 +
+                Math.random() * 50;
+
+            const y =
+                20 +
+                Math.random() * 60;
+
+            target.style.left =
+                x + "%";
+
+            target.style.top =
+                y + "%";
+
+        }
+    );
+}
+
+setInterval(
+    moveTargets,
+    3500
+);
+
+/* =========================================================
+   DYNAMIC NETWORK NODE MOTION
+   ========================================================= */
+
+const networkNodes =
+    document.querySelectorAll(
+        ".node"
+    );
+
+function animateNetwork(){
+
+    networkNodes.forEach(
+        node => {
+
+            const currentLeft =
+                parseFloat(
+                    node.style.left ||
+                    getComputedStyle(
+                        node
+                    ).left
+                );
+
+            const currentTop =
+                parseFloat(
+                    node.style.top ||
+                    getComputedStyle(
+                        node
+                    ).top
+                );
+
+            let newLeft =
+                currentLeft +
+                (Math.random() - .5) * 4;
+
+            let newTop =
+                currentTop +
+                (Math.random() - .5) * 4;
+
+            newLeft =
+                Math.max(
+                    5,
+                    Math.min(
+                        92,
+                        newLeft
+                    )
+                );
+
+            newTop =
+                Math.max(
+                    8,
+                    Math.min(
+                        90,
+                        newTop
+                    )
+                );
+
+            node.style.left =
+                newLeft + "%";
+
+            node.style.top =
+                newTop + "%";
+        }
+    );
+}
+
+setInterval(
+    animateNetwork,
+    2200
+);
+
+/* =========================================================
+   STARTUP MESSAGE
+   ========================================================= */
 
 setTimeout(()=>{
 
-    consoleWrite(
-        '<span class="prompt">[SYSTEM]</span> V5.1 BLACK × NEON GREEN interface ready.'
+    printConsole(
+        "[V5.5] Advanced visualization modules loaded."
     );
 
-},500);
+},900);
 
 </script>
 
