@@ -2692,6 +2692,473 @@ console.log(
 </script>
 
 <!-- END ALFA OSINT V3.9 -->
+<!-- =========================================
+     ALFA OSINT V4.0 CYBER COMMAND CENTER
+     VISUAL / LOCAL SIMULATION ONLY
+========================================= -->
+
+<style>
+.alfa-v40{
+  max-width:1150px;
+  margin:30px auto;
+  padding:20px;
+  display:grid;
+  grid-template-columns:1.4fr 1fr;
+  gap:16px;
+}
+
+.alfa-v40-panel{
+  position:relative;
+  overflow:hidden;
+  padding:18px;
+  min-height:230px;
+  border:1px solid rgba(0,255,157,.28);
+  background:rgba(2,9,8,.82);
+  box-shadow:
+    0 0 25px rgba(0,255,157,.06),
+    inset 0 0 25px rgba(0,255,157,.025);
+  backdrop-filter:blur(7px);
+}
+
+.alfa-v40-title{
+  color:#00ff9d;
+  font:12px monospace;
+  letter-spacing:3px;
+  margin-bottom:16px;
+}
+
+.alfa-v40-main{
+  grid-row:span 2;
+  min-height:480px;
+}
+
+.alfa-v40-radar{
+  position:relative;
+  width:280px;
+  height:280px;
+  margin:20px auto;
+  border-radius:50%;
+  border:1px solid rgba(0,255,157,.5);
+  background:
+    radial-gradient(
+      circle,
+      transparent 0 28%,
+      rgba(0,255,157,.08) 29% 29.5%,
+      transparent 30% 48%,
+      rgba(0,255,157,.08) 49% 49.5%,
+      transparent 50% 68%,
+      rgba(0,255,157,.08) 69% 69.5%,
+      transparent 70%
+    );
+  box-shadow:
+    0 0 25px rgba(0,255,157,.12),
+    inset 0 0 25px rgba(0,255,157,.08);
+}
+
+.alfa-v40-radar::before,
+.alfa-v40-radar::after{
+  content:"";
+  position:absolute;
+  background:rgba(0,255,157,.2);
+}
+
+.alfa-v40-radar::before{
+  width:100%;
+  height:1px;
+  top:50%;
+  left:0;
+}
+
+.alfa-v40-radar::after{
+  width:1px;
+  height:100%;
+  left:50%;
+  top:0;
+}
+
+.alfa-v40-sweep{
+  position:absolute;
+  width:50%;
+  height:2px;
+  left:50%;
+  top:50%;
+  transform-origin:left center;
+  background:linear-gradient(
+    90deg,
+    #00ff9d,
+    transparent
+  );
+  box-shadow:0 0 12px #00ff9d;
+  animation:alfaV40Sweep 3s linear infinite;
+}
+
+.alfa-v40-dot{
+  position:absolute;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#00ff9d;
+  box-shadow:0 0 12px #00ff9d;
+  animation:alfaV40Dot 2.5s ease-in-out infinite;
+}
+
+.alfa-v40-dot.d1{
+  left:68%;
+  top:30%;
+}
+
+.alfa-v40-dot.d2{
+  left:32%;
+  top:62%;
+  animation-delay:.8s;
+}
+
+.alfa-v40-dot.d3{
+  left:73%;
+  top:67%;
+  animation-delay:1.4s;
+}
+
+@keyframes alfaV40Sweep{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+
+@keyframes alfaV40Dot{
+  0%,100%{
+    opacity:.25;
+    transform:scale(.7);
+  }
+  50%{
+    opacity:1;
+    transform:scale(1.5);
+  }
+}
+
+/* SYSTEM BARS */
+
+.alfa-v40-stat{
+  margin:14px 0;
+}
+
+.alfa-v40-stat-top{
+  display:flex;
+  justify-content:space-between;
+  color:#7fffc5;
+  font:11px monospace;
+  margin-bottom:6px;
+}
+
+.alfa-v40-bar{
+  height:5px;
+  background:rgba(0,255,157,.08);
+  overflow:hidden;
+}
+
+.alfa-v40-fill{
+  height:100%;
+  width:0;
+  background:#00ff9d;
+  box-shadow:0 0 10px rgba(0,255,157,.7);
+  transition:width .8s ease;
+}
+
+/* CORE STATUS */
+
+.alfa-v40-status{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+
+.alfa-v40-chip{
+  padding:12px;
+  border:1px solid rgba(0,255,157,.2);
+  background:rgba(0,255,157,.025);
+  color:#00ff9d;
+  font:11px monospace;
+}
+
+.alfa-v40-chip b{
+  display:block;
+  margin-top:5px;
+  color:#d5fff0;
+  font-size:14px;
+}
+
+/* SCAN LINE */
+
+.alfa-v40-panel::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:-2px;
+  height:1px;
+  background:#00ff9d;
+  opacity:.35;
+  box-shadow:0 0 10px #00ff9d;
+  animation:alfaV40Scan 4s linear infinite;
+}
+
+@keyframes alfaV40Scan{
+  0%{transform:translateY(0)}
+  100%{transform:translateY(500px)}
+}
+
+@media(max-width:800px){
+  .alfa-v40{
+    grid-template-columns:1fr;
+    margin:18px 10px;
+    padding:10px;
+  }
+
+  .alfa-v40-main{
+    grid-row:auto;
+    min-height:390px;
+  }
+
+  .alfa-v40-radar{
+    width:230px;
+    height:230px;
+  }
+}
+</style>
+
+<section class="alfa-v40">
+
+  <!-- RADAR COMMAND PANEL -->
+
+  <div class="alfa-v40-panel alfa-v40-main">
+
+    <div class="alfa-v40-title">
+      ◉ CYBER COMMAND RADAR
+    </div>
+
+    <div class="alfa-v40-radar">
+
+      <div class="alfa-v40-sweep"></div>
+
+      <div class="alfa-v40-dot d1"></div>
+      <div class="alfa-v40-dot d2"></div>
+      <div class="alfa-v40-dot d3"></div>
+
+    </div>
+
+    <div style="
+      text-align:center;
+      color:#00ff9d;
+      font:11px monospace;
+      letter-spacing:2px;
+    ">
+      VISUAL RADAR // ONLINE
+    </div>
+
+  </div>
+
+
+  <!-- SYSTEM CORE -->
+
+  <div class="alfa-v40-panel">
+
+    <div class="alfa-v40-title">
+      ◉ SYSTEM CORE
+    </div>
+
+    <div class="alfa-v40-stat">
+
+      <div class="alfa-v40-stat-top">
+        <span>CPU CORE</span>
+        <span id="v40CPU">--%</span>
+      </div>
+
+      <div class="alfa-v40-bar">
+        <div
+          class="alfa-v40-fill"
+          id="v40CPUBar">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="alfa-v40-stat">
+
+      <div class="alfa-v40-stat-top">
+        <span>NETWORK</span>
+        <span id="v40NET">--%</span>
+      </div>
+
+      <div class="alfa-v40-bar">
+        <div
+          class="alfa-v40-fill"
+          id="v40NETBar">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="alfa-v40-stat">
+
+      <div class="alfa-v40-stat-top">
+        <span>SIGNAL</span>
+        <span id="v40SIG">--%</span>
+      </div>
+
+      <div class="alfa-v40-bar">
+        <div
+          class="alfa-v40-fill"
+          id="v40SIGBar">
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- COMMAND STATUS -->
+
+  <div class="alfa-v40-panel">
+
+    <div class="alfa-v40-title">
+      ◉ COMMAND STATUS
+    </div>
+
+    <div class="alfa-v40-status">
+
+      <div class="alfa-v40-chip">
+        MATRIX
+        <b>ONLINE</b>
+      </div>
+
+      <div class="alfa-v40-chip">
+        RADAR
+        <b>ACTIVE</b>
+      </div>
+
+      <div class="alfa-v40-chip">
+        NETWORK
+        <b>SYNC</b>
+      </div>
+
+      <div class="alfa-v40-chip">
+        CORE
+        <b>STABLE</b>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<script>
+/* ALFA OSINT V4.0 SYSTEM SIMULATION */
+
+(function(){
+
+  function updateV40(){
+
+    const cpu =
+      Math.floor(35 + Math.random()*55);
+
+    const net =
+      Math.floor(45 + Math.random()*50);
+
+    const sig =
+      Math.floor(65 + Math.random()*34);
+
+    const cpuText =
+      document.getElementById("v40CPU");
+
+    const netText =
+      document.getElementById("v40NET");
+
+    const sigText =
+      document.getElementById("v40SIG");
+
+    const cpuBar =
+      document.getElementById("v40CPUBar");
+
+    const netBar =
+      document.getElementById("v40NETBar");
+
+    const sigBar =
+      document.getElementById("v40SIGBar");
+
+    if(cpuText) cpuText.textContent = cpu+"%";
+    if(netText) netText.textContent = net+"%";
+    if(sigText) sigText.textContent = sig+"%";
+
+    if(cpuBar) cpuBar.style.width = cpu+"%";
+    if(netBar) netBar.style.width = net+"%";
+    if(sigBar) sigBar.style.width = sig+"%";
+
+  }
+
+  updateV40();
+
+  setInterval(
+    updateV40,
+    1800
+  );
+
+})();
+
+/* V4.0 TERMINAL EVENTS */
+
+setInterval(() => {
+
+  const terminal =
+    document.getElementById("terminal");
+
+  if(!terminal) return;
+
+  const events = [
+
+    "[CORE] COMMAND CENTER SYNCHRONIZED",
+    "[RADAR] VISUAL SWEEP COMPLETE",
+    "[SYSTEM] CORE LOAD UPDATED",
+    "[NET] VISUAL NETWORK STATUS UPDATED",
+    "[SIGNAL] COMMAND CHANNEL STABLE"
+
+  ];
+
+  const line =
+    document.createElement("div");
+
+  line.textContent =
+    "[" +
+    new Date().toLocaleTimeString("id-ID") +
+    "] " +
+    events[
+      Math.floor(Math.random()*events.length)
+    ];
+
+  line.style.color="#00ff9d";
+
+  terminal.appendChild(line);
+
+  while(terminal.children.length > 28){
+
+    terminal.removeChild(
+      terminal.firstChild
+    );
+
+  }
+
+  terminal.scrollTop =
+    terminal.scrollHeight;
+
+},3500);
+
+console.log(
+  "%c ALFA OSINT V4.0 COMMAND CENTER ONLINE ",
+  "color:#00ff9d;background:#020b08;font-weight:bold;padding:7px;"
+);
+</script>
+
+<!-- END ALFA OSINT V4.0 -->
 </body>
 </html>
 
