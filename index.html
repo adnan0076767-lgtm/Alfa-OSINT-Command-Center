@@ -1,11 +1,12 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ALFA OSINT COMMAND CENTER V3</title>
-<meta name="description" content="ALFA OSINT Command Center - Public Source Intelligence Dashboard">
+<title>ALFA OSINT COMMAND CENTER V5.0</title>
+<meta name="description" content="ALFA OSINT Command Center V5.0 - Public Source Intelligence Dashboard">
 <meta name="robots" content="index,follow">
 
 <style>
@@ -19,6 +20,7 @@
   --text:#d8fff1;
   --muted:#6d8f87;
   --danger:#ff3864;
+  --warning:#ffbd59;
   --shadow:0 0 25px rgba(0,255,157,.12);
 }
 
@@ -43,7 +45,12 @@ body{
   overflow-x:hidden;
 }
 
-/* ================= MATRIX BACKGROUND ================= */
+button,
+input{
+  font-family:inherit;
+}
+
+/* ================= MATRIX ================= */
 
 #matrix{
   position:fixed;
@@ -65,7 +72,7 @@ body::before{
   pointer-events:none;
   background:repeating-linear-gradient(
     to bottom,
-    transparent 0px,
+    transparent 0,
     transparent 3px,
     rgba(0,255,157,.025) 4px
   );
@@ -93,6 +100,21 @@ body::after{
   to{top:120%}
 }
 
+@keyframes pulse{
+  50%{
+    opacity:.3;
+    transform:scale(.6);
+  }
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+@keyframes spinReverse{
+  to{transform:rotate(-360deg)}
+}
+
 /* ================= NAV ================= */
 
 nav{
@@ -103,7 +125,7 @@ nav{
   justify-content:space-between;
   align-items:center;
   padding:15px 5%;
-  background:rgba(1,5,9,.88);
+  background:rgba(1,5,9,.9);
   backdrop-filter:blur(12px);
   border-bottom:1px solid rgba(0,255,157,.2);
 }
@@ -130,10 +152,6 @@ nav{
   background:var(--line);
   box-shadow:0 0 12px var(--line);
   animation:pulse 1.2s infinite;
-}
-
-@keyframes pulse{
-  50%{opacity:.3;transform:scale(.6)}
 }
 
 /* ================= HERO ================= */
@@ -163,7 +181,18 @@ nav{
   font-size:13px;
 }
 
-/* ================= MAIN GRID ================= */
+.v5-badge{
+  display:inline-block;
+  margin-top:14px;
+  padding:6px 12px;
+  border:1px solid rgba(0,255,157,.3);
+  color:var(--line);
+  background:rgba(0,255,157,.04);
+  font-size:10px;
+  letter-spacing:2px;
+}
+
+/* ================= CONTAINER ================= */
 
 .container{
   width:min(1400px,92%);
@@ -192,6 +221,7 @@ nav{
   border-radius:14px;
   padding:20px;
   box-shadow:var(--shadow);
+  backdrop-filter:blur(7px);
 }
 
 .panel::before{
@@ -201,7 +231,12 @@ nav{
   left:-100%;
   width:100%;
   height:1px;
-  background:linear-gradient(90deg,transparent,var(--line),transparent);
+  background:linear-gradient(
+    90deg,
+    transparent,
+    var(--line),
+    transparent
+  );
   animation:borderScan 4s linear infinite;
 }
 
@@ -213,6 +248,7 @@ nav{
   display:flex;
   justify-content:space-between;
   align-items:center;
+  gap:10px;
   margin-bottom:15px;
   color:var(--cyan);
   font-weight:bold;
@@ -240,7 +276,6 @@ nav{
   outline:none;
   background:#01070b;
   color:var(--line);
-  font-family:inherit;
   box-shadow:inset 0 0 15px rgba(0,255,157,.04);
 }
 
@@ -251,7 +286,6 @@ button{
   padding:12px 18px;
   border-radius:8px;
   cursor:pointer;
-  font-family:inherit;
   font-weight:bold;
   transition:.2s;
 }
@@ -293,11 +327,15 @@ button:hover{
   line-height:1.7;
 }
 
-.terminal::-webkit-scrollbar{
+.terminal::-webkit-scrollbar,
+.alfa-console-box::-webkit-scrollbar,
+.activity-feed::-webkit-scrollbar{
   width:5px;
 }
 
-.terminal::-webkit-scrollbar-thumb{
+.terminal::-webkit-scrollbar-thumb,
+.alfa-console-box::-webkit-scrollbar-thumb,
+.activity-feed::-webkit-scrollbar-thumb{
   background:#075c48;
 }
 
@@ -350,14 +388,6 @@ button:hover{
   animation:spinReverse 5s linear infinite;
 }
 
-@keyframes spin{
-  to{transform:rotate(360deg)}
-}
-
-@keyframes spinReverse{
-  to{transform:rotate(-360deg)}
-}
-
 .holo-grid{
   position:absolute;
   inset:0;
@@ -392,7 +422,10 @@ button:hover{
 }
 
 @keyframes corePulse{
-  50%{transform:scale(1.18);opacity:.7}
+  50%{
+    transform:scale(1.18);
+    opacity:.7;
+  }
 }
 
 .radar-sweep{
@@ -402,7 +435,11 @@ button:hover{
   left:50%;
   top:50%;
   transform-origin:left center;
-  background:linear-gradient(90deg,var(--line),transparent);
+  background:linear-gradient(
+    90deg,
+    var(--line),
+    transparent
+  );
   box-shadow:0 0 10px var(--line);
   animation:radar 2.5s linear infinite;
 }
@@ -427,12 +464,6 @@ button:hover{
   grid-template-columns:repeat(4,1fr);
   gap:10px;
   margin:20px 0;
-}
-
-@media(max-width:700px){
-  .stats{
-    grid-template-columns:repeat(2,1fr);
-  }
 }
 
 .stat{
@@ -463,23 +494,18 @@ button:hover{
   gap:12px;
 }
 
-@media(max-width:800px){
-  .modules{
-    grid-template-columns:1fr 1fr;
-  }
-}
-
-@media(max-width:500px){
-  .modules{
-    grid-template-columns:1fr;
-  }
-}
-
 .module{
   padding:15px;
   border:1px solid rgba(0,234,255,.15);
   background:rgba(0,234,255,.025);
   border-radius:10px;
+  transition:.25s;
+}
+
+.module:hover{
+  transform:translateY(-3px);
+  border-color:rgba(0,255,157,.45);
+  box-shadow:0 0 18px rgba(0,255,157,.08);
 }
 
 .module h3{
@@ -516,8 +542,6 @@ button:hover{
   word-break:break-word;
 }
 
-/* ================= REPORT ================= */
-
 .report-actions{
   display:flex;
   flex-wrap:wrap;
@@ -525,2179 +549,10 @@ button:hover{
   margin-top:12px;
 }
 
-footer{
-  width:min(1400px,92%);
-  margin:30px auto;
-  padding:20px;
-  text-align:center;
-  border-top:1px solid rgba(0,255,157,.12);
-  color:#48635d;
-  font-size:10px;
-  line-height:1.7;
-}
+/* =====================================================
+   V4.0 CYBER COMMAND CENTER
+===================================================== */
 
-.warning{
-  color:#ffbd59;
-}
-
-.hide{
-  display:none;
-}
-</style>
-</head>
-
-<body>
-
-<canvas id="matrix"></canvas>
-
-<nav>
-  <div class="logo">ALFA // OSINT V3</div>
-
-  <div class="nav-status">
-    <span class="status-dot"></span>
-    SYSTEM ONLINE
-  </div>
-</nav>
-
-<section class="hero">
-  <h1>OSINT <span>COMMAND CENTER</span></h1>
-  <p>PUBLIC SOURCE INTELLIGENCE // CYBER ANALYSIS INTERFACE</p>
-</section>
-
-<main class="container">
-
-  <div class="grid">
-
-    <!-- COMMAND PANEL -->
-    <section class="panel">
-
-      <div class="panel-title">
-        <span>◈ COMMAND INTERFACE</span>
-        <small id="clock">--:--:--</small>
-      </div>
-
-      <div class="command-box">
-        <input
-          id="target"
-          type="text"
-          placeholder="Masukkan domain / URL / username..."
-          autocomplete="off"
-        >
-        <button onclick="runScan()">SCAN</button>
-      </div>
-
-      <div class="mode-row">
-        <button class="mode-btn active" onclick="setMode('auto',this)">AUTO</button>
-        <button class="mode-btn" onclick="setMode('domain',this)">DOMAIN</button>
-        <button class="mode-btn" onclick="setMode('url',this)">URL</button>
-        <button class="mode-btn" onclick="setMode('username',this)">USERNAME</button>
-      </div>
-
-      <br>
-
-      <div class="terminal" id="terminal">
-        <div>[BOOT] ALFA OSINT COMMAND CENTER V3</div>
-        <div>[SYS] Initializing cyber interface...</div>
-        <div>[SYS] Matrix engine: ONLINE</div>
-        <div>[SYS] Holographic radar: ONLINE</div>
-        <div>[SYS] Public-source mode: ENABLED</div>
-        <div>[READY] Waiting for target...</div>
-      </div>
-
-    </section>
-
-    <!-- HOLOGRAM PANEL -->
-    <section class="panel">
-
-      <div class="panel-title">
-        <span>◉ HOLOGRAPHIC RADAR</span>
-        <small>LIVE</small>
-      </div>
-
-      <div class="holo-wrap">
-
-        <div class="hologram">
-
-          <div class="holo-grid"></div>
-
-          <div class="radar-sweep"></div>
-
-          <div class="holo-core"></div>
-
-          <div class="holo-label">
-            PUBLIC SIGNAL MONITOR
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-  </div>
-
-  <!-- STATS -->
-  <div class="stats">
-
-    <div class="stat">
-      <strong id="scanCount">0</strong>
-      <span>SCANS</span>
-    </div>
-
-    <div class="stat">
-      <strong id="moduleCount">06</strong>
-      <span>MODULES</span>
-    </div>
-
-    <div class="stat">
-      <strong id="signalStatus">OK</strong>
-      <span>SIGNAL</span>
-    </div>
-
-    <div class="stat">
-      <strong id="systemLoad">18%</strong>
-      <span>SYSTEM LOAD</span>
-    </div>
-
-  </div>
-
-  <!-- MODULES -->
-  <section class="panel">
-
-    <div class="panel-title">
-      <span>▣ INTELLIGENCE MODULES</span>
-      <small>PUBLIC DATA ONLY</small>
-    </div>
-
-    <div class="modules">
-
-      <div class="module">
-        <h3>◈ DOMAIN INTELLIGENCE</h3>
-        <p>Analisis dasar nama domain, hostname, dan informasi publik.</p>
-      </div>
-
-      <div class="module">
-        <h3>◈ URL ANALYSIS</h3>
-        <p>Memecah komponen URL secara lokal tanpa mengirim password/token.</p>
-      </div>
-
-      <div class="module">
-        <h3>◈ USERNAME SEARCH</h3>
-        <p>Membuka pencarian publik untuk username pada layanan umum.</p>
-      </div>
-
-      <div class="module">
-        <h3>◈ PUBLIC WEB SEARCH</h3>
-        <p>Pencarian menggunakan mesin pencari publik.</p>
-      </div>
-
-      <div class="module">
-        <h3>◈ WHOIS LOOKUP</h3>
-        <p>Shortcut menuju layanan WHOIS publik.</p>
-      </div>
-
-      <div class="module">
-        <h3>◈ DNS LOOKUP</h3>
-        <p>Shortcut pemeriksaan DNS melalui layanan publik.</p>
-      </div>
-
-    </div>
-
-  </section>
-
-  <br>
-
-  <!-- RESULT -->
-  <section class="panel">
-
-    <div class="panel-title">
-      <span>▤ ANALYSIS RESULT</span>
-      <small id="resultStatus">STANDBY</small>
-    </div>
-
-    <div id="result" class="result">
-      <span class="label">[INFO]</span>
-      <span class="value">
-        Masukkan target kemudian tekan SCAN.
-      </span>
-    </div>
-
-    <div class="report-actions">
-
-      <button onclick="generateReport()">
-        GENERATE REPORT
-      </button>
-
-      <button onclick="copyReport()">
-        COPY REPORT
-      </button>
-
-      <button onclick="downloadReport()">
-        EXPORT TXT
-      </button>
-
-    </div>
-
-  </section>
-
-</main>
-
-<footer>
-  <div class="warning">
-    ⚠ PUBLIC-SOURCE OSINT ONLY
-  </div>
-
-  Sistem ini hanya untuk analisis informasi yang tersedia secara publik.
-  Jangan digunakan untuk mengakses akun pribadi, password, token,
-  data privat, pelacakan diam-diam, atau aktivitas tanpa izin.
-  <br><br>
-  ALFA OSINT COMMAND CENTER V3 // LOCAL BROWSER INTERFACE
-</footer>
-
-<script>
-
-/* =========================================================
-   MATRIX RAIN
-========================================================= */
-
-const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
-
-let fontSize = 15;
-let columns;
-let drops;
-
-const chars =
-"01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&*@<>[]{}:/\\\\|";
-
-function resizeMatrix(){
-
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  columns = Math.floor(canvas.width / fontSize);
-
-  drops = [];
-
-  for(let i=0;i<columns;i++){
-    drops[i] = Math.random() * -100;
-  }
-}
-
-function drawMatrix(){
-
-  ctx.fillStyle = "rgba(0,0,0,0.055)";
-  ctx.fillRect(0,0,canvas.width,canvas.height);
-
-  ctx.font = fontSize + "px monospace";
-
-  for(let i=0;i<drops.length;i++){
-
-    const char =
-      chars[Math.floor(Math.random()*chars.length)];
-
-    ctx.fillStyle =
-      Math.random() > .92
-      ? "#ffffff"
-      : "#00ff9d";
-
-    ctx.fillText(
-      char,
-      i * fontSize,
-      drops[i] * fontSize
-    );
-
-    if(
-      drops[i] * fontSize > canvas.height &&
-      Math.random() > .975
-    ){
-      drops[i] = 0;
-    }
-
-    drops[i] += .65;
-  }
-
-  requestAnimationFrame(drawMatrix);
-}
-
-window.addEventListener("resize",resizeMatrix);
-
-resizeMatrix();
-drawMatrix();
-
-
-/* =========================================================
-   CLOCK
-========================================================= */
-
-function updateClock(){
-
-  const now = new Date();
-
-  document.getElementById("clock").textContent =
-    now.toLocaleTimeString("id-ID");
-
-}
-
-setInterval(updateClock,1000);
-updateClock();
-
-
-/* =========================================================
-   SYSTEM LOAD
-========================================================= */
-
-setInterval(()=>{
-
-  const load =
-    Math.floor(12 + Math.random()*35);
-
-  document.getElementById("systemLoad").textContent =
-    load + "%";
-
-},1500);
-
-
-/* =========================================================
-   MODE
-========================================================= */
-
-let currentMode = "auto";
-
-function setMode(mode,button){
-
-  currentMode = mode;
-
-  document.querySelectorAll(".mode-btn")
-    .forEach(btn => btn.classList.remove("active"));
-
-  button.classList.add("active");
-
-  log("[MODE] Analysis mode switched to: " + mode.toUpperCase());
-
-}
-
-
-/* =========================================================
-   TERMINAL
-========================================================= */
-
-function log(message){
-
-  const terminal =
-    document.getElementById("terminal");
-
-  const line =
-    document.createElement("div");
-
-  const time =
-    new Date().toLocaleTimeString("id-ID");
-
-  line.textContent =
-    "[" + time + "] " + message;
-
-  terminal.appendChild(line);
-
-  terminal.scrollTop =
-    terminal.scrollHeight;
-
-}
-
-
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function escapeHTML(value){
-
-  return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-
-/* =========================================================
-   TARGET DETECTION
-========================================================= */
-
-function detectTarget(value){
-
-  value = value.trim();
-
-  if(/^https?:\/\//i.test(value)){
-    return "url";
-  }
-
-  if(
-    /^[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/i.test(value)
-  ){
-    return "domain";
-  }
-
-  return "username";
-}
-
-
-/* =========================================================
-   SCAN
-========================================================= */
-
-let scanCounter = 0;
-let latestReport = "";
-
-function runScan(){
-
-  const input =
-    document.getElementById("target");
-
-  const raw =
-    input.value.trim();
-
-  if(!raw){
-
-    log("[ERROR] Target kosong.");
-
-    document.getElementById("result").innerHTML =
-      '<span class="label">[ERROR]</span> Masukkan target terlebih dahulu.';
-
-    return;
-  }
-
-  let mode = currentMode;
-
-  if(mode === "auto"){
-    mode = detectTarget(raw);
-  }
-
-  scanCounter++;
-
-  document.getElementById("scanCount").textContent =
-    scanCounter;
-
-  document.getElementById("resultStatus").textContent =
-    "ANALYZING";
-
-  log("[SCAN] Target received: " + raw);
-  log("[SCAN] Module selected: " + mode.toUpperCase());
-
-  const result =
-    document.getElementById("result");
-
-  result.innerHTML =
-    '<span class="label">[PROCESS]</span> Running public-source analysis...';
-
-  setTimeout(()=>{
-
-    if(mode === "domain"){
-      analyzeDomain(raw);
-    }
-
-    else if(mode === "url"){
-      analyzeURL(raw);
-    }
-
-    else{
-      analyzeUsername(raw);
-    }
-
-  },700);
-
-}
-
-
-/* =========================================================
-   DOMAIN ANALYSIS
-========================================================= */
-
-function analyzeDomain(domain){
-
-  domain =
-    domain
-      .replace(/^https?:\/\//i,"")
-      .split("/")[0]
-      .trim();
-
-  const parts =
-    domain.split(".");
-
-  const tld =
-    parts.length > 1
-    ? "." + parts[parts.length-1]
-    : "N/A";
-
-  const hostname =
-    parts.slice(0,-1).join(".") || domain;
-
-  const now =
-    new Date().toISOString();
-
-  latestReport =
-`ALFA OSINT V3 REPORT
-TYPE: DOMAIN
-TARGET: ${domain}
-HOSTNAME: ${hostname}
-TLD: ${tld}
-ANALYSIS TIME: ${now}
-
-NOTE:
-Analysis performed locally.
-No private account access.
-No credential extraction.
-Public-source workflow only.`;
-
-  document.getElementById("result").innerHTML = `
-    <div><span class="label">TYPE:</span> <span class="value">DOMAIN</span></div>
-    <div><span class="label">TARGET:</span> <span class="value">${escapeHTML(domain)}</span></div>
-    <div><span class="label">HOSTNAME:</span> <span class="value">${escapeHTML(hostname)}</span></div>
-    <div><span class="label">TLD:</span> <span class="value">${escapeHTML(tld)}</span></div>
-    <div><span class="label">STATUS:</span> <span class="value">PUBLIC ANALYSIS READY</span></div>
-  `;
-
-  document.getElementById("resultStatus").textContent =
-    "COMPLETE";
-
-  log("[DONE] Domain analysis complete.");
-
-}
-
-
-/* =========================================================
-   URL ANALYSIS
-========================================================= */
-
-function analyzeURL(target){
-
-  try{
-
-    const url =
-      new URL(target);
-
-    const protocol =
-      url.protocol;
-
-    const hostname =
-      url.hostname;
-
-    const port =
-      url.port || "DEFAULT";
-
-    const path =
-      url.pathname || "/";
-
-    const query =
-      url.search || "NONE";
-
-    latestReport =
-`ALFA OSINT V3 REPORT
-TYPE: URL
-TARGET: ${target}
-PROTOCOL: ${protocol}
-HOSTNAME: ${hostname}
-PORT: ${port}
-PATH: ${path}
-QUERY: ${query}
-TIME: ${new Date().toISOString()}
-
-NOTE:
-URL parsed locally.
-Sensitive credentials are not collected.`;
-
-    document.getElementById("result").innerHTML = `
-      <div><span class="label">TYPE:</span> <span class="value">URL</span></div>
-      <div><span class="label">PROTOCOL:</span> <span class="value">${escapeHTML(protocol)}</span></div>
-      <div><span class="label">HOSTNAME:</span> <span class="value">${escapeHTML(hostname)}</span></div>
-      <div><span class="label">PORT:</span> <span class="value">${escapeHTML(port)}</span></div>
-      <div><span class="label">PATH:</span> <span class="value">${escapeHTML(path)}</span></div>
-      <div><span class="label">QUERY:</span> <span class="value">${escapeHTML(query)}</span></div>
-    `;
-
-    document.getElementById("resultStatus").textContent =
-      "COMPLETE";
-
-    log("[DONE] URL structure parsed.");
-
-  }
-
-  catch(error){
-
-    document.getElementById("result").innerHTML =
-      '<span class="label">[ERROR]</span> URL tidak valid.';
-
-    document.getElementById("resultStatus").textContent =
-      "ERROR";
-
-    log("[ERROR] Invalid URL.");
-
-  }
-
-}
-
-
-/* =========================================================
-   USERNAME ANALYSIS
-========================================================= */
-
-function analyzeUsername(username){
-
-  username =
-    username.replace(/^@/,"").trim();
-
-  const safe =
-    encodeURIComponent(username);
-
-  latestReport =
-`ALFA OSINT V3 REPORT
-TYPE: USERNAME
-TARGET: ${username}
-TIME: ${new Date().toISOString()}
-
-PUBLIC SEARCH SHORTCUTS:
-Google
-GitHub
-Reddit
-
-NOTE:
-Search is performed on publicly accessible pages only.`;
-
-  document.getElementById("result").innerHTML = `
-    <div>
-      <span class="label">TYPE:</span>
-      <span class="value">USERNAME</span>
-    </div>
-
-    <div>
-      <span class="label">TARGET:</span>
-      <span class="value">${escapeHTML(username)}</span>
-    </div>
-
-    <br>
-
-    <button onclick="openSearch('https://www.google.com/search?q='+encodeURIComponent('${safe}'))">
-      GOOGLE
-    </button>
-
-    <button onclick="openSearch('https://github.com/search?q='+encodeURIComponent('${safe}'))">
-      GITHUB
-    </button>
-
-    <button onclick="openSearch('https://www.reddit.com/search/?q='+encodeURIComponent('${safe}'))">
-      REDDIT
-    </button>
-  `;
-
-  document.getElementById("resultStatus").textContent =
-    "READY";
-
-  log("[DONE] Public username search shortcuts ready.");
-
-}
-
-
-/* =========================================================
-   SAFE SEARCH
-========================================================= */
-
-function openSearch(url){
-
-  window.open(
-    url,
-    "_blank",
-    "noopener,noreferrer"
-  );
-
-}
-
-
-/* =========================================================
-   REPORT
-========================================================= */
-
-function generateReport(){
-
-  if(!latestReport){
-
-    latestReport =
-`ALFA OSINT V3 REPORT
-
-No analysis has been performed yet.
-
-Please enter a public target and run SCAN.`;
-
-  }
-
-  document.getElementById("result").innerHTML =
-    `<pre style="
-      white-space:pre-wrap;
-      color:#74ffca;
-      font-family:inherit;
-    ">${escapeHTML(latestReport)}</pre>`;
-
-  log("[REPORT] Report generated.");
-
-}
-
-
-/* =========================================================
-   COPY
-========================================================= */
-
-async function copyReport(){
-
-  if(!latestReport){
-    generateReport();
-  }
-
-  try{
-
-    await navigator.clipboard.writeText(
-      latestReport
-    );
-
-    log("[REPORT] Copied to clipboard.");
-
-  }
-
-  catch(error){
-
-    log("[ERROR] Clipboard permission unavailable.");
-
-  }
-
-}
-
-
-/* =========================================================
-   DOWNLOAD TXT
-========================================================= */
-
-function downloadReport(){
-
-  if(!latestReport){
-    generateReport();
-  }
-
-  const blob =
-    new Blob(
-      [latestReport],
-      {type:"text/plain;charset=utf-8"}
-    );
-
-  const url =
-    URL.createObjectURL(blob);
-
-  const a =
-    document.createElement("a");
-
-  a.href = url;
-  a.download =
-    "alfa-osint-report.txt";
-
-  document.body.appendChild(a);
-
-  a.click();
-
-  a.remove();
-
-  URL.revokeObjectURL(url);
-
-  log("[REPORT] TXT exported.");
-
-}
-
-
-/* =========================================================
-   ENTER KEY
-========================================================= */
-
-document.getElementById("target")
-  .addEventListener("keydown",function(event){
-
-    if(event.key === "Enter"){
-      runScan();
-    }
-
-  });
-
-</script>
-<!-- AUTO CYBER ACTIVITY V3.1 -->
-<script>
-const autoMessages = [
-  "[AUTO] Scanning public signal...",
-  "[AUTO] Monitoring open-source channel...",
-  "[AUTO] Network visualization refreshed...",
-  "[AUTO] Holographic radar synchronized...",
-  "[AUTO] Public-source module ready...",
-  "[AUTO] Signal pulse detected...",
-  "[AUTO] Intelligence interface online...",
-  "[AUTO] Waiting for public target..."
-];
-
-setInterval(() => {
-  const terminal = document.getElementById("terminal");
-  if (!terminal) return;
-
-  const msg =
-    autoMessages[Math.floor(Math.random() * autoMessages.length)];
-
-  const line = document.createElement("div");
-
-  line.textContent =
-    "[" + new Date().toLocaleTimeString("id-ID") + "] " + msg;
-
-  terminal.appendChild(line);
-
-  while (terminal.children.length > 18) {
-    terminal.removeChild(terminal.firstChild);
-  }
-
-  terminal.scrollTop = terminal.scrollHeight;
-
-}, 2500);
-
-
-/* AUTO HUD PULSE */
-setInterval(() => {
-
-  const status =
-    document.getElementById("signalStatus");
-
-  if (!status) return;
-
-  status.textContent =
-    Math.random() > 0.15 ? "OK" : "SCAN";
-
-}, 1800);
-</script>
-<!-- KODE V3 YANG SUDAH ADA -->
-
-<!-- AUTO CYBER ACTIVITY V3.1 -->
-<script>
-...
-</script>
-
-<!-- FLOATING CYBER PARTICLES V3.2 -->
-<script>
-...
-</script>
-<!-- ALFA OSINT V3.3 LIVE CYBER STREAM -->
-<script>
-const cyberEvents = [
-  "SIGNAL DETECTED",
-  "NODE SYNCHRONIZED",
-  "RADAR SWEEP ACTIVE",
-  "DATA CHANNEL ACTIVE",
-  "PUBLIC SOURCE READY",
-  "NETWORK PULSE",
-  "SYSTEM CHECK COMPLETE",
-  "HOLOGRAM SYNC",
-  "MATRIX STREAM ACTIVE",
-  "OSINT MODULE READY"
-];
-
-setInterval(() => {
-  const terminal = document.getElementById("terminal");
-  if (!terminal) return;
-
-  const event =
-    cyberEvents[Math.floor(Math.random() * cyberEvents.length)];
-
-  const line = document.createElement("div");
-
-  line.textContent =
-    "[" + new Date().toLocaleTimeString("id-ID") + "] " + event;
-
-  line.style.opacity = "0";
-  terminal.appendChild(line);
-
-  setTimeout(() => {
-    line.style.transition = "opacity .5s";
-    line.style.opacity = "1";
-  }, 50);
-
-  while (terminal.children.length > 22) {
-    terminal.removeChild(terminal.firstChild);
-  }
-
-  terminal.scrollTop = terminal.scrollHeight;
-}, 1300);
-</script>
-<!-- ALFA OSINT V3.4 DIGITAL TARGET HUD -->
-<style>
-.alfa-target-hud{
-  position:fixed;
-  right:25px;
-  bottom:25px;
-  width:190px;
-  padding:14px;
-  background:rgba(1,8,12,.88);
-  border:1px solid rgba(0,255,157,.35);
-  border-radius:10px;
-  box-shadow:0 0 25px rgba(0,255,157,.12);
-  z-index:20;
-  pointer-events:none;
-  backdrop-filter:blur(8px);
-}
-
-.alfa-target-title{
-  color:#00eaff;
-  font-size:10px;
-  letter-spacing:2px;
-  margin-bottom:10px;
-}
-
-.alfa-target-ring{
-  width:75px;
-  height:75px;
-  margin:0 auto 10px;
-  border:1px solid #00ff9d;
-  border-radius:50%;
-  position:relative;
-  animation:targetSpin 4s linear infinite;
-  box-shadow:0 0 15px rgba(0,255,157,.2);
-}
-
-.alfa-target-ring::before,
-.alfa-target-ring::after{
-  content:"";
-  position:absolute;
-  background:#00ff9d;
-}
-
-.alfa-target-ring::before{
-  width:100%;
-  height:1px;
-  top:50%;
-  left:0;
-}
-
-.alfa-target-ring::after{
-  width:1px;
-  height:100%;
-  left:50%;
-  top:0;
-}
-
-.alfa-target-dot{
-  position:absolute;
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:#00eaff;
-  box-shadow:0 0 12px #00eaff;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  animation:targetPulse 1s infinite;
-}
-
-@keyframes targetSpin{
-  to{transform:rotate(360deg)}
-}
-
-@keyframes targetPulse{
-  50%{
-    transform:translate(-50%,-50%) scale(1.8);
-    opacity:.45;
-  }
-}
-
-.alfa-target-data{
-  font-size:9px;
-  line-height:1.8;
-  color:#72cfc0;
-}
-
-.alfa-target-data span{
-  color:#00ff9d;
-}
-
-@media(max-width:600px){
-  .alfa-target-hud{
-    right:10px;
-    bottom:10px;
-    width:165px;
-    transform:scale(.85);
-    transform-origin:bottom right;
-  }
-}
-</style>
-
-<div class="alfa-target-hud">
-
-  <div class="alfa-target-title">
-    ◉ DIGITAL TARGET HUD
-  </div>
-
-  <div class="alfa-target-ring">
-    <div class="alfa-target-dot"></div>
-  </div>
-
-  <div class="alfa-target-data">
-    X: <span id="hudX">074.21</span><br>
-    Y: <span id="hudY">391.08</span><br>
-    SIGNAL: <span id="hudSignal">87%</span><br>
-    STATUS: <span id="hudStatus">ONLINE</span>
-  </div>
-
-</div>
-
-<script>
-setInterval(() => {
-
-  const x =
-    (Math.random()*999).toFixed(2);
-
-  const y =
-    (Math.random()*999).toFixed(2);
-
-  const signal =
-    Math.floor(70 + Math.random()*30);
-
-  document.getElementById("hudX").textContent = x;
-  document.getElementById("hudY").textContent = y;
-  document.getElementById("hudSignal").textContent =
-    signal + "%";
-
-},1200);
-</script>
-<!-- ALFA OSINT V3.5 CYBER GLITCH + ALERT SYSTEM -->
-
-<style>
-.alfa-alert{
-  position:fixed;
-  top:82px;
-  right:22px;
-  width:220px;
-  padding:12px 14px;
-  background:rgba(2,8,12,.94);
-  border:1px solid #00ff9d;
-  border-radius:8px;
-  box-shadow:0 0 20px rgba(0,255,157,.18);
-  z-index:30;
-  font-size:10px;
-  transform:translateX(280px);
-  transition:transform .35s ease;
-  pointer-events:none;
-}
-
-.alfa-alert.show{
-  transform:translateX(0);
-}
-
-.alfa-alert-title{
-  color:#00ff9d;
-  font-weight:bold;
-  letter-spacing:1px;
-  margin-bottom:5px;
-}
-
-.alfa-alert-text{
-  color:#82aaa1;
-}
-
-.alfa-signal{
-  display:flex;
-  gap:3px;
-  align-items:flex-end;
-  height:15px;
-  margin-top:8px;
-}
-
-.alfa-signal i{
-  display:block;
-  width:4px;
-  background:#00ff9d;
-  box-shadow:0 0 5px rgba(0,255,157,.6);
-  animation:signalPulse .8s infinite alternate;
-}
-
-.alfa-signal i:nth-child(1){height:5px}
-.alfa-signal i:nth-child(2){height:8px;animation-delay:.1s}
-.alfa-signal i:nth-child(3){height:11px;animation-delay:.2s}
-.alfa-signal i:nth-child(4){height:14px;animation-delay:.3s}
-.alfa-signal i:nth-child(5){height:9px;animation-delay:.4s}
-
-@keyframes signalPulse{
-  from{opacity:.25}
-  to{opacity:1}
-}
-
-/* GLITCH EFFECT */
-.alfa-glitch{
-  animation:alfaGlitch .18s linear;
-}
-
-@keyframes alfaGlitch{
-  0%{transform:translate(0)}
-  25%{transform:translate(2px,-1px)}
-  50%{transform:translate(-2px,1px)}
-  75%{transform:translate(1px,1px)}
-  100%{transform:translate(0)}
-}
-
-@media(max-width:600px){
-  .alfa-alert{
-    top:70px;
-    right:10px;
-    width:190px;
-    transform:translateX(230px);
-  }
-}
-</style>
-
-<div class="alfa-alert" id="alfaAlert">
-
-  <div class="alfa-alert-title">
-    ◉ CYBER SYSTEM
-  </div>
-
-  <div class="alfa-alert-text" id="alfaAlertText">
-    SYSTEM INITIALIZED
-  </div>
-
-  <div class="alfa-signal">
-    <i></i>
-    <i></i>
-    <i></i>
-    <i></i>
-    <i></i>
-  </div>
-
-</div>
-
-<script>
-const alfaAlerts = [
-  "SIGNAL CHANNEL ACTIVE",
-  "RADAR SYNCHRONIZED",
-  "NETWORK PULSE DETECTED",
-  "MATRIX STREAM ACTIVE",
-  "PUBLIC SOURCE MODULE READY",
-  "HOLOGRAM SYSTEM ONLINE",
-  "DATA CHANNEL STABLE",
-  "OSINT INTERFACE READY"
-];
-
-function showAlfaAlert(){
-
-  const box =
-    document.getElementById("alfaAlert");
-
-  const text =
-    document.getElementById("alfaAlertText");
-
-  if(!box || !text) return;
-
-  text.textContent =
-    alfaAlerts[
-      Math.floor(Math.random()*alfaAlerts.length)
-    ];
-
-  box.classList.add("show");
-
-  setTimeout(()=>{
-    box.classList.remove("show");
-  },2200);
-
-}
-
-setInterval(showAlfaAlert,6500);
-
-
-/* RANDOM LIGHT GLITCH */
-setInterval(()=>{
-
-  const elements =
-    document.querySelectorAll(
-      ".panel-title,.alfa-target-hud,.logo"
-    );
-
-  if(!elements.length) return;
-
-  const element =
-    elements[
-      Math.floor(Math.random()*elements.length)
-    ];
-
-  element.classList.add("alfa-glitch");
-
-  setTimeout(()=>{
-    element.classList.remove("alfa-glitch");
-  },180);
-
-},5000);
-</script>
-<!-- =========================================
-     ALFA OSINT V3.6 CYBER MAP GRID
-     VISUAL EFFECT ONLY
-========================================= -->
-
-<style>
-.alfa-cyber-grid{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:-18vh;
-  height:48vh;
-  z-index:-2;
-  pointer-events:none;
-  overflow:hidden;
-  perspective:500px;
-  opacity:.38;
-  mask-image:linear-gradient(to top,black,transparent);
-  -webkit-mask-image:linear-gradient(to top,black,transparent);
-}
-
-.alfa-grid-floor{
-  position:absolute;
-  left:-50%;
-  width:200%;
-  height:100%;
-  transform:rotateX(62deg);
-  transform-origin:center bottom;
-
-  background-image:
-    linear-gradient(rgba(0,255,157,.28) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,255,157,.28) 1px,transparent 1px);
-
-  background-size:55px 55px;
-
-  animation:alfaGridMove 4s linear infinite;
-}
-
-.alfa-grid-glow{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
-  height:35%;
-  background:radial-gradient(
-    ellipse at center bottom,
-    rgba(0,255,157,.18),
-    transparent 70%
-  );
-}
-
-@keyframes alfaGridMove{
-  from{
-    background-position:0 0,0 0;
-  }
-  to{
-    background-position:0 55px,0 55px;
-  }
-}
-
-/* CYBER HORIZON */
-
-.alfa-horizon{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:28vh;
-  height:1px;
-  z-index:-1;
-  pointer-events:none;
-  background:linear-gradient(
-    90deg,
-    transparent,
-    rgba(0,255,157,.7),
-    rgba(0,220,255,.8),
-    rgba(0,255,157,.7),
-    transparent
-  );
-  box-shadow:
-    0 0 10px rgba(0,255,157,.6),
-    0 0 25px rgba(0,255,157,.35);
-  animation:alfaHorizonPulse 2.8s ease-in-out infinite;
-}
-
-@keyframes alfaHorizonPulse{
-  0%,100%{
-    opacity:.35;
-    transform:scaleX(.8);
-  }
-  50%{
-    opacity:1;
-    transform:scaleX(1);
-  }
-}
-
-/* MOVING SCAN BEAM */
-
-.alfa-grid-scan{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  height:3px;
-  z-index:-1;
-  pointer-events:none;
-  background:linear-gradient(
-    90deg,
-    transparent,
-    rgba(0,255,157,.7),
-    transparent
-  );
-  box-shadow:0 0 15px rgba(0,255,157,.8);
-  animation:alfaScanBeam 5s ease-in-out infinite;
-  opacity:.45;
-}
-
-@keyframes alfaScanBeam{
-  0%{
-    transform:translateY(0);
-  }
-  50%{
-    transform:translateY(-45vh);
-  }
-  100%{
-    transform:translateY(0);
-  }
-}
-
-@media(max-width:700px){
-  .alfa-cyber-grid{
-    height:38vh;
-    bottom:-12vh;
-    opacity:.25;
-  }
-
-  .alfa-grid-floor{
-    background-size:38px 38px;
-  }
-
-  .alfa-horizon{
-    bottom:24vh;
-  }
-}
-</style>
-
-<div class="alfa-cyber-grid">
-  <div class="alfa-grid-floor"></div>
-  <div class="alfa-grid-glow"></div>
-</div>
-
-<div class="alfa-horizon"></div>
-<div class="alfa-grid-scan"></div>
-
-<script>
-/* ALFA OSINT V3.6 GRID STATUS */
-
-setInterval(() => {
-
-  const status = document.getElementById("signalStatus");
-
-  if(status){
-
-    const states = [
-      "GRID",
-      "SYNC",
-      "OK",
-      "SCAN"
-    ];
-
-    status.textContent =
-      states[Math.floor(Math.random() * states.length)];
-  }
-
-}, 2200);
-
-console.log(
-  "%c ALFA OSINT V3.6 CYBER MAP GRID ONLINE ",
-  "color:#00ff9d;background:#020b08;font-weight:bold;padding:6px;"
-);
-</script>
-
-<!-- END ALFA OSINT V3.6 -->
-<!-- =========================================
-     ALFA OSINT V3.7 CYBER NETWORK NODES
-     VISUAL SIMULATION ONLY
-========================================= -->
-
-<style>
-.alfa-network-canvas{
-  position:fixed;
-  inset:0;
-  width:100%;
-  height:100%;
-  z-index:-1;
-  pointer-events:none;
-  opacity:.55;
-}
-
-.alfa-network-label{
-  position:fixed;
-  right:20px;
-  bottom:20px;
-  z-index:5;
-  padding:8px 12px;
-  border:1px solid rgba(0,255,157,.35);
-  background:rgba(0,8,7,.72);
-  color:#00ff9d;
-  font:11px monospace;
-  letter-spacing:2px;
-  box-shadow:0 0 15px rgba(0,255,157,.12);
-  pointer-events:none;
-  backdrop-filter:blur(5px);
-}
-
-@media(max-width:700px){
-  .alfa-network-label{
-    right:10px;
-    bottom:10px;
-    font-size:9px;
-  }
-}
-</style>
-
-<canvas id="alfaNetworkCanvas"
-        class="alfa-network-canvas"></canvas>
-
-<div class="alfa-network-label">
-  NETWORK GRID // SIMULATION
-</div>
-
-<script>
-/* ALFA OSINT V3.7 NETWORK NODES */
-
-(function(){
-
-  const canvas = document.getElementById("alfaNetworkCanvas");
-  if(!canvas) return;
-
-  const ctx = canvas.getContext("2d");
-
-  let nodes = [];
-  let width = 0;
-  let height = 0;
-
-  function resizeNetwork(){
-
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-
-    nodes = [];
-
-    const amount = Math.min(
-      55,
-      Math.max(25, Math.floor(width / 25))
-    );
-
-    for(let i = 0; i < amount; i++){
-
-      nodes.push({
-
-        x: Math.random() * width,
-        y: Math.random() * height,
-
-        vx: (Math.random() - .5) * .35,
-        vy: (Math.random() - .5) * .35,
-
-        r: Math.random() * 2 + 1,
-
-        pulse: Math.random() * Math.PI * 2
-
-      });
-
-    }
-  }
-
-  function drawNetwork(){
-
-    ctx.clearRect(0,0,width,height);
-
-    /* CONNECTION LINES */
-
-    for(let i = 0; i < nodes.length; i++){
-
-      const a = nodes[i];
-
-      for(let j = i + 1; j < nodes.length; j++){
-
-        const b = nodes[j];
-
-        const dx = a.x - b.x;
-        const dy = a.y - b.y;
-
-        const distance =
-          Math.sqrt(dx * dx + dy * dy);
-
-        if(distance < 145){
-
-          const alpha =
-            (1 - distance / 145) * .22;
-
-          ctx.beginPath();
-
-          ctx.moveTo(a.x,a.y);
-          ctx.lineTo(b.x,b.y);
-
-          ctx.strokeStyle =
-            "rgba(0,255,157," + alpha + ")";
-
-          ctx.lineWidth = 1;
-
-          ctx.stroke();
-        }
-      }
-    }
-
-    /* NODES */
-
-    for(const node of nodes){
-
-      node.x += node.vx;
-      node.y += node.vy;
-
-      node.pulse += .035;
-
-      if(node.x < 0 || node.x > width){
-        node.vx *= -1;
-      }
-
-      if(node.y < 0 || node.y > height){
-        node.vy *= -1;
-      }
-
-      const glow =
-        Math.sin(node.pulse) * .5 + .5;
-
-      ctx.beginPath();
-
-      ctx.arc(
-        node.x,
-        node.y,
-        node.r + glow,
-        0,
-        Math.PI * 2
-      );
-
-      ctx.fillStyle = "#00ff9d";
-
-      ctx.shadowBlur = 12;
-
-      ctx.shadowColor = "#00ff9d";
-
-      ctx.fill();
-
-      ctx.shadowBlur = 0;
-    }
-
-    requestAnimationFrame(drawNetwork);
-  }
-
-  window.addEventListener(
-    "resize",
-    resizeNetwork
-  );
-
-  resizeNetwork();
-  drawNetwork();
-
-})();
-
-/* NETWORK EVENT */
-
-setInterval(() => {
-
-  const terminal =
-    document.getElementById("terminal");
-
-  if(!terminal) return;
-
-  const events = [
-
-    "[NET] NODE LINK ESTABLISHED",
-    "[NET] ROUTE VISUALIZED",
-    "[NET] SIGNAL PATH UPDATED",
-    "[NET] NODE PULSE DETECTED",
-    "[NET] NETWORK GRID SYNCHRONIZED"
-
-  ];
-
-  const line =
-    document.createElement("div");
-
-  line.textContent =
-    "[" +
-    new Date().toLocaleTimeString("id-ID") +
-    "] " +
-    events[
-      Math.floor(Math.random() * events.length)
-    ];
-
-  line.style.color = "#00ff9d";
-
-  terminal.appendChild(line);
-
-  while(terminal.children.length > 24){
-
-    terminal.removeChild(
-      terminal.firstChild
-    );
-
-  }
-
-  terminal.scrollTop =
-    terminal.scrollHeight;
-
-}, 3000);
-
-console.log(
-  "%c ALFA OSINT V3.7 NETWORK NODES ONLINE ",
-  "color:#00ff9d;background:#020b08;font-weight:bold;padding:6px;"
-);
-
-</script>
-
-<!-- END ALFA OSINT V3.7 -->
-<!-- =========================================
-     ALFA OSINT V3.8 COMMAND CONSOLE
-     LOCAL VISUAL SIMULATION
-========================================= -->
-
-<style>
-.alfa-command-console{
-  margin:24px auto;
-  max-width:1100px;
-  padding:20px;
-  border:1px solid rgba(0,255,157,.35);
-  background:rgba(2,10,9,.82);
-  box-shadow:
-    0 0 25px rgba(0,255,157,.08),
-    inset 0 0 25px rgba(0,255,157,.025);
-  backdrop-filter:blur(8px);
-}
-
-.alfa-console-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  margin-bottom:15px;
-  color:#00ff9d;
-  font-family:monospace;
-  letter-spacing:2px;
-}
-
-.alfa-console-status{
-  font-size:11px;
-  padding:5px 9px;
-  border:1px solid rgba(0,255,157,.35);
-}
-
-.alfa-console-box{
-  min-height:180px;
-  max-height:260px;
-  overflow:auto;
-  padding:15px;
-  background:#010605;
-  border:1px solid rgba(0,255,157,.18);
-  color:#8fffd0;
-  font:13px/1.7 monospace;
-}
-
-.alfa-console-line{
-  margin-bottom:3px;
-}
-
-.alfa-console-input{
-  display:flex;
-  gap:8px;
-  margin-top:12px;
-}
-
-.alfa-console-input span{
-  color:#00ff9d;
-  font:bold 15px monospace;
-  padding-top:10px;
-}
-
-.alfa-console-input input{
-  flex:1;
-  min-width:0;
-  padding:11px 12px;
-  border:1px solid rgba(0,255,157,.35);
-  outline:none;
-  background:#020b08;
-  color:#00ff9d;
-  font:14px monospace;
-}
-
-.alfa-console-input button{
-  padding:10px 18px;
-  border:1px solid #00ff9d;
-  background:#00ff9d;
-  color:#00130b;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.alfa-console-input button:hover{
-  box-shadow:0 0 18px rgba(0,255,157,.45);
-}
-
-.alfa-console-help{
-  margin-top:10px;
-  color:#668f82;
-  font:11px monospace;
-}
-
-@media(max-width:700px){
-  .alfa-command-console{
-    margin:16px 10px;
-    padding:14px;
-  }
-
-  .alfa-console-input{
-    flex-wrap:wrap;
-  }
-
-  .alfa-console-input input{
-    width:100%;
-    flex-basis:100%;
-  }
-
-  .alfa-console-input span{
-    display:none;
-  }
-
-  .alfa-console-input button{
-    width:100%;
-  }
-}
-</style>
-
-<div class="alfa-command-console">
-
-  <div class="alfa-console-head">
-    <div>◉ COMMAND CONSOLE</div>
-    <div class="alfa-console-status">
-      LOCAL MODE
-    </div>
-  </div>
-
-  <div class="alfa-console-box" id="alfaCommandOutput">
-
-    <div class="alfa-console-line">
-      [SYSTEM] ALFA COMMAND CONSOLE ONLINE
-    </div>
-
-    <div class="alfa-console-line">
-      [SYSTEM] Local visual simulation active
-    </div>
-
-    <div class="alfa-console-line">
-      [SYSTEM] Public-source tools only
-    </div>
-
-    <div class="alfa-console-line">
-      [HELP] Type "help" for commands
-    </div>
-
-  </div>
-
-  <div class="alfa-console-input">
-
-    <span>ALFA&gt;</span>
-
-    <input
-      id="alfaCommandInput"
-      type="text"
-      autocomplete="off"
-      placeholder="type command..."
-    >
-
-    <button id="alfaCommandBtn">
-      EXECUTE
-    </button>
-
-  </div>
-
-  <div class="alfa-console-help">
-    Commands: help • status • radar • matrix • network • clear
-  </div>
-
-</div>
-
-<script>
-/* ALFA OSINT V3.8 COMMAND ENGINE */
-
-(function(){
-
-  const input =
-    document.getElementById("alfaCommandInput");
-
-  const button =
-    document.getElementById("alfaCommandBtn");
-
-  const output =
-    document.getElementById("alfaCommandOutput");
-
-  if(!input || !button || !output) return;
-
-  function addLine(text){
-
-    const line =
-      document.createElement("div");
-
-    line.className =
-      "alfa-console-line";
-
-    line.textContent =
-      text;
-
-    output.appendChild(line);
-
-    output.scrollTop =
-      output.scrollHeight;
-  }
-
-  function executeCommand(){
-
-    const command =
-      input.value.trim().toLowerCase();
-
-    if(!command) return;
-
-    addLine("ALFA> " + command);
-
-    if(command === "help"){
-
-      addLine("[HELP] Available commands:");
-      addLine("[HELP] status  - system status");
-      addLine("[HELP] radar   - radar simulation");
-      addLine("[HELP] matrix  - matrix stream");
-      addLine("[HELP] network - network simulation");
-      addLine("[HELP] clear   - clear console");
-
-    }
-
-    else if(command === "status"){
-
-      addLine("[STATUS] CORE ........ ONLINE");
-      addLine("[STATUS] MATRIX ...... ACTIVE");
-      addLine("[STATUS] RADAR ....... ACTIVE");
-      addLine("[STATUS] NETWORK ..... SYNC");
-      addLine("[STATUS] OSINT ....... READY");
-
-    }
-
-    else if(command === "radar"){
-
-      addLine("[RADAR] Initializing visual sweep...");
-
-      setTimeout(() => {
-        addLine("[RADAR] Sweep complete");
-        addLine("[RADAR] Visual signal detected");
-      },600);
-
-    }
-
-    else if(command === "matrix"){
-
-      addLine("[MATRIX] Stream status: ACTIVE");
-      addLine("[MATRIX] Visual data rain synchronized");
-
-    }
-
-    else if(command === "network"){
-
-      addLine("[NET] Network visualization initialized");
-      addLine("[NET] Nodes synchronized");
-      addLine("[NET] Visual routes active");
-
-    }
-
-    else if(command === "clear"){
-
-      output.innerHTML = "";
-
-      addLine(
-        "[SYSTEM] Console cleared"
-      );
-
-    }
-
-    else{
-
-      addLine(
-        "[ERROR] Unknown command: " +
-        command
-      );
-
-      addLine(
-        '[HELP] Type "help" for commands'
-      );
-
-    }
-
-    input.value = "";
-
-  }
-
-  button.addEventListener(
-    "click",
-    executeCommand
-  );
-
-  input.addEventListener(
-    "keydown",
-    function(event){
-
-      if(event.key === "Enter"){
-        executeCommand();
-      }
-
-    }
-  );
-
-})();
-</script>
-
-<!-- END ALFA OSINT V3.8 -->
-<!-- =========================================
-     ALFA OSINT V3.9 HOLOGRAPHIC DATA CORE
-     VISUAL SIMULATION ONLY
-========================================= -->
-
-<style>
-.alfa-data-core{
-  position:relative;
-  width:180px;
-  height:180px;
-  margin:28px auto;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  pointer-events:none;
-}
-
-.alfa-core-center{
-  width:58px;
-  height:58px;
-  border-radius:50%;
-  border:2px solid #00ff9d;
-  background:radial-gradient(
-    circle,
-    rgba(0,255,157,.35),
-    rgba(0,255,157,.05) 55%,
-    transparent 72%
-  );
-  box-shadow:
-    0 0 15px rgba(0,255,157,.8),
-    0 0 45px rgba(0,255,157,.35),
-    inset 0 0 18px rgba(0,255,157,.5);
-  animation:alfaCorePulse 1.8s ease-in-out infinite;
-  z-index:4;
-}
-
-.alfa-core-ring{
-  position:absolute;
-  border-radius:50%;
-  border:1px solid rgba(0,255,157,.7);
-  box-shadow:0 0 15px rgba(0,255,157,.18);
-}
-
-.alfa-core-ring.r1{
-  width:100px;
-  height:100px;
-  animation:alfaCoreSpin 5s linear infinite;
-  border-top-color:#00ff9d;
-  border-bottom-color:transparent;
-}
-
-.alfa-core-ring.r2{
-  width:135px;
-  height:135px;
-  animation:alfaCoreSpinReverse 8s linear infinite;
-  border-left-color:#00eaff;
-  border-right-color:transparent;
-}
-
-.alfa-core-ring.r3{
-  width:170px;
-  height:170px;
-  animation:alfaCoreSpin 12s linear infinite;
-  border-top-color:rgba(0,255,157,.4);
-  border-bottom-color:rgba(0,234,255,.25);
-}
-
-.alfa-core-ring::before,
-.alfa-core-ring::after{
-  content:"";
-  position:absolute;
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  background:#00ff9d;
-  box-shadow:0 0 12px #00ff9d;
-}
-
-.alfa-core-ring::before{
-  top:-3px;
-  left:50%;
-}
-
-.alfa-core-ring::after{
-  bottom:-3px;
-  right:50%;
-}
-
-.alfa-core-label{
-  position:absolute;
-  top:calc(100% + 12px);
-  left:50%;
-  transform:translateX(-50%);
-  white-space:nowrap;
-  color:#00ff9d;
-  font:11px monospace;
-  letter-spacing:3px;
-  text-shadow:0 0 8px rgba(0,255,157,.8);
-}
-
-@keyframes alfaCoreSpin{
-  from{
-    transform:rotate(0deg);
-  }
-  to{
-    transform:rotate(360deg);
-  }
-}
-
-@keyframes alfaCoreSpinReverse{
-  from{
-    transform:rotate(360deg);
-  }
-  to{
-    transform:rotate(0deg);
-  }
-}
-
-@keyframes alfaCorePulse{
-  0%,100%{
-    transform:scale(.9);
-    opacity:.65;
-  }
-  50%{
-    transform:scale(1.08);
-    opacity:1;
-  }
-}
-
-@media(max-width:700px){
-  .alfa-data-core{
-    width:145px;
-    height:145px;
-    transform:scale(.82);
-    margin:18px auto;
-  }
-}
-</style>
-
-<div class="alfa-data-core">
-
-  <div class="alfa-core-ring r3"></div>
-  <div class="alfa-core-ring r2"></div>
-  <div class="alfa-core-ring r1"></div>
-
-  <div class="alfa-core-center"></div>
-
-  <div class="alfa-core-label">
-    DATA CORE // ONLINE
-  </div>
-
-</div>
-
-<script>
-/* ALFA OSINT V3.9 CORE ACTIVITY */
-
-(function(){
-
-  const core =
-    document.querySelector(".alfa-core-center");
-
-  if(!core) return;
-
-  setInterval(() => {
-
-    const intensity =
-      Math.floor(65 + Math.random() * 35);
-
-    core.style.boxShadow =
-      "0 0 15px rgba(0,255,157,.9)," +
-      "0 0 " + intensity +
-      "px rgba(0,255,157,.35)," +
-      "inset 0 0 18px rgba(0,255,157,.6)";
-
-  },1200);
-
-})();
-
-/* CORE TERMINAL EVENT */
-
-setInterval(() => {
-
-  const terminal =
-    document.getElementById("terminal");
-
-  if(!terminal) return;
-
-  const events = [
-
-    "[CORE] HOLOGRAPHIC CORE ONLINE",
-    "[CORE] ENERGY RING SYNCHRONIZED",
-    "[CORE] DATA CORE PULSE",
-    "[CORE] VISUAL CORE STABLE",
-    "[CORE] HOLOGRAM SIGNAL READY"
-
-  ];
-
-  const line =
-    document.createElement("div");
-
-  line.textContent =
-    "[" +
-    new Date().toLocaleTimeString("id-ID") +
-    "] " +
-    events[
-      Math.floor(Math.random() * events.length)
-    ];
-
-  line.style.color="#00eaff";
-
-  terminal.appendChild(line);
-
-  while(terminal.children.length > 26){
-
-    terminal.removeChild(
-      terminal.firstChild
-    );
-
-  }
-
-  terminal.scrollTop =
-    terminal.scrollHeight;
-
-},4200);
-
-console.log(
-  "%c ALFA OSINT V3.9 HOLOGRAPHIC DATA CORE ONLINE ",
-  "color:#00ff9d;background:#020b08;font-weight:bold;padding:6px;"
-);
-
-</script>
-
-<!-- END ALFA OSINT V3.9 -->
-<!-- =========================================
-     ALFA OSINT V4.0 CYBER COMMAND CENTER
-     VISUAL / LOCAL SIMULATION ONLY
-========================================= -->
-
-<style>
 .alfa-v40{
   max-width:1150px;
   margin:30px auto;
@@ -2835,8 +690,6 @@ console.log(
   }
 }
 
-/* SYSTEM BARS */
-
 .alfa-v40-stat{
   margin:14px 0;
 }
@@ -2863,8 +716,6 @@ console.log(
   transition:width .8s ease;
 }
 
-/* CORE STATUS */
-
 .alfa-v40-status{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -2886,8 +737,6 @@ console.log(
   font-size:14px;
 }
 
-/* SCAN LINE */
-
 .alfa-v40-panel::after{
   content:"";
   position:absolute;
@@ -2906,7 +755,705 @@ console.log(
   100%{transform:translateY(500px)}
 }
 
-@media(max-width:800px){
+/* =====================================================
+   DIGITAL TARGET HUD
+===================================================== */
+
+.alfa-target-hud{
+  position:fixed;
+  right:25px;
+  bottom:25px;
+  width:190px;
+  padding:14px;
+  background:rgba(1,8,12,.88);
+  border:1px solid rgba(0,255,157,.35);
+  border-radius:10px;
+  box-shadow:0 0 25px rgba(0,255,157,.12);
+  z-index:20;
+  pointer-events:none;
+  backdrop-filter:blur(8px);
+}
+
+.alfa-target-title{
+  color:#00eaff;
+  font-size:10px;
+  letter-spacing:2px;
+  margin-bottom:10px;
+}
+
+.alfa-target-ring{
+  width:75px;
+  height:75px;
+  margin:0 auto 10px;
+  border:1px solid #00ff9d;
+  border-radius:50%;
+  position:relative;
+  animation:targetSpin 4s linear infinite;
+  box-shadow:0 0 15px rgba(0,255,157,.2);
+}
+
+.alfa-target-ring::before,
+.alfa-target-ring::after{
+  content:"";
+  position:absolute;
+  background:#00ff9d;
+}
+
+.alfa-target-ring::before{
+  width:100%;
+  height:1px;
+  top:50%;
+  left:0;
+}
+
+.alfa-target-ring::after{
+  width:1px;
+  height:100%;
+  left:50%;
+  top:0;
+}
+
+.alfa-target-dot{
+  position:absolute;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#00eaff;
+  box-shadow:0 0 12px #00eaff;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  animation:targetPulse 1s infinite;
+}
+
+@keyframes targetSpin{
+  to{transform:rotate(360deg)}
+}
+
+@keyframes targetPulse{
+  50%{
+    transform:translate(-50%,-50%) scale(1.8);
+    opacity:.45;
+  }
+}
+
+.alfa-target-data{
+  font-size:9px;
+  line-height:1.8;
+  color:#72cfc0;
+}
+
+.alfa-target-data span{
+  color:#00ff9d;
+}
+
+/* =====================================================
+   ALERT
+===================================================== */
+
+.alfa-alert{
+  position:fixed;
+  top:82px;
+  right:22px;
+  width:220px;
+  padding:12px 14px;
+  background:rgba(2,8,12,.94);
+  border:1px solid #00ff9d;
+  border-radius:8px;
+  box-shadow:0 0 20px rgba(0,255,157,.18);
+  z-index:30;
+  font-size:10px;
+  transform:translateX(280px);
+  transition:transform .35s ease;
+  pointer-events:none;
+}
+
+.alfa-alert.show{
+  transform:translateX(0);
+}
+
+.alfa-alert-title{
+  color:#00ff9d;
+  font-weight:bold;
+  letter-spacing:1px;
+  margin-bottom:5px;
+}
+
+.alfa-alert-text{
+  color:#82aaa1;
+}
+
+.alfa-signal{
+  display:flex;
+  gap:3px;
+  align-items:flex-end;
+  height:15px;
+  margin-top:8px;
+}
+
+.alfa-signal i{
+  display:block;
+  width:4px;
+  background:#00ff9d;
+  box-shadow:0 0 5px rgba(0,255,157,.6);
+  animation:signalPulse .8s infinite alternate;
+}
+
+.alfa-signal i:nth-child(1){height:5px}
+.alfa-signal i:nth-child(2){height:8px;animation-delay:.1s}
+.alfa-signal i:nth-child(3){height:11px;animation-delay:.2s}
+.alfa-signal i:nth-child(4){height:14px;animation-delay:.3s}
+.alfa-signal i:nth-child(5){height:9px;animation-delay:.4s}
+
+@keyframes signalPulse{
+  from{opacity:.25}
+  to{opacity:1}
+}
+
+.alfa-glitch{
+  animation:alfaGlitch .18s linear;
+}
+
+@keyframes alfaGlitch{
+  0%{transform:translate(0)}
+  25%{transform:translate(2px,-1px)}
+  50%{transform:translate(-2px,1px)}
+  75%{transform:translate(1px,1px)}
+  100%{transform:translate(0)}
+}
+
+/* =====================================================
+   CYBER GRID
+===================================================== */
+
+.alfa-cyber-grid{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:-18vh;
+  height:48vh;
+  z-index:-2;
+  pointer-events:none;
+  overflow:hidden;
+  perspective:500px;
+  opacity:.38;
+  mask-image:linear-gradient(to top,black,transparent);
+  -webkit-mask-image:linear-gradient(to top,black,transparent);
+}
+
+.alfa-grid-floor{
+  position:absolute;
+  left:-50%;
+  width:200%;
+  height:100%;
+  transform:rotateX(62deg);
+  transform-origin:center bottom;
+  background-image:
+    linear-gradient(rgba(0,255,157,.28) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,255,157,.28) 1px,transparent 1px);
+  background-size:55px 55px;
+  animation:alfaGridMove 4s linear infinite;
+}
+
+.alfa-grid-glow{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:35%;
+  background:radial-gradient(
+    ellipse at center bottom,
+    rgba(0,255,157,.18),
+    transparent 70%
+  );
+}
+
+@keyframes alfaGridMove{
+  from{
+    background-position:0 0,0 0;
+  }
+  to{
+    background-position:0 55px,0 55px;
+  }
+}
+
+.alfa-horizon{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:28vh;
+  height:1px;
+  z-index:-1;
+  pointer-events:none;
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(0,255,157,.7),
+    rgba(0,220,255,.8),
+    rgba(0,255,157,.7),
+    transparent
+  );
+  box-shadow:
+    0 0 10px rgba(0,255,157,.6),
+    0 0 25px rgba(0,255,157,.35);
+  animation:alfaHorizonPulse 2.8s ease-in-out infinite;
+}
+
+@keyframes alfaHorizonPulse{
+  0%,100%{
+    opacity:.35;
+    transform:scaleX(.8);
+  }
+  50%{
+    opacity:1;
+    transform:scaleX(1);
+  }
+}
+
+.alfa-grid-scan{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  height:3px;
+  z-index:-1;
+  pointer-events:none;
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(0,255,157,.7),
+    transparent
+  );
+  box-shadow:0 0 15px rgba(0,255,157,.8);
+  animation:alfaScanBeam 5s ease-in-out infinite;
+  opacity:.45;
+}
+
+@keyframes alfaScanBeam{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-45vh)}
+  100%{transform:translateY(0)}
+}
+
+/* =====================================================
+   NETWORK CANVAS
+===================================================== */
+
+.alfa-network-canvas{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:-1;
+  pointer-events:none;
+  opacity:.55;
+}
+
+.alfa-network-label{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:5;
+  padding:8px 12px;
+  border:1px solid rgba(0,255,157,.35);
+  background:rgba(0,8,7,.72);
+  color:#00ff9d;
+  font:11px monospace;
+  letter-spacing:2px;
+  box-shadow:0 0 15px rgba(0,255,157,.12);
+  pointer-events:none;
+  backdrop-filter:blur(5px);
+}
+
+/* =====================================================
+   COMMAND CONSOLE
+===================================================== */
+
+.alfa-command-console{
+  margin:24px auto;
+  max-width:1100px;
+  padding:20px;
+  border:1px solid rgba(0,255,157,.35);
+  background:rgba(2,10,9,.82);
+  box-shadow:
+    0 0 25px rgba(0,255,157,.08),
+    inset 0 0 25px rgba(0,255,157,.025);
+  backdrop-filter:blur(8px);
+}
+
+.alfa-console-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:15px;
+  color:#00ff9d;
+  letter-spacing:2px;
+}
+
+.alfa-console-status{
+  font-size:11px;
+  padding:5px 9px;
+  border:1px solid rgba(0,255,157,.35);
+}
+
+.alfa-console-box{
+  min-height:180px;
+  max-height:260px;
+  overflow:auto;
+  padding:15px;
+  background:#010605;
+  border:1px solid rgba(0,255,157,.18);
+  color:#8fffd0;
+  font:13px/1.7 monospace;
+}
+
+.alfa-console-line{
+  margin-bottom:3px;
+}
+
+.alfa-console-input{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+
+.alfa-console-input span{
+  color:#00ff9d;
+  font:bold 15px monospace;
+  padding-top:10px;
+}
+
+.alfa-console-input input{
+  flex:1;
+  min-width:0;
+  padding:11px 12px;
+  border:1px solid rgba(0,255,157,.35);
+  outline:none;
+  background:#020b08;
+  color:#00ff9d;
+  font:14px monospace;
+}
+
+.alfa-console-input button{
+  padding:10px 18px;
+}
+
+/* =====================================================
+   DATA CORE
+===================================================== */
+
+.alfa-data-core{
+  position:relative;
+  width:180px;
+  height:180px;
+  margin:28px auto 45px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+}
+
+.alfa-core-center{
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  border:2px solid #00ff9d;
+  background:radial-gradient(
+    circle,
+    rgba(0,255,157,.35),
+    rgba(0,255,157,.05) 55%,
+    transparent 72%
+  );
+  box-shadow:
+    0 0 15px rgba(0,255,157,.8),
+    0 0 45px rgba(0,255,157,.35),
+    inset 0 0 18px rgba(0,255,157,.5);
+  animation:alfaCorePulse 1.8s ease-in-out infinite;
+  z-index:4;
+}
+
+.alfa-core-ring{
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(0,255,157,.7);
+  box-shadow:0 0 15px rgba(0,255,157,.18);
+}
+
+.alfa-core-ring.r1{
+  width:100px;
+  height:100px;
+  animation:alfaCoreSpin 5s linear infinite;
+  border-top-color:#00ff9d;
+  border-bottom-color:transparent;
+}
+
+.alfa-core-ring.r2{
+  width:135px;
+  height:135px;
+  animation:alfaCoreSpinReverse 8s linear infinite;
+  border-left-color:#00eaff;
+  border-right-color:transparent;
+}
+
+.alfa-core-ring.r3{
+  width:170px;
+  height:170px;
+  animation:alfaCoreSpin 12s linear infinite;
+  border-top-color:rgba(0,255,157,.4);
+  border-bottom-color:rgba(0,234,255,.25);
+}
+
+.alfa-core-ring::before,
+.alfa-core-ring::after{
+  content:"";
+  position:absolute;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#00ff9d;
+  box-shadow:0 0 12px #00ff9d;
+}
+
+.alfa-core-ring::before{
+  top:-3px;
+  left:50%;
+}
+
+.alfa-core-ring::after{
+  bottom:-3px;
+  right:50%;
+}
+
+.alfa-core-label{
+  position:absolute;
+  top:calc(100% + 12px);
+  left:50%;
+  transform:translateX(-50%);
+  white-space:nowrap;
+  color:#00ff9d;
+  font:11px monospace;
+  letter-spacing:3px;
+  text-shadow:0 0 8px rgba(0,255,157,.8);
+}
+
+@keyframes alfaCoreSpin{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+
+@keyframes alfaCoreSpinReverse{
+  from{transform:rotate(360deg)}
+  to{transform:rotate(0deg)}
+}
+
+@keyframes alfaCorePulse{
+  0%,100%{
+    transform:scale(.9);
+    opacity:.65;
+  }
+  50%{
+    transform:scale(1.08);
+    opacity:1;
+  }
+}
+
+/* =====================================================
+   V5.0 INTELLIGENCE ANALYTICS
+===================================================== */
+
+.v5-section{
+  max-width:1400px;
+  margin:25px auto;
+}
+
+.v5-grid{
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:16px;
+}
+
+.v5-analytics{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.v5-metric{
+  padding:14px;
+  border:1px solid rgba(0,234,255,.18);
+  background:rgba(0,234,255,.025);
+  border-radius:9px;
+}
+
+.v5-metric-top{
+  display:flex;
+  justify-content:space-between;
+  color:#79e9df;
+  font-size:10px;
+  margin-bottom:8px;
+}
+
+.v5-meter{
+  height:7px;
+  background:rgba(0,255,157,.07);
+  overflow:hidden;
+  border-radius:4px;
+}
+
+.v5-meter-fill{
+  height:100%;
+  width:0;
+  background:linear-gradient(
+    90deg,
+    #00ff9d,
+    #00eaff,
+    #9d4edd
+  );
+  box-shadow:0 0 10px rgba(0,255,157,.5);
+  transition:width .7s ease;
+}
+
+.v5-live-number{
+  font-size:25px;
+  color:#fff;
+  text-shadow:0 0 10px rgba(0,234,255,.4);
+}
+
+/* ================= ACTIVITY FEED ================= */
+
+.activity-feed{
+  height:235px;
+  overflow:auto;
+  padding:10px;
+  background:#010506;
+  border:1px solid rgba(0,255,157,.14);
+  border-radius:8px;
+}
+
+.activity-item{
+  display:flex;
+  gap:9px;
+  padding:8px 4px;
+  border-bottom:1px solid rgba(0,255,157,.07);
+  font-size:10px;
+}
+
+.activity-time{
+  color:#51766e;
+  min-width:65px;
+}
+
+.activity-text{
+  color:#8fffd0;
+}
+
+.activity-tag{
+  color:#00eaff;
+}
+
+/* ================= SEARCH HUB ================= */
+
+.search-hub{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.search-card{
+  padding:14px;
+  border:1px solid rgba(0,255,157,.17);
+  background:rgba(0,255,157,.025);
+  border-radius:9px;
+}
+
+.search-card h3{
+  color:#00eaff;
+  font-size:12px;
+  margin-bottom:7px;
+}
+
+.search-card p{
+  color:#648b82;
+  font-size:9px;
+  line-height:1.5;
+  margin-bottom:10px;
+}
+
+.search-card button{
+  width:100%;
+  padding:8px;
+  font-size:10px;
+}
+
+/* ================= CASE WORKSPACE ================= */
+
+.case-box{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.case-field{
+  padding:11px;
+  background:#010605;
+  border:1px solid rgba(0,255,157,.15);
+  color:#00ff9d;
+  font-size:10px;
+}
+
+.case-field.full{
+  grid-column:1/-1;
+}
+
+.case-field span{
+  display:block;
+  color:#55776f;
+  margin-bottom:5px;
+}
+
+.case-field strong{
+  color:#d9fff2;
+  font-size:12px;
+  word-break:break-word;
+}
+
+/* ================= FULLSCREEN ================= */
+
+.v5-fullscreen{
+  position:fixed;
+  top:80px;
+  right:20px;
+  z-index:25;
+  padding:8px 12px;
+  font-size:10px;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+  width:min(1400px,92%);
+  margin:30px auto;
+  padding:20px;
+  text-align:center;
+  border-top:1px solid rgba(0,255,157,.12);
+  color:#48635d;
+  font-size:10px;
+  line-height:1.7;
+}
+
+.warning{
+  color:#ffbd59;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:900px){
+
+  .v5-grid{
+    grid-template-columns:1fr;
+  }
+
   .alfa-v40{
     grid-template-columns:1fr;
     margin:18px 10px;
@@ -2917,229 +1464,1102 @@ console.log(
     grid-row:auto;
     min-height:390px;
   }
+}
+
+@media(max-width:800px){
+
+  .modules{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .search-hub{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:700px){
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
 
   .alfa-v40-radar{
     width:230px;
     height:230px;
   }
+
+  .alfa-target-hud{
+    right:10px;
+    bottom:10px;
+    width:165px;
+    transform:scale(.85);
+    transform-origin:bottom right;
+  }
+
+  .alfa-alert{
+    top:70px;
+    right:10px;
+    width:190px;
+    transform:translateX(230px);
+  }
+
+  .alfa-network-label{
+    right:10px;
+    bottom:10px;
+    font-size:9px;
+  }
+
+  .search-hub{
+    grid-template-columns:1fr;
+  }
+
+  .case-box{
+    grid-template-columns:1fr;
+  }
+
+  .case-field.full{
+    grid-column:auto;
+  }
+}
+
+@media(max-width:500px){
+
+  .modules{
+    grid-template-columns:1fr;
+  }
+
+  .command-box{
+    flex-direction:column;
+  }
+
+  .command-box button{
+    width:100%;
+  }
+
+  .alfa-console-input{
+    flex-wrap:wrap;
+  }
+
+  .alfa-console-input input{
+    width:100%;
+    flex-basis:100%;
+  }
+
+  .alfa-console-input span{
+    display:none;
+  }
+
+  .alfa-console-input button{
+    width:100%;
+  }
+
+  .v5-analytics{
+    grid-template-columns:1fr;
+  }
 }
 </style>
+</head>
 
-<section class="alfa-v40">
+<body>
 
-  <!-- RADAR COMMAND PANEL -->
+<canvas id="matrix"></canvas>
 
-  <div class="alfa-v40-panel alfa-v40-main">
+<!-- NETWORK -->
+<canvas id="alfaNetworkCanvas" class="alfa-network-canvas"></canvas>
 
-    <div class="alfa-v40-title">
-      ◉ CYBER COMMAND RADAR
-    </div>
+<div class="alfa-cyber-grid">
+  <div class="alfa-grid-floor"></div>
+  <div class="alfa-grid-glow"></div>
+</div>
 
-    <div class="alfa-v40-radar">
+<div class="alfa-horizon"></div>
+<div class="alfa-grid-scan"></div>
 
-      <div class="alfa-v40-sweep"></div>
+<button class="v5-fullscreen" onclick="toggleFullscreen()">
+  ⛶ FULLSCREEN
+</button>
 
-      <div class="alfa-v40-dot d1"></div>
-      <div class="alfa-v40-dot d2"></div>
-      <div class="alfa-v40-dot d3"></div>
+<nav>
+  <div class="logo">ALFA // OSINT V5.0</div>
 
-    </div>
-
-    <div style="
-      text-align:center;
-      color:#00ff9d;
-      font:11px monospace;
-      letter-spacing:2px;
-    ">
-      VISUAL RADAR // ONLINE
-    </div>
-
+  <div class="nav-status">
+    <span class="status-dot"></span>
+    SYSTEM ONLINE
   </div>
+</nav>
 
+<section class="hero">
 
-  <!-- SYSTEM CORE -->
+  <h1>
+    OSINT <span>COMMAND CENTER</span>
+  </h1>
 
-  <div class="alfa-v40-panel">
+  <p>
+    PUBLIC SOURCE INTELLIGENCE // CYBER ANALYSIS INTERFACE
+  </p>
 
-    <div class="alfa-v40-title">
-      ◉ SYSTEM CORE
-    </div>
-
-    <div class="alfa-v40-stat">
-
-      <div class="alfa-v40-stat-top">
-        <span>CPU CORE</span>
-        <span id="v40CPU">--%</span>
-      </div>
-
-      <div class="alfa-v40-bar">
-        <div
-          class="alfa-v40-fill"
-          id="v40CPUBar">
-        </div>
-      </div>
-
-    </div>
-
-    <div class="alfa-v40-stat">
-
-      <div class="alfa-v40-stat-top">
-        <span>NETWORK</span>
-        <span id="v40NET">--%</span>
-      </div>
-
-      <div class="alfa-v40-bar">
-        <div
-          class="alfa-v40-fill"
-          id="v40NETBar">
-        </div>
-      </div>
-
-    </div>
-
-    <div class="alfa-v40-stat">
-
-      <div class="alfa-v40-stat-top">
-        <span>SIGNAL</span>
-        <span id="v40SIG">--%</span>
-      </div>
-
-      <div class="alfa-v40-bar">
-        <div
-          class="alfa-v40-fill"
-          id="v40SIGBar">
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- COMMAND STATUS -->
-
-  <div class="alfa-v40-panel">
-
-    <div class="alfa-v40-title">
-      ◉ COMMAND STATUS
-    </div>
-
-    <div class="alfa-v40-status">
-
-      <div class="alfa-v40-chip">
-        MATRIX
-        <b>ONLINE</b>
-      </div>
-
-      <div class="alfa-v40-chip">
-        RADAR
-        <b>ACTIVE</b>
-      </div>
-
-      <div class="alfa-v40-chip">
-        NETWORK
-        <b>SYNC</b>
-      </div>
-
-      <div class="alfa-v40-chip">
-        CORE
-        <b>STABLE</b>
-      </div>
-
-    </div>
-
+  <div class="v5-badge">
+    V5.0 // CYBER INTELLIGENCE MODE
   </div>
 
 </section>
 
+<main class="container">
+
+<!-- =====================================================
+     ORIGINAL COMMAND + HOLOGRAM
+===================================================== -->
+
+<div class="grid">
+
+<section class="panel">
+
+<div class="panel-title">
+  <span>◈ COMMAND INTERFACE</span>
+  <small id="clock">--:--:--</small>
+</div>
+
+<div class="command-box">
+
+<input
+  id="target"
+  type="text"
+  placeholder="Masukkan domain / URL / username..."
+  autocomplete="off"
+>
+
+<button onclick="runScan()">
+  SCAN
+</button>
+
+</div>
+
+<div class="mode-row">
+
+<button class="mode-btn active"
+onclick="setMode('auto',this)">
+AUTO
+</button>
+
+<button class="mode-btn"
+onclick="setMode('domain',this)">
+DOMAIN
+</button>
+
+<button class="mode-btn"
+onclick="setMode('url',this)">
+URL
+</button>
+
+<button class="mode-btn"
+onclick="setMode('username',this)">
+USERNAME
+</button>
+
+</div>
+
+<br>
+
+<div class="terminal" id="terminal">
+
+<div>[BOOT] ALFA OSINT COMMAND CENTER V5.0</div>
+<div>[SYS] Initializing cyber interface...</div>
+<div>[SYS] Matrix engine: ONLINE</div>
+<div>[SYS] Holographic radar: ONLINE</div>
+<div>[SYS] Network visualization: ONLINE</div>
+<div>[SYS] Intelligence analytics: ONLINE</div>
+<div>[SYS] Public-source mode: ENABLED</div>
+<div>[READY] Waiting for target...</div>
+
+</div>
+
+</section>
+
+<section class="panel">
+
+<div class="panel-title">
+  <span>◉ HOLOGRAPHIC RADAR</span>
+  <small>LIVE</small>
+</div>
+
+<div class="holo-wrap">
+
+<div class="hologram">
+
+<div class="holo-grid"></div>
+
+<div class="radar-sweep"></div>
+
+<div class="holo-core"></div>
+
+<div class="holo-label">
+PUBLIC SIGNAL MONITOR
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+<!-- =====================================================
+     ORIGINAL STATS
+===================================================== -->
+
+<div class="stats">
+
+<div class="stat">
+<strong id="scanCount">0</strong>
+<span>SCANS</span>
+</div>
+
+<div class="stat">
+<strong id="moduleCount">06</strong>
+<span>MODULES</span>
+</div>
+
+<div class="stat">
+<strong id="signalStatus">OK</strong>
+<span>SIGNAL</span>
+</div>
+
+<div class="stat">
+<strong id="systemLoad">18%</strong>
+<span>SYSTEM LOAD</span>
+</div>
+
+</div>
+
+<!-- =====================================================
+     ORIGINAL MODULES
+===================================================== -->
+
+<section class="panel">
+
+<div class="panel-title">
+<span>▣ INTELLIGENCE MODULES</span>
+<small>PUBLIC DATA ONLY</small>
+</div>
+
+<div class="modules">
+
+<div class="module">
+<h3>◈ DOMAIN INTELLIGENCE</h3>
+<p>
+Analisis dasar nama domain, hostname, dan informasi publik.
+</p>
+</div>
+
+<div class="module">
+<h3>◈ URL ANALYSIS</h3>
+<p>
+Memecah komponen URL secara lokal tanpa mengirim password/token.
+</p>
+</div>
+
+<div class="module">
+<h3>◈ USERNAME SEARCH</h3>
+<p>
+Membuka pencarian publik untuk username pada layanan umum.
+</p>
+</div>
+
+<div class="module">
+<h3>◈ PUBLIC WEB SEARCH</h3>
+<p>
+Pencarian menggunakan mesin pencari publik.
+</p>
+</div>
+
+<div class="module">
+<h3>◈ WHOIS LOOKUP</h3>
+<p>
+Shortcut menuju layanan WHOIS publik.
+</p>
+</div>
+
+<div class="module">
+<h3>◈ DNS LOOKUP</h3>
+<p>
+Shortcut pemeriksaan DNS melalui layanan publik.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<br>
+
+<!-- =====================================================
+     RESULT
+===================================================== -->
+
+<section class="panel">
+
+<div class="panel-title">
+<span>▤ ANALYSIS RESULT</span>
+<small id="resultStatus">STANDBY</small>
+</div>
+
+<div id="result" class="result">
+
+<span class="label">[INFO]</span>
+
+<span class="value">
+Masukkan target kemudian tekan SCAN.
+</span>
+
+</div>
+
+<div class="report-actions">
+
+<button onclick="generateReport()">
+GENERATE REPORT
+</button>
+
+<button onclick="copyReport()">
+COPY REPORT
+</button>
+
+<button onclick="downloadReport()">
+EXPORT TXT
+</button>
+
+</div>
+
+</section>
+
+</main>
+
+<!-- =====================================================
+     V4.0 CYBER COMMAND CENTER
+===================================================== -->
+
+<section class="alfa-v40">
+
+<div class="alfa-v40-panel alfa-v40-main">
+
+<div class="alfa-v40-title">
+◉ CYBER COMMAND RADAR
+</div>
+
+<div class="alfa-v40-radar">
+
+<div class="alfa-v40-sweep"></div>
+
+<div class="alfa-v40-dot d1"></div>
+<div class="alfa-v40-dot d2"></div>
+<div class="alfa-v40-dot d3"></div>
+
+</div>
+
+<div style="
+text-align:center;
+color:#00ff9d;
+font:11px monospace;
+letter-spacing:2px;
+">
+VISUAL RADAR // ONLINE
+</div>
+
+</div>
+
+<div class="alfa-v40-panel">
+
+<div class="alfa-v40-title">
+◉ SYSTEM CORE
+</div>
+
+<div class="alfa-v40-stat">
+
+<div class="alfa-v40-stat-top">
+<span>CPU CORE</span>
+<span id="v40CPU">--%</span>
+</div>
+
+<div class="alfa-v40-bar">
+<div class="alfa-v40-fill" id="v40CPUBar"></div>
+</div>
+
+</div>
+
+<div class="alfa-v40-stat">
+
+<div class="alfa-v40-stat-top">
+<span>NETWORK</span>
+<span id="v40NET">--%</span>
+</div>
+
+<div class="alfa-v40-bar">
+<div class="alfa-v40-fill" id="v40NETBar"></div>
+</div>
+
+</div>
+
+<div class="alfa-v40-stat">
+
+<div class="alfa-v40-stat-top">
+<span>SIGNAL</span>
+<span id="v40SIG">--%</span>
+</div>
+
+<div class="alfa-v40-bar">
+<div class="alfa-v40-fill" id="v40SIGBar"></div>
+</div>
+
+</div>
+
+</div>
+
+<div class="alfa-v40-panel">
+
+<div class="alfa-v40-title">
+◉ COMMAND STATUS
+</div>
+
+<div class="alfa-v40-status">
+
+<div class="alfa-v40-chip">
+MATRIX
+<b>ONLINE</b>
+</div>
+
+<div class="alfa-v40-chip">
+RADAR
+<b>ACTIVE</b>
+</div>
+
+<div class="alfa-v40-chip">
+NETWORK
+<b>SYNC</b>
+</div>
+
+<div class="alfa-v40-chip">
+CORE
+<b>STABLE</b>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================================
+     V5.0 ANALYTICS
+===================================================== -->
+
+<section class="v5-section">
+
+<div class="v5-grid">
+
+<section class="panel">
+
+<div class="panel-title">
+<span>🧠 INTELLIGENCE ANALYTICS V5</span>
+<small>LIVE TELEMETRY</small>
+</div>
+
+<div class="v5-analytics">
+
+<div class="v5-metric">
+
+<div class="v5-metric-top">
+<span>PUBLIC SIGNAL</span>
+<strong id="v5Signal">87%</strong>
+</div>
+
+<div class="v5-meter">
+<div class="v5-meter-fill" id="v5SignalBar"></div>
+</div>
+
+</div>
+
+<div class="v5-metric">
+
+<div class="v5-metric-top">
+<span>NETWORK ACTIVITY</span>
+<strong id="v5Network">64%</strong>
+</div>
+
+<div class="v5-meter">
+<div class="v5-meter-fill" id="v5NetworkBar"></div>
+</div>
+
+</div>
+
+<div class="v5-metric">
+
+<div class="v5-metric-top">
+<span>RADAR COVERAGE</span>
+<strong id="v5Radar">72%</strong>
+</div>
+
+<div class="v5-meter">
+<div class="v5-meter-fill" id="v5RadarBar"></div>
+</div>
+
+</div>
+
+<div class="v5-metric">
+
+<div class="v5-metric-top">
+<span>CORE STABILITY</span>
+<strong id="v5Core">93%</strong>
+</div>
+
+<div class="v5-meter">
+<div class="v5-meter-fill" id="v5CoreBar"></div>
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<div style="color:#557b72;font-size:10px;">
+LIVE DATA EVENTS
+</div>
+
+<div class="activity-feed" id="activityFeed">
+
+<div class="activity-item">
+<span class="activity-time">BOOT</span>
+<span class="activity-text">
+<span class="activity-tag">[V5]</span>
+Intelligence analytics initialized.
+</span>
+</div>
+
+</div>
+
+</section>
+
+<section class="panel">
+
+<div class="panel-title">
+<span>◉ LIVE TELEMETRY</span>
+<small>SIMULATION</small>
+</div>
+
+<div class="v5-live-number" id="v5EventCount">
+0000
+</div>
+
+<div style="
+color:#587c73;
+font-size:10px;
+margin-top:5px;
+">
+CYBER EVENTS PROCESSED
+</div>
+
+<br>
+
+<div class="case-box">
+
+<div class="case-field">
+<span>ENGINE</span>
+<strong>ALFA V5 CORE</strong>
+</div>
+
+<div class="case-field">
+<span>MODE</span>
+<strong>PUBLIC SOURCE</strong>
+</div>
+
+<div class="case-field">
+<span>RADAR</span>
+<strong id="v5RadarState">ACTIVE</strong>
+</div>
+
+<div class="case-field">
+<span>NETWORK</span>
+<strong id="v5NetworkState">SYNC</strong>
+</div>
+
+<div class="case-field full">
+<span>SESSION</span>
+<strong id="v5Session">
+LOCAL VISUAL INTELLIGENCE SESSION
+</strong>
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+</section>
+
+<!-- =====================================================
+     V5 SEARCH HUB
+===================================================== -->
+
+<section class="container">
+
+<section class="panel">
+
+<div class="panel-title">
+<span>🔎 PUBLIC SEARCH HUB</span>
+<small>SAFE SHORTCUTS</small>
+</div>
+
+<div class="search-hub">
+
+<div class="search-card">
+<h3>GOOGLE WEB</h3>
+<p>
+Pencarian halaman publik menggunakan mesin pencari.
+</p>
+<button onclick="hubSearch('google')">
+OPEN SEARCH
+</button>
+</div>
+
+<div class="search-card">
+<h3>GITHUB</h3>
+<p>
+Pencarian repository dan halaman publik.
+</p>
+<button onclick="hubSearch('github')">
+OPEN SEARCH
+</button>
+</div>
+
+<div class="search-card">
+<h3>REDDIT</h3>
+<p>
+Pencarian posting publik.
+</p>
+<button onclick="hubSearch('reddit')">
+OPEN SEARCH
+</button>
+</div>
+
+</div>
+
+</section>
+
+<br>
+
+<!-- =====================================================
+     CASE WORKSPACE
+===================================================== -->
+
+<section class="panel">
+
+<div class="panel-title">
+<span>🗂 CASE WORKSPACE</span>
+<small>LOCAL SESSION</small>
+</div>
+
+<div class="case-box">
+
+<div class="case-field">
+<span>CASE ID</span>
+<strong id="caseId">ALFA-000000</strong>
+</div>
+
+<div class="case-field">
+<span>STATUS</span>
+<strong id="caseStatus">STANDBY</strong>
+</div>
+
+<div class="case-field">
+<span>LAST TARGET</span>
+<strong id="caseTarget">NONE</strong>
+</div>
+
+<div class="case-field">
+<span>ANALYSIS MODE</span>
+<strong id="caseMode">AUTO</strong>
+</div>
+
+<div class="case-field full">
+<span>SESSION NOTE</span>
+<strong>
+Public-source analysis only. No private credentials,
+passwords, tokens, or silent tracking.
+</strong>
+</div>
+
+</div>
+
+</section>
+
+</section>
+
+<!-- =====================================================
+     COMMAND CONSOLE
+===================================================== -->
+
+<div class="alfa-command-console">
+
+<div class="alfa-console-head">
+
+<div>
+◉ COMMAND CONSOLE V5
+</div>
+
+<div class="alfa-console-status">
+LOCAL MODE
+</div>
+
+</div>
+
+<div class="alfa-console-box" id="alfaCommandOutput">
+
+<div class="alfa-console-line">
+[SYSTEM] ALFA COMMAND CONSOLE ONLINE
+</div>
+
+<div class="alfa-console-line">
+[SYSTEM] V5 Intelligence engine loaded
+</div>
+
+<div class="alfa-console-line">
+[SYSTEM] Local visual simulation active
+</div>
+
+<div class="alfa-console-line">
+[SYSTEM] Public-source tools only
+</div>
+
+<div class="alfa-console-line">
+[HELP] Type "help" for commands
+</div>
+
+</div>
+
+<div class="alfa-console-input">
+
+<span>ALFA&gt;</span>
+
+<input
+id="alfaCommandInput"
+type="text"
+autocomplete="off"
+placeholder="type command..."
+>
+
+<button id="alfaCommandBtn">
+EXECUTE
+</button>
+
+</div>
+
+<div style="
+margin-top:10px;
+color:#668f82;
+font:11px monospace;
+">
+Commands:
+help • status • radar • matrix • network • analytics • case • clear
+</div>
+
+</div>
+
+<!-- =====================================================
+     DATA CORE
+===================================================== -->
+
+<div class="alfa-data-core">
+
+<div class="alfa-core-ring r3"></div>
+<div class="alfa-core-ring r2"></div>
+<div class="alfa-core-ring r1"></div>
+
+<div class="alfa-core-center"></div>
+
+<div class="alfa-core-label">
+DATA CORE // ONLINE
+</div>
+
+</div>
+
+<!-- =====================================================
+     TARGET HUD
+===================================================== -->
+
+<div class="alfa-target-hud">
+
+<div class="alfa-target-title">
+◉ DIGITAL TARGET HUD
+</div>
+
+<div class="alfa-target-ring">
+<div class="alfa-target-dot"></div>
+</div>
+
+<div class="alfa-target-data">
+
+X:
+<span id="hudX">074.21</span>
+<br>
+
+Y:
+<span id="hudY">391.08</span>
+<br>
+
+SIGNAL:
+<span id="hudSignal">87%</span>
+<br>
+
+STATUS:
+<span id="hudStatus">ONLINE</span>
+
+</div>
+
+</div>
+
+<!-- =====================================================
+     ALERT
+===================================================== -->
+
+<div class="alfa-alert" id="alfaAlert">
+
+<div class="alfa-alert-title">
+◉ CYBER SYSTEM
+</div>
+
+<div class="alfa-alert-text" id="alfaAlertText">
+SYSTEM INITIALIZED
+</div>
+
+<div class="alfa-signal">
+<i></i>
+<i></i>
+<i></i>
+<i></i>
+<i></i>
+</div>
+
+</div>
+
+<footer>
+
+<div class="warning">
+⚠ PUBLIC-SOURCE OSINT ONLY
+</div>
+
+ALFA OSINT COMMAND CENTER V5.0
+
+<br>
+
+Sistem ini hanya untuk analisis informasi yang tersedia
+secara publik dan simulasi antarmuka lokal.
+
+Jangan digunakan untuk mengakses akun pribadi,
+password, token, data privat, pelacakan diam-diam,
+atau aktivitas tanpa izin.
+
+<br><br>
+
+V5.0 // CYBER INTELLIGENCE MODE // LOCAL BROWSER INTERFACE
+
+</footer>
+
 <script>
-/* ALFA OSINT V4.0 SYSTEM SIMULATION */
+/* =====================================================
+   MATRIX ENGINE
+===================================================== */
 
-(function(){
+const canvas =
+document.getElementById("matrix");
 
-  function updateV40(){
+const ctx =
+canvas.getContext("2d");
 
-    const cpu =
-      Math.floor(35 + Math.random()*55);
+let fontSize = 15;
+let columns;
+let drops;
 
-    const net =
-      Math.floor(45 + Math.random()*50);
+const chars =
+"01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&*@<>[]{}:/\\\\|";
 
-    const sig =
-      Math.floor(65 + Math.random()*34);
+function resizeMatrix(){
 
-    const cpuText =
-      document.getElementById("v40CPU");
+  canvas.width =
+    window.innerWidth;
 
-    const netText =
-      document.getElementById("v40NET");
+  canvas.height =
+    window.innerHeight;
 
-    const sigText =
-      document.getElementById("v40SIG");
+  columns =
+    Math.floor(canvas.width / fontSize);
 
-    const cpuBar =
-      document.getElementById("v40CPUBar");
+  drops = [];
 
-    const netBar =
-      document.getElementById("v40NETBar");
+  for(let i=0;i<columns;i++){
 
-    const sigBar =
-      document.getElementById("v40SIGBar");
-
-    if(cpuText) cpuText.textContent = cpu+"%";
-    if(netText) netText.textContent = net+"%";
-    if(sigText) sigText.textContent = sig+"%";
-
-    if(cpuBar) cpuBar.style.width = cpu+"%";
-    if(netBar) netBar.style.width = net+"%";
-    if(sigBar) sigBar.style.width = sig+"%";
+    drops[i] =
+      Math.random() * -100;
 
   }
 
-  updateV40();
+}
 
-  setInterval(
-    updateV40,
-    1800
+function drawMatrix(){
+
+  ctx.fillStyle =
+    "rgba(0,0,0,0.055)";
+
+  ctx.fillRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
   );
 
-})();
+  ctx.font =
+    fontSize + "px monospace";
 
-/* V4.0 TERMINAL EVENTS */
+  for(let i=0;i<drops.length;i++){
 
-setInterval(() => {
+    const char =
+      chars[
+        Math.floor(
+          Math.random()*chars.length
+        )
+      ];
+
+    ctx.fillStyle =
+      Math.random() > .92
+      ? "#ffffff"
+      : "#00ff9d";
+
+    ctx.fillText(
+      char,
+      i * fontSize,
+      drops[i] * fontSize
+    );
+
+    if(
+      drops[i] * fontSize >
+      canvas.height &&
+      Math.random() > .975
+    ){
+
+      drops[i] = 0;
+
+    }
+
+    drops[i] += .65;
+
+  }
+
+  requestAnimationFrame(drawMatrix);
+
+}
+
+window.addEventListener(
+  "resize",
+  resizeMatrix
+);
+
+resizeMatrix();
+drawMatrix();
+
+
+/* =====================================================
+   CLOCK
+===================================================== */
+
+function updateClock(){
+
+  document.getElementById("clock")
+    .textContent =
+    new Date().toLocaleTimeString("id-ID");
+
+}
+
+setInterval(updateClock,1000);
+updateClock();
+
+
+/* =====================================================
+   SYSTEM LOAD
+===================================================== */
+
+setInterval(()=>{
+
+  const load =
+    Math.floor(
+      12 + Math.random()*35
+    );
+
+  document.getElementById(
+    "systemLoad"
+  ).textContent =
+    load + "%";
+
+},1500);
+
+
+/* =====================================================
+   MODE
+===================================================== */
+
+let currentMode = "auto";
+
+function setMode(mode,button){
+
+  currentMode = mode;
+
+  document.querySelectorAll(".mode-btn")
+    .forEach(btn =>
+      btn.classList.remove("active")
+    );
+
+  button.classList.add("active");
+
+  const caseMode =
+    document.getElementById("caseMode");
+
+  if(caseMode){
+    caseMode.textContent =
+      mode.toUpperCase();
+  }
+
+  log(
+    "[MODE] Analysis mode switched to: " +
+    mode.toUpperCase()
+  );
+
+}
+
+
+/* =====================================================
+   TERMINAL
+===================================================== */
+
+function log(message){
 
   const terminal =
     document.getElementById("terminal");
 
   if(!terminal) return;
 
-  const events = [
-
-    "[CORE] COMMAND CENTER SYNCHRONIZED",
-    "[RADAR] VISUAL SWEEP COMPLETE",
-    "[SYSTEM] CORE LOAD UPDATED",
-    "[NET] VISUAL NETWORK STATUS UPDATED",
-    "[SIGNAL] COMMAND CHANNEL STABLE"
-
-  ];
-
   const line =
     document.createElement("div");
 
-  line.textContent =
-    "[" +
-    new Date().toLocaleTimeString("id-ID") +
-    "] " +
-    events[
-      Math.floor(Math.random()*events.length)
-    ];
+  const time =
+    new Date().toLocaleTimeString("id-ID");
 
-  line.style.color="#00ff9d";
+  line.textContent =
+    "[" + time + "] " + message;
 
   terminal.appendChild(line);
 
-  while(terminal.children.length > 28){
+  while(
+    terminal.children.length > 30
+  ){
 
     terminal.removeChild(
       terminal.firstChild
@@ -3150,15 +2570,1736 @@ setInterval(() => {
   terminal.scrollTop =
     terminal.scrollHeight;
 
-},3500);
+}
+
+
+/* =====================================================
+   ESCAPE
+===================================================== */
+
+function escapeHTML(value){
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
+   TARGET DETECTION
+===================================================== */
+
+function detectTarget(value){
+
+  value =
+    value.trim();
+
+  if(
+    /^https?:\/\//i.test(value)
+  ){
+
+    return "url";
+
+  }
+
+  if(
+    /^[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/i.test(value)
+  ){
+
+    return "domain";
+
+  }
+
+  return "username";
+
+}
+
+
+/* =====================================================
+   SCAN ENGINE
+===================================================== */
+
+let scanCounter = 0;
+let latestReport = "";
+
+function runScan(){
+
+  const input =
+    document.getElementById("target");
+
+  const raw =
+    input.value.trim();
+
+  if(!raw){
+
+    log("[ERROR] Target kosong.");
+
+    document.getElementById(
+      "result"
+    ).innerHTML =
+      '<span class="label">[ERROR]</span> Masukkan target terlebih dahulu.';
+
+    return;
+
+  }
+
+  let mode =
+    currentMode;
+
+  if(mode === "auto"){
+
+    mode =
+      detectTarget(raw);
+
+  }
+
+  scanCounter++;
+
+  document.getElementById(
+    "scanCount"
+  ).textContent =
+    scanCounter;
+
+  document.getElementById(
+    "resultStatus"
+  ).textContent =
+    "ANALYZING";
+
+  document.getElementById(
+    "caseStatus"
+  ).textContent =
+    "ANALYZING";
+
+  document.getElementById(
+    "caseTarget"
+  ).textContent =
+    raw;
+
+  document.getElementById(
+    "caseMode"
+  ).textContent =
+    mode.toUpperCase();
+
+  log(
+    "[SCAN] Target received: " +
+    raw
+  );
+
+  log(
+    "[SCAN] Module selected: " +
+    mode.toUpperCase()
+  );
+
+  document.getElementById(
+    "result"
+  ).innerHTML =
+    '<span class="label">[PROCESS]</span> Running public-source analysis...';
+
+  setTimeout(()=>{
+
+    if(mode === "domain"){
+
+      analyzeDomain(raw);
+
+    }
+
+    else if(mode === "url"){
+
+      analyzeURL(raw);
+
+    }
+
+    else{
+
+      analyzeUsername(raw);
+
+    }
+
+    document.getElementById(
+      "caseStatus"
+    ).textContent =
+      "COMPLETE";
+
+  },700);
+
+}
+
+
+/* =====================================================
+   DOMAIN
+===================================================== */
+
+function analyzeDomain(domain){
+
+  domain =
+    domain
+      .replace(/^https?:\/\//i,"")
+      .split("/")[0]
+      .trim();
+
+  const parts =
+    domain.split(".");
+
+  const tld =
+    parts.length > 1
+    ? "." + parts[parts.length-1]
+    : "N/A";
+
+  const hostname =
+    parts.slice(0,-1).join(".") ||
+    domain;
+
+  const now =
+    new Date().toISOString();
+
+  latestReport =
+`ALFA OSINT V5.0 REPORT
+TYPE: DOMAIN
+TARGET: ${domain}
+HOSTNAME: ${hostname}
+TLD: ${tld}
+ANALYSIS TIME: ${now}
+
+STATUS:
+PUBLIC ANALYSIS READY
+
+NOTE:
+Analysis performed locally.
+No private account access.
+No credential extraction.
+Public-source workflow only.`;
+
+  document.getElementById(
+    "result"
+  ).innerHTML = `
+
+<div>
+<span class="label">TYPE:</span>
+<span class="value">DOMAIN</span>
+</div>
+
+<div>
+<span class="label">TARGET:</span>
+<span class="value">
+${escapeHTML(domain)}
+</span>
+</div>
+
+<div>
+<span class="label">HOSTNAME:</span>
+<span class="value">
+${escapeHTML(hostname)}
+</span>
+</div>
+
+<div>
+<span class="label">TLD:</span>
+<span class="value">
+${escapeHTML(tld)}
+</span>
+</div>
+
+<div>
+<span class="label">STATUS:</span>
+<span class="value">
+PUBLIC ANALYSIS READY
+</span>
+</div>
+
+`;
+
+  document.getElementById(
+    "resultStatus"
+  ).textContent =
+    "COMPLETE";
+
+  log(
+    "[DONE] Domain analysis complete."
+  );
+
+}
+
+
+/* =====================================================
+   URL
+===================================================== */
+
+function analyzeURL(target){
+
+  try{
+
+    const url =
+      new URL(target);
+
+    const protocol =
+      url.protocol;
+
+    const hostname =
+      url.hostname;
+
+    const port =
+      url.port ||
+      "DEFAULT";
+
+    const path =
+      url.pathname ||
+      "/";
+
+    const query =
+      url.search ||
+      "NONE";
+
+    latestReport =
+`ALFA OSINT V5.0 REPORT
+TYPE: URL
+TARGET: ${target}
+PROTOCOL: ${protocol}
+HOSTNAME: ${hostname}
+PORT: ${port}
+PATH: ${path}
+QUERY: ${query}
+TIME: ${new Date().toISOString()}
+
+NOTE:
+URL parsed locally.
+Sensitive credentials are not collected.`;
+
+    document.getElementById(
+      "result"
+    ).innerHTML = `
+
+<div>
+<span class="label">TYPE:</span>
+<span class="value">URL</span>
+</div>
+
+<div>
+<span class="label">PROTOCOL:</span>
+<span class="value">
+${escapeHTML(protocol)}
+</span>
+</div>
+
+<div>
+<span class="label">HOSTNAME:</span>
+<span class="value">
+${escapeHTML(hostname)}
+</span>
+</div>
+
+<div>
+<span class="label">PORT:</span>
+<span class="value">
+${escapeHTML(port)}
+</span>
+</div>
+
+<div>
+<span class="label">PATH:</span>
+<span class="value">
+${escapeHTML(path)}
+</span>
+</div>
+
+<div>
+<span class="label">QUERY:</span>
+<span class="value">
+${escapeHTML(query)}
+</span>
+</div>
+
+`;
+
+    document.getElementById(
+      "resultStatus"
+    ).textContent =
+      "COMPLETE";
+
+    log(
+      "[DONE] URL structure parsed."
+    );
+
+  }
+
+  catch(error){
+
+    document.getElementById(
+      "result"
+    ).innerHTML =
+      '<span class="label">[ERROR]</span> URL tidak valid.';
+
+    document.getElementById(
+      "resultStatus"
+    ).textContent =
+      "ERROR";
+
+    log(
+      "[ERROR] Invalid URL."
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   USERNAME
+===================================================== */
+
+function analyzeUsername(username){
+
+  username =
+    username
+      .replace(/^@/,"")
+      .trim();
+
+  latestReport =
+`ALFA OSINT V5.0 REPORT
+TYPE: USERNAME
+TARGET: ${username}
+TIME: ${new Date().toISOString()}
+
+PUBLIC SEARCH SHORTCUTS:
+Google
+GitHub
+Reddit
+
+NOTE:
+Search is performed on publicly accessible pages only.`;
+
+  document.getElementById(
+    "result"
+  ).innerHTML = `
+
+<div>
+<span class="label">TYPE:</span>
+<span class="value">USERNAME</span>
+</div>
+
+<div>
+<span class="label">TARGET:</span>
+<span class="value">
+${escapeHTML(username)}
+</span>
+</div>
+
+<br>
+
+<button onclick="openSearch(
+'https://www.google.com/search?q=' +
+encodeURIComponent('${escapeHTML(username)}')
+)">
+GOOGLE
+</button>
+
+<button onclick="openSearch(
+'https://github.com/search?q=' +
+encodeURIComponent('${escapeHTML(username)}')
+)">
+GITHUB
+</button>
+
+<button onclick="openSearch(
+'https://www.reddit.com/search/?q=' +
+encodeURIComponent('${escapeHTML(username)}')
+)">
+REDDIT
+</button>
+
+`;
+
+  document.getElementById(
+    "resultStatus"
+  ).textContent =
+    "READY";
+
+  log(
+    "[DONE] Public username search shortcuts ready."
+  );
+
+}
+
+
+/* =====================================================
+   SAFE SEARCH
+===================================================== */
+
+function openSearch(url){
+
+  window.open(
+    url,
+    "_blank",
+    "noopener,noreferrer"
+  );
+
+}
+
+
+/* =====================================================
+   REPORT
+===================================================== */
+
+function generateReport(){
+
+  if(!latestReport){
+
+    latestReport =
+`ALFA OSINT V5.0 REPORT
+
+No analysis has been performed yet.
+
+Please enter a public target and run SCAN.`;
+
+  }
+
+  document.getElementById(
+    "result"
+  ).innerHTML =
+
+`<pre style="
+white-space:pre-wrap;
+color:#74ffca;
+font-family:inherit;
+">${escapeHTML(latestReport)}</pre>`;
+
+  log(
+    "[REPORT] Report generated."
+  );
+
+}
+
+
+/* =====================================================
+   COPY
+===================================================== */
+
+async function copyReport(){
+
+  if(!latestReport){
+
+    generateReport();
+
+  }
+
+  try{
+
+    await navigator.clipboard.writeText(
+      latestReport
+    );
+
+    log(
+      "[REPORT] Copied to clipboard."
+    );
+
+  }
+
+  catch(error){
+
+    log(
+      "[ERROR] Clipboard permission unavailable."
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   DOWNLOAD
+===================================================== */
+
+function downloadReport(){
+
+  if(!latestReport){
+
+    generateReport();
+
+  }
+
+  const blob =
+    new Blob(
+      [latestReport],
+      {
+        type:
+        "text/plain;charset=utf-8"
+      }
+    );
+
+  const url =
+    URL.createObjectURL(blob);
+
+  const a =
+    document.createElement("a");
+
+  a.href =
+    url;
+
+  a.download =
+    "alfa-osint-v5-report.txt";
+
+  document.body.appendChild(a);
+
+  a.click();
+
+  a.remove();
+
+  URL.revokeObjectURL(url);
+
+  log(
+    "[REPORT] TXT exported."
+  );
+
+}
+
+
+/* =====================================================
+   ENTER
+===================================================== */
+
+document.getElementById(
+  "target"
+).addEventListener(
+  "keydown",
+  function(event){
+
+    if(event.key === "Enter"){
+      runScan();
+    }
+
+  }
+);
+
+
+/* =====================================================
+   AUTO CYBER ACTIVITY
+===================================================== */
+
+const autoMessages = [
+
+"[AUTO] Scanning public signal...",
+"[AUTO] Monitoring open-source channel...",
+"[AUTO] Network visualization refreshed...",
+"[AUTO] Holographic radar synchronized...",
+"[AUTO] Public-source module ready...",
+"[AUTO] Signal pulse detected...",
+"[AUTO] Intelligence interface online...",
+"[AUTO] Waiting for public target...",
+"[AUTO] V5 telemetry synchronized..."
+
+];
+
+setInterval(()=>{
+
+  const msg =
+    autoMessages[
+      Math.floor(
+        Math.random() *
+        autoMessages.length
+      )
+    ];
+
+  log(msg);
+
+},2500);
+
+
+/* =====================================================
+   LIVE CYBER STREAM
+===================================================== */
+
+const cyberEvents = [
+
+"SIGNAL DETECTED",
+"NODE SYNCHRONIZED",
+"RADAR SWEEP ACTIVE",
+"DATA CHANNEL ACTIVE",
+"PUBLIC SOURCE READY",
+"NETWORK PULSE",
+"SYSTEM CHECK COMPLETE",
+"HOLOGRAM SYNC",
+"MATRIX STREAM ACTIVE",
+"OSINT MODULE READY",
+"V5 ANALYTICS UPDATED"
+
+];
+
+setInterval(()=>{
+
+  log(
+    "[STREAM] " +
+    cyberEvents[
+      Math.floor(
+        Math.random() *
+        cyberEvents.length
+      )
+    ]
+  );
+
+},1300);
+
+
+/* =====================================================
+   HUD
+===================================================== */
+
+setInterval(()=>{
+
+  const x =
+    (Math.random()*999)
+    .toFixed(2);
+
+  const y =
+    (Math.random()*999)
+    .toFixed(2);
+
+  const signal =
+    Math.floor(
+      70 + Math.random()*30
+    );
+
+  document.getElementById(
+    "hudX"
+  ).textContent = x;
+
+  document.getElementById(
+    "hudY"
+  ).textContent = y;
+
+  document.getElementById(
+    "hudSignal"
+  ).textContent =
+    signal + "%";
+
+},1200);
+
+
+/* =====================================================
+   ALERT
+===================================================== */
+
+const alfaAlerts = [
+
+"SIGNAL CHANNEL ACTIVE",
+"RADAR SYNCHRONIZED",
+"NETWORK PULSE DETECTED",
+"MATRIX STREAM ACTIVE",
+"PUBLIC SOURCE MODULE READY",
+"HOLOGRAM SYSTEM ONLINE",
+"DATA CHANNEL STABLE",
+"OSINT INTERFACE READY",
+"V5 ANALYTICS ONLINE"
+
+];
+
+function showAlfaAlert(){
+
+  const box =
+    document.getElementById(
+      "alfaAlert"
+    );
+
+  const text =
+    document.getElementById(
+      "alfaAlertText"
+    );
+
+  if(!box || !text) return;
+
+  text.textContent =
+    alfaAlerts[
+      Math.floor(
+        Math.random() *
+        alfaAlerts.length
+      )
+    ];
+
+  box.classList.add("show");
+
+  setTimeout(()=>{
+    box.classList.remove("show");
+  },2200);
+
+}
+
+setInterval(
+  showAlfaAlert,
+  6500
+);
+
+
+/* =====================================================
+   RANDOM GLITCH
+===================================================== */
+
+setInterval(()=>{
+
+  const elements =
+    document.querySelectorAll(
+      ".panel-title," +
+      ".alfa-target-hud," +
+      ".logo"
+    );
+
+  if(!elements.length) return;
+
+  const element =
+    elements[
+      Math.floor(
+        Math.random() *
+        elements.length
+      )
+    ];
+
+  element.classList.add(
+    "alfa-glitch"
+  );
+
+  setTimeout(()=>{
+    element.classList.remove(
+      "alfa-glitch"
+    );
+  },180);
+
+},5000);
+
+
+/* =====================================================
+   V4 SYSTEM CORE
+===================================================== */
+
+function updateV40(){
+
+  const cpu =
+    Math.floor(
+      35 + Math.random()*55
+    );
+
+  const net =
+    Math.floor(
+      45 + Math.random()*50
+    );
+
+  const sig =
+    Math.floor(
+      65 + Math.random()*34
+    );
+
+  document.getElementById(
+    "v40CPU"
+  ).textContent =
+    cpu+"%";
+
+  document.getElementById(
+    "v40NET"
+  ).textContent =
+    net+"%";
+
+  document.getElementById(
+    "v40SIG"
+  ).textContent =
+    sig+"%";
+
+  document.getElementById(
+    "v40CPUBar"
+  ).style.width =
+    cpu+"%";
+
+  document.getElementById(
+    "v40NETBar"
+  ).style.width =
+    net+"%";
+
+  document.getElementById(
+    "v40SIGBar"
+  ).style.width =
+    sig+"%";
+
+}
+
+updateV40();
+
+setInterval(
+  updateV40,
+  1800
+);
+
+
+/* =====================================================
+   V5 ANALYTICS ENGINE
+===================================================== */
+
+let v5Events = 0;
+
+function updateV5Analytics(){
+
+  const signal =
+    Math.floor(
+      70 + Math.random()*30
+    );
+
+  const network =
+    Math.floor(
+      45 + Math.random()*50
+    );
+
+  const radar =
+    Math.floor(
+      60 + Math.random()*40
+    );
+
+  const core =
+    Math.floor(
+      75 + Math.random()*25
+    );
+
+  document.getElementById(
+    "v5Signal"
+  ).textContent =
+    signal+"%";
+
+  document.getElementById(
+    "v5Network"
+  ).textContent =
+    network+"%";
+
+  document.getElementById(
+    "v5Radar"
+  ).textContent =
+    radar+"%";
+
+  document.getElementById(
+    "v5Core"
+  ).textContent =
+    core+"%";
+
+  document.getElementById(
+    "v5SignalBar"
+  ).style.width =
+    signal+"%";
+
+  document.getElementById(
+    "v5NetworkBar"
+  ).style.width =
+    network+"%";
+
+  document.getElementById(
+    "v5RadarBar"
+  ).style.width =
+    radar+"%";
+
+  document.getElementById(
+    "v5CoreBar"
+  ).style.width =
+    core+"%";
+
+  v5Events++;
+
+  document.getElementById(
+    "v5EventCount"
+  ).textContent =
+    String(v5Events)
+      .padStart(4,"0");
+
+}
+
+updateV5Analytics();
+
+setInterval(
+  updateV5Analytics,
+  1800
+);
+
+
+/* =====================================================
+   ACTIVITY FEED
+===================================================== */
+
+const activityFeed =
+document.getElementById(
+  "activityFeed"
+);
+
+function addActivity(){
+
+  if(!activityFeed) return;
+
+  const events = [
+
+    "Public signal refreshed",
+    "Network telemetry updated",
+    "Radar coverage recalculated",
+    "V5 core heartbeat",
+    "Open-source channel synchronized",
+    "Visual intelligence stream active"
+
+  ];
+
+  const item =
+    document.createElement("div");
+
+  item.className =
+    "activity-item";
+
+  const time =
+    new Date()
+      .toLocaleTimeString(
+        "id-ID"
+      );
+
+  item.innerHTML = `
+
+<span class="activity-time">
+${escapeHTML(time)}
+</span>
+
+<span class="activity-text">
+<span class="activity-tag">
+[V5]
+</span>
+${escapeHTML(
+  events[
+    Math.floor(
+      Math.random() *
+      events.length
+    )
+  ]
+)}
+</span>
+
+`;
+
+  activityFeed.appendChild(
+    item
+  );
+
+  while(
+    activityFeed.children.length > 18
+  ){
+
+    activityFeed.removeChild(
+      activityFeed.firstChild
+    );
+
+  }
+
+  activityFeed.scrollTop =
+    activityFeed.scrollHeight;
+
+}
+
+setInterval(
+  addActivity,
+  1600
+);
+
+
+/* =====================================================
+   CASE ID
+===================================================== */
+
+function createCaseId(){
+
+  const id =
+    Math.floor(
+      100000 +
+      Math.random()*900000
+    );
+
+  document.getElementById(
+    "caseId"
+  ).textContent =
+    "ALFA-" + id;
+
+}
+
+createCaseId();
+
+
+/* =====================================================
+   SEARCH HUB
+===================================================== */
+
+function hubSearch(type){
+
+  const target =
+    document.getElementById(
+      "target"
+    ).value.trim();
+
+  if(!target){
+
+    log(
+      "[SEARCH] Masukkan target terlebih dahulu."
+    );
+
+    return;
+
+  }
+
+  let url = "";
+
+  const query =
+    encodeURIComponent(
+      target
+    );
+
+  if(type === "google"){
+
+    url =
+      "https://www.google.com/search?q=" +
+      query;
+
+  }
+
+  else if(type === "github"){
+
+    url =
+      "https://github.com/search?q=" +
+      query;
+
+  }
+
+  else if(type === "reddit"){
+
+    url =
+      "https://www.reddit.com/search/?q=" +
+      query;
+
+  }
+
+  if(url){
+
+    openSearch(url);
+
+    log(
+      "[HUB] Public search opened: " +
+      type.toUpperCase()
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   COMMAND CONSOLE V5
+===================================================== */
+
+(function(){
+
+  const input =
+    document.getElementById(
+      "alfaCommandInput"
+    );
+
+  const button =
+    document.getElementById(
+      "alfaCommandBtn"
+    );
+
+  const output =
+    document.getElementById(
+      "alfaCommandOutput"
+    );
+
+  if(
+    !input ||
+    !button ||
+    !output
+  ) return;
+
+  function addLine(text){
+
+    const line =
+      document.createElement(
+        "div"
+      );
+
+    line.className =
+      "alfa-console-line";
+
+    line.textContent =
+      text;
+
+    output.appendChild(
+      line
+    );
+
+    output.scrollTop =
+      output.scrollHeight;
+
+  }
+
+  function executeCommand(){
+
+    const command =
+      input.value
+        .trim()
+        .toLowerCase();
+
+    if(!command) return;
+
+    addLine(
+      "ALFA> " + command
+    );
+
+    if(command === "help"){
+
+      addLine(
+        "[HELP] Available commands:"
+      );
+
+      addLine(
+        "[HELP] status - system status"
+      );
+
+      addLine(
+        "[HELP] radar - radar simulation"
+      );
+
+      addLine(
+        "[HELP] matrix - matrix stream"
+      );
+
+      addLine(
+        "[HELP] network - network simulation"
+      );
+
+      addLine(
+        "[HELP] analytics - V5 analytics"
+      );
+
+      addLine(
+        "[HELP] case - current case"
+      );
+
+      addLine(
+        "[HELP] clear - clear console"
+      );
+
+    }
+
+    else if(command === "status"){
+
+      addLine(
+        "[STATUS] CORE ........ ONLINE"
+      );
+
+      addLine(
+        "[STATUS] MATRIX ...... ACTIVE"
+      );
+
+      addLine(
+        "[STATUS] RADAR ....... ACTIVE"
+      );
+
+      addLine(
+        "[STATUS] NETWORK ..... SYNC"
+      );
+
+      addLine(
+        "[STATUS] ANALYTICS ... ONLINE"
+      );
+
+      addLine(
+        "[STATUS] OSINT ....... READY"
+      );
+
+    }
+
+    else if(command === "radar"){
+
+      addLine(
+        "[RADAR] Initializing visual sweep..."
+      );
+
+      setTimeout(()=>{
+
+        addLine(
+          "[RADAR] Sweep complete"
+        );
+
+        addLine(
+          "[RADAR] Visual signal detected"
+        );
+
+      },600);
+
+    }
+
+    else if(command === "matrix"){
+
+      addLine(
+        "[MATRIX] Stream status: ACTIVE"
+      );
+
+      addLine(
+        "[MATRIX] Visual data rain synchronized"
+      );
+
+    }
+
+    else if(command === "network"){
+
+      addLine(
+        "[NET] Network visualization initialized"
+      );
+
+      addLine(
+        "[NET] Nodes synchronized"
+      );
+
+      addLine(
+        "[NET] Visual routes active"
+      );
+
+    }
+
+    else if(command === "analytics"){
+
+      addLine(
+        "[V5] Intelligence analytics: ONLINE"
+      );
+
+      addLine(
+        "[V5] Telemetry engine: ACTIVE"
+      );
+
+      addLine(
+        "[V5] Activity feed: STREAMING"
+      );
+
+    }
+
+    else if(command === "case"){
+
+      const id =
+        document.getElementById(
+          "caseId"
+        ).textContent;
+
+      const status =
+        document.getElementById(
+          "caseStatus"
+        ).textContent;
+
+      const target =
+        document.getElementById(
+          "caseTarget"
+        ).textContent;
+
+      addLine(
+        "[CASE] ID: " + id
+      );
+
+      addLine(
+        "[CASE] STATUS: " + status
+      );
+
+      addLine(
+        "[CASE] TARGET: " + target
+      );
+
+    }
+
+    else if(command === "clear"){
+
+      output.innerHTML = "";
+
+      addLine(
+        "[SYSTEM] Console cleared"
+      );
+
+    }
+
+    else{
+
+      addLine(
+        "[ERROR] Unknown command: " +
+        command
+      );
+
+      addLine(
+        '[HELP] Type "help" for commands'
+      );
+
+    }
+
+    input.value = "";
+
+  }
+
+  button.addEventListener(
+    "click",
+    executeCommand
+  );
+
+  input.addEventListener(
+    "keydown",
+    function(event){
+
+      if(event.key === "Enter"){
+
+        executeCommand();
+
+      }
+
+    }
+  );
+
+})();
+
+
+/* =====================================================
+   DATA CORE
+===================================================== */
+
+(function(){
+
+  const core =
+    document.querySelector(
+      ".alfa-core-center"
+    );
+
+  if(!core) return;
+
+  setInterval(()=>{
+
+    const intensity =
+      Math.floor(
+        65 + Math.random()*35
+      );
+
+    core.style.boxShadow =
+      "0 0 15px rgba(0,255,157,.9)," +
+      "0 0 " +
+      intensity +
+      "px rgba(0,255,157,.35)," +
+      "inset 0 0 18px rgba(0,255,157,.6)";
+
+  },1200);
+
+})();
+
+
+/* =====================================================
+   NETWORK ENGINE
+===================================================== */
+
+(function(){
+
+  const canvas =
+    document.getElementById(
+      "alfaNetworkCanvas"
+    );
+
+  if(!canvas) return;
+
+  const ctx =
+    canvas.getContext("2d");
+
+  let nodes = [];
+  let width = 0;
+  let height = 0;
+
+  function resizeNetwork(){
+
+    width =
+      canvas.width =
+      window.innerWidth;
+
+    height =
+      canvas.height =
+      window.innerHeight;
+
+    nodes = [];
+
+    const amount =
+      Math.min(
+        55,
+        Math.max(
+          25,
+          Math.floor(width / 25)
+        )
+      );
+
+    for(
+      let i=0;
+      i<amount;
+      i++
+    ){
+
+      nodes.push({
+
+        x:
+          Math.random()*width,
+
+        y:
+          Math.random()*height,
+
+        vx:
+          (Math.random()-.5)*.35,
+
+        vy:
+          (Math.random()-.5)*.35,
+
+        r:
+          Math.random()*2+1,
+
+        pulse:
+          Math.random() *
+          Math.PI*2
+
+      });
+
+    }
+
+  }
+
+  function drawNetwork(){
+
+    ctx.clearRect(
+      0,
+      0,
+      width,
+      height
+    );
+
+    for(
+      let i=0;
+      i<nodes.length;
+      i++
+    ){
+
+      const a =
+        nodes[i];
+
+      for(
+        let j=i+1;
+        j<nodes.length;
+        j++
+      ){
+
+        const b =
+          nodes[j];
+
+        const dx =
+          a.x-b.x;
+
+        const dy =
+          a.y-b.y;
+
+        const distance =
+          Math.sqrt(
+            dx*dx +
+            dy*dy
+          );
+
+        if(distance < 145){
+
+          const alpha =
+            (1-distance/145)*.22;
+
+          ctx.beginPath();
+
+          ctx.moveTo(
+            a.x,
+            a.y
+          );
+
+          ctx.lineTo(
+            b.x,
+            b.y
+          );
+
+          ctx.strokeStyle =
+            "rgba(0,255,157," +
+            alpha +
+            ")";
+
+          ctx.lineWidth =
+            1;
+
+          ctx.stroke();
+
+        }
+
+      }
+
+    }
+
+    for(
+      const node of nodes
+    ){
+
+      node.x += node.vx;
+      node.y += node.vy;
+      node.pulse += .035;
+
+      if(
+        node.x < 0 ||
+        node.x > width
+      ){
+
+        node.vx *= -1;
+
+      }
+
+      if(
+        node.y < 0 ||
+        node.y > height
+      ){
+
+        node.vy *= -1;
+
+      }
+
+      const glow =
+        Math.sin(
+          node.pulse
+        )*.5+.5;
+
+      ctx.beginPath();
+
+      ctx.arc(
+        node.x,
+        node.y,
+        node.r+glow,
+        0,
+        Math.PI*2
+      );
+
+      ctx.fillStyle =
+        "#00ff9d";
+
+      ctx.shadowBlur =
+        12;
+
+      ctx.shadowColor =
+        "#00ff9d";
+
+      ctx.fill();
+
+      ctx.shadowBlur =
+        0;
+
+    }
+
+    requestAnimationFrame(
+      drawNetwork
+    );
+
+  }
+
+  window.addEventListener(
+    "resize",
+    resizeNetwork
+  );
+
+  resizeNetwork();
+  drawNetwork();
+
+})();
+
+
+/* =====================================================
+   SIGNAL STATUS
+===================================================== */
+
+setInterval(()=>{
+
+  const status =
+    document.getElementById(
+      "signalStatus"
+    );
+
+  if(!status) return;
+
+  const states = [
+    "GRID",
+    "SYNC",
+    "OK",
+    "SCAN"
+  ];
+
+  status.textContent =
+    states[
+      Math.floor(
+        Math.random()*states.length
+      )
+    ];
+
+},2200);
+
+
+/* =====================================================
+   FULLSCREEN
+===================================================== */
+
+function toggleFullscreen(){
+
+  if(
+    !document.fullscreenElement
+  ){
+
+    document.documentElement
+      .requestFullscreen()
+      .catch(()=>{
+        log(
+          "[SYSTEM] Fullscreen unavailable."
+        );
+      });
+
+  }
+
+  else{
+
+    document.exitFullscreen();
+
+  }
+
+}
+
+
+/* =====================================================
+   V5 BOOT
+===================================================== */
+
+setTimeout(()=>{
+
+  log(
+    "[V5] Intelligence Analytics ONLINE"
+  );
+
+  log(
+    "[V5] Telemetry engine ONLINE"
+  );
+
+  log(
+    "[V5] Activity feed ONLINE"
+  );
+
+  log(
+    "[V5] Case workspace READY"
+  );
+
+  log(
+    "[READY] ALFA OSINT V5.0 COMMAND CENTER READY"
+  );
+
+},1000);
 
 console.log(
-  "%c ALFA OSINT V4.0 COMMAND CENTER ONLINE ",
-  "color:#00ff9d;background:#020b08;font-weight:bold;padding:7px;"
+  "%c ALFA OSINT V5.0 CYBER INTELLIGENCE COMMAND CENTER ONLINE ",
+  "color:#00ff9d;background:#020b08;font-weight:bold;padding:8px;"
 );
+
 </script>
 
-<!-- END ALFA OSINT V4.0 -->
 </body>
 </html>
-
+```
