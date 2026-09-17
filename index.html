@@ -2,19 +2,19 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>ALFA OSINT COMMAND CENTER V5.5</title>
+<title>ALFA OSINT COMMAND CENTER V6.0</title>
 
-<meta name="description" content="ALFA OSINT Command Center V5.5 - Black Neon Green Cyber Interface">
+<meta name="description" content="ALFA OSINT Command Center V6.0 - Advanced Black Neon Green Cyber Interface">
 <meta name="theme-color" content="#000000">
 
 <style>
 :root{
     --green:#39ff14;
     --lime:#b6ff00;
-    --dark:#000000;
-    --panel:rgba(0,15,0,.82);
+    --dark:#000;
+    --panel:rgba(0,15,0,.84);
     --panel2:rgba(2,25,2,.72);
     --border:rgba(57,255,20,.55);
     --soft:rgba(57,255,20,.12);
@@ -40,10 +40,6 @@ body{
     overflow-x:hidden;
 }
 
-/* =========================================================
-   MATRIX RAIN — PRESERVED / LOCKED
-   ========================================================= */
-
 #matrix{
     position:fixed;
     inset:0;
@@ -53,24 +49,19 @@ body{
     background:#000;
 }
 
-/* =========================================================
-   GLOBAL CYBER ATMOSPHERE
-   ========================================================= */
-
 body::before{
     content:"";
     position:fixed;
     inset:0;
     pointer-events:none;
     z-index:50;
-    background:
-        repeating-linear-gradient(
-            0deg,
-            rgba(57,255,20,.018) 0px,
-            rgba(57,255,20,.018) 1px,
-            transparent 1px,
-            transparent 4px
-        );
+    background:repeating-linear-gradient(
+        0deg,
+        rgba(57,255,20,.018) 0px,
+        rgba(57,255,20,.018) 1px,
+        transparent 1px,
+        transparent 4px
+    );
     mix-blend-mode:screen;
 }
 
@@ -85,9 +76,7 @@ body::after{
         inset 0 0 50px rgba(57,255,20,.08);
 }
 
-/* =========================================================
-   TOP BAR
-   ========================================================= */
+/* ================= TOP BAR ================= */
 
 .topbar{
     position:sticky;
@@ -98,7 +87,7 @@ body::after{
     align-items:center;
     justify-content:space-between;
     padding:0 22px;
-    background:rgba(0,0,0,.92);
+    background:rgba(0,0,0,.93);
     border-bottom:1px solid var(--border);
     box-shadow:
         0 0 20px rgba(57,255,20,.15),
@@ -118,7 +107,6 @@ body::after{
     border:1px solid var(--green);
     display:grid;
     place-items:center;
-    color:var(--green);
     font-weight:bold;
     box-shadow:
         0 0 10px var(--green),
@@ -155,9 +143,7 @@ body::after{
     animation:blink 1s infinite;
 }
 
-/* =========================================================
-   MAIN
-   ========================================================= */
+/* ================= MAIN ================= */
 
 main{
     position:relative;
@@ -167,9 +153,7 @@ main{
     padding:24px 0 50px;
 }
 
-/* =========================================================
-   HERO
-   ========================================================= */
+/* ================= HERO ================= */
 
 .hero{
     position:relative;
@@ -214,9 +198,7 @@ main{
     box-shadow:0 0 12px var(--green);
 }
 
-/* =========================================================
-   HUD STATS
-   ========================================================= */
+/* ================= STATS ================= */
 
 .stats{
     display:grid;
@@ -266,9 +248,7 @@ main{
     opacity:.65;
 }
 
-/* =========================================================
-   GRID
-   ========================================================= */
+/* ================= DASHBOARD ================= */
 
 .dashboard{
     display:grid;
@@ -317,9 +297,7 @@ main{
     border:1px solid rgba(57,255,20,.4);
 }
 
-/* =========================================================
-   HOLOGRAPHIC UI — PRESERVED / LOCKED
-   ========================================================= */
+/* ================= HOLOGRAM — PRESERVED ================= */
 
 .hologram{
     min-height:400px;
@@ -327,12 +305,11 @@ main{
     align-items:center;
     justify-content:center;
     position:relative;
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(57,255,20,.09),
-            transparent 48%
-        );
+    background:radial-gradient(
+        circle at center,
+        rgba(57,255,20,.09),
+        transparent 48%
+    );
 }
 
 .holo-core{
@@ -394,19 +371,16 @@ main{
     animation:holoScan 2.5s linear infinite;
 }
 
-/* =========================================================
-   TARGET HUD
-   ========================================================= */
+/* ================= TARGET HUD ================= */
 
 .target-hud{
     height:400px;
     position:relative;
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(57,255,20,.07),
-            transparent 50%
-        );
+    background:radial-gradient(
+        circle at center,
+        rgba(57,255,20,.07),
+        transparent 50%
+    );
     overflow:hidden;
 }
 
@@ -502,20 +476,9 @@ main{
     top:-6px;
 }
 
-.target.t1{
-    left:65%;
-    top:32%;
-}
-
-.target.t2{
-    left:31%;
-    top:63%;
-}
-
-.target.t3{
-    left:57%;
-    top:72%;
-}
+.target.t1{left:65%;top:32%}
+.target.t2{left:31%;top:63%}
+.target.t3{left:57%;top:72%}
 
 .hud-label{
     position:absolute;
@@ -525,24 +488,11 @@ main{
     background:rgba(0,0,0,.65);
 }
 
-.label1{
-    left:66%;
-    top:26%;
-}
+.label1{left:66%;top:26%}
+.label2{left:24%;top:67%}
+.label3{left:59%;top:77%}
 
-.label2{
-    left:24%;
-    top:67%;
-}
-
-.label3{
-    left:59%;
-    top:77%;
-}
-
-/* =========================================================
-   NETWORK
-   ========================================================= */
+/* ================= NETWORK ================= */
 
 .network{
     height:400px;
@@ -571,14 +521,14 @@ main{
     animation:nodePulse 1.7s infinite;
 }
 
-.node.n1{left:15%;top:25%;}
-.node.n2{left:50%;top:18%;}
-.node.n3{left:78%;top:34%;}
-.node.n4{left:31%;top:54%;}
-.node.n5{left:64%;top:57%;}
-.node.n6{left:84%;top:78%;}
-.node.n7{left:18%;top:82%;}
-.node.n8{left:49%;top:79%;}
+.node.n1{left:15%;top:25%}
+.node.n2{left:50%;top:18%}
+.node.n3{left:78%;top:34%}
+.node.n4{left:31%;top:54%}
+.node.n5{left:64%;top:57%}
+.node.n6{left:84%;top:78%}
+.node.n7{left:18%;top:82%}
+.node.n8{left:49%;top:79%}
 
 .connection{
     position:absolute;
@@ -629,9 +579,7 @@ main{
     transform:rotate(-2deg);
 }
 
-/* =========================================================
-   CYBER MAP
-   ========================================================= */
+/* ================= MAP ================= */
 
 .map{
     height:300px;
@@ -667,7 +615,6 @@ main{
         20% 100%,
         0 62%
     );
-    box-shadow:0 0 20px rgba(57,255,20,.1);
 }
 
 .map-point{
@@ -679,10 +626,10 @@ main{
     box-shadow:0 0 15px var(--green);
 }
 
-.mp1{left:28%;top:38%;}
-.mp2{left:55%;top:30%;}
-.mp3{left:72%;top:57%;}
-.mp4{left:43%;top:70%;}
+.mp1{left:28%;top:38%}
+.mp2{left:55%;top:30%}
+.mp3{left:72%;top:57%}
+.mp4{left:43%;top:70%}
 
 .map-ping{
     position:absolute;
@@ -694,9 +641,7 @@ main{
     animation:ping 2s infinite;
 }
 
-/* =========================================================
-   LIVE STREAM
-   ========================================================= */
+/* ================= STREAM ================= */
 
 .stream{
     height:300px;
@@ -736,9 +681,7 @@ main{
     animation:blink .8s infinite;
 }
 
-/* =========================================================
-   ALERT MONITOR
-   ========================================================= */
+/* ================= ALERTS ================= */
 
 .alerts{
     height:300px;
@@ -771,9 +714,7 @@ main{
     opacity:.75;
 }
 
-/* =========================================================
-   TELEMETRY
-   ========================================================= */
+/* ================= TELEMETRY ================= */
 
 .telemetry{
     padding:14px;
@@ -806,8 +747,288 @@ main{
 }
 
 /* =========================================================
-   COMMAND CONSOLE
+   V6.0 MISSION CONTROL
    ========================================================= */
+
+.mission-panel{
+    grid-column:1 / -1;
+}
+
+.mission-grid{
+    display:grid;
+    grid-template-columns:1.2fr 1fr 1fr;
+    gap:12px;
+    padding:12px;
+}
+
+.mission-box{
+    border:1px solid rgba(57,255,20,.25);
+    background:rgba(0,0,0,.4);
+    padding:12px;
+    min-height:180px;
+    position:relative;
+    overflow:hidden;
+}
+
+.mission-box h3{
+    font-size:10px;
+    letter-spacing:2px;
+    margin-bottom:12px;
+    color:var(--lime);
+}
+
+.mission-status{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    margin-bottom:12px;
+    font-size:11px;
+}
+
+.big-dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 15px var(--green);
+    animation:blink 1s infinite;
+}
+
+.mission-data{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+}
+
+.mission-data div{
+    border:1px solid rgba(57,255,20,.15);
+    padding:8px;
+    font-size:9px;
+}
+
+.mission-data strong{
+    display:block;
+    color:var(--lime);
+    margin-top:4px;
+}
+
+.action-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:7px;
+}
+
+.action-btn{
+    min-height:45px;
+    border:1px solid rgba(57,255,20,.4);
+    background:#000;
+    color:var(--green);
+    font-family:inherit;
+    font-size:9px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.action-btn:hover{
+    border-color:var(--green);
+    background:rgba(57,255,20,.1);
+    box-shadow:0 0 15px rgba(57,255,20,.25);
+    transform:translateY(-2px);
+}
+
+.action-btn.active{
+    background:rgba(57,255,20,.14);
+    box-shadow:inset 0 0 15px rgba(57,255,20,.1);
+}
+
+/* ================= TIMELINE ================= */
+
+.timeline-panel{
+    grid-column:1 / 3;
+}
+
+.timeline{
+    height:280px;
+    padding:14px;
+    overflow-y:auto;
+}
+
+.timeline::-webkit-scrollbar{
+    width:5px;
+}
+
+.timeline::-webkit-scrollbar-thumb{
+    background:rgba(57,255,20,.35);
+}
+
+.timeline-item{
+    position:relative;
+    padding:0 0 15px 22px;
+    border-left:1px solid rgba(57,255,20,.25);
+    margin-left:5px;
+}
+
+.timeline-item::before{
+    content:"";
+    position:absolute;
+    left:-4px;
+    top:3px;
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 9px var(--green);
+}
+
+.timeline-time{
+    font-size:8px;
+    opacity:.5;
+}
+
+.timeline-title{
+    font-size:10px;
+    margin-top:3px;
+    color:var(--lime);
+}
+
+.timeline-desc{
+    font-size:9px;
+    color:#7cff68;
+    opacity:.75;
+    margin-top:3px;
+}
+
+/* ================= DATA VISUALIZATION ================= */
+
+.chart-panel{
+    grid-column:3;
+}
+
+.chart-wrap{
+    height:280px;
+    padding:15px;
+    position:relative;
+}
+
+#activityChart{
+    width:100%;
+    height:100%;
+}
+
+/* ================= INTELLIGENCE FEED ================= */
+
+.intel-panel{
+    grid-column:1 / 2;
+}
+
+.intel{
+    height:260px;
+    padding:12px;
+    overflow:hidden;
+}
+
+.intel-card{
+    border-left:2px solid var(--green);
+    padding:9px;
+    margin-bottom:8px;
+    background:rgba(57,255,20,.025);
+}
+
+.intel-card .tag{
+    display:inline-block;
+    font-size:7px;
+    padding:3px 5px;
+    border:1px solid rgba(57,255,20,.35);
+    margin-bottom:5px;
+}
+
+.intel-card p{
+    font-size:9px;
+    line-height:1.5;
+}
+
+/* ================= ACTIVITY REPLAY ================= */
+
+.replay-panel{
+    grid-column:2 / 4;
+}
+
+.replay{
+    padding:14px;
+}
+
+.replay-screen{
+    height:150px;
+    border:1px solid rgba(57,255,20,.2);
+    background:
+        linear-gradient(
+            rgba(57,255,20,.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(57,255,20,.035) 1px,
+            transparent 1px
+        );
+    background-size:20px 20px;
+    position:relative;
+    overflow:hidden;
+}
+
+.replay-line{
+    position:absolute;
+    height:1px;
+    background:var(--green);
+    box-shadow:0 0 8px var(--green);
+    left:0;
+    width:100%;
+    top:50%;
+    transform:scaleX(0);
+    transform-origin:left;
+}
+
+.replay-marker{
+    position:absolute;
+    width:12px;
+    height:12px;
+    border:1px solid var(--lime);
+    box-shadow:0 0 12px var(--green);
+    left:20%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    opacity:0;
+}
+
+.replay.running .replay-line{
+    animation:replayLine 3s linear infinite;
+}
+
+.replay.running .replay-marker{
+    animation:replayMarker 3s linear infinite;
+}
+
+.replay-controls{
+    display:flex;
+    gap:7px;
+    margin-top:10px;
+}
+
+.replay-btn{
+    background:#000;
+    border:1px solid rgba(57,255,20,.35);
+    color:var(--green);
+    padding:7px 13px;
+    font-family:inherit;
+    font-size:8px;
+    cursor:pointer;
+}
+
+.replay-btn:hover{
+    border-color:var(--green);
+    box-shadow:0 0 10px rgba(57,255,20,.3);
+}
+
+/* ================= CONSOLE ================= */
 
 .console-panel{
     grid-column:1 / -1;
@@ -828,15 +1049,11 @@ main{
     background:rgba(0,0,0,.45);
 }
 
-.console-output::-webkit-scrollbar,
-.stream::-webkit-scrollbar,
-.alerts::-webkit-scrollbar{
+.console-output::-webkit-scrollbar{
     width:5px;
 }
 
-.console-output::-webkit-scrollbar-thumb,
-.stream::-webkit-scrollbar-thumb,
-.alerts::-webkit-scrollbar-thumb{
+.console-output::-webkit-scrollbar-thumb{
     background:rgba(57,255,20,.35);
 }
 
@@ -863,7 +1080,6 @@ main{
 
 .console-prefix{
     padding:12px;
-    color:var(--green);
     background:rgba(57,255,20,.03);
 }
 
@@ -881,10 +1097,6 @@ main{
 #commandInput::placeholder{
     color:rgba(57,255,20,.3);
 }
-
-/* =========================================================
-   QUICK COMMANDS
-   ========================================================= */
 
 .quick{
     display:flex;
@@ -912,9 +1124,7 @@ main{
     transform:translateY(-1px);
 }
 
-/* =========================================================
-   FOOTER
-   ========================================================= */
+/* ================= FOOTER ================= */
 
 .footer{
     text-align:center;
@@ -926,9 +1136,7 @@ main{
     letter-spacing:1px;
 }
 
-/* =========================================================
-   ANIMATIONS
-   ========================================================= */
+/* ================= ANIMATIONS ================= */
 
 @keyframes blink{
     0%,100%{opacity:1}
@@ -1000,35 +1208,86 @@ main{
 }
 
 @keyframes ping{
-    0%{transform:translate(-7px,-7px) scale(.4);opacity:1}
-    100%{transform:translate(-7px,-7px) scale(2.4);opacity:0}
+    0%{
+        transform:translate(-7px,-7px) scale(.4);
+        opacity:1
+    }
+    100%{
+        transform:translate(-7px,-7px) scale(2.4);
+        opacity:0
+    }
 }
 
 @keyframes streamIn{
-    from{opacity:0;transform:translateX(-8px)}
-    to{opacity:1;transform:translateX(0)}
+    from{
+        opacity:0;
+        transform:translateX(-8px)
+    }
+    to{
+        opacity:1;
+        transform:translateX(0)
+    }
 }
 
 @keyframes alertIn{
-    from{opacity:0;transform:translateY(-5px)}
-    to{opacity:1;transform:translateY(0)}
+    from{
+        opacity:0;
+        transform:translateY(-5px)
+    }
+    to{
+        opacity:1;
+        transform:translateY(0)
+    }
 }
 
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
+@keyframes replayLine{
+    0%{transform:scaleX(0)}
+    60%{transform:scaleX(1)}
+    100%{transform:scaleX(1)}
+}
 
-@media(max-width:1050px){
+@keyframes replayMarker{
+    0%{
+        left:0%;
+        opacity:1
+    }
+    90%{
+        left:100%;
+        opacity:1
+    }
+    100%{
+        left:100%;
+        opacity:0
+    }
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1100px){
+
     .dashboard{
         grid-template-columns:1fr 1fr;
     }
 
+    .mission-panel,
     .console-panel{
         grid-column:1 / -1;
+    }
+
+    .timeline-panel,
+    .chart-panel,
+    .intel-panel,
+    .replay-panel{
+        grid-column:auto;
+    }
+
+    .mission-grid{
+        grid-template-columns:1fr 1fr;
     }
 }
 
 @media(max-width:720px){
+
     .topbar{
         padding:0 12px;
     }
@@ -1073,8 +1332,17 @@ main{
         grid-template-columns:1fr;
     }
 
-    .console-panel{
+    .mission-panel,
+    .console-panel,
+    .timeline-panel,
+    .chart-panel,
+    .intel-panel,
+    .replay-panel{
         grid-column:auto;
+    }
+
+    .mission-grid{
+        grid-template-columns:1fr;
     }
 
     .hologram,
@@ -1092,31 +1360,31 @@ main{
     .map{
         height:260px;
     }
+
+    .replay-controls{
+        flex-wrap:wrap;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- =======================================================
-     MATRIX RAIN — PRESERVED
-     ======================================================= -->
-
 <canvas id="matrix"></canvas>
-
-<!-- =======================================================
-     TOP BAR
-     ======================================================= -->
 
 <header class="topbar">
 
     <div class="brand">
+
         <div class="logo">A</div>
 
         <div>
             <h1>ALFA OSINT COMMAND CENTER</h1>
-            <small>ADVANCED CYBER VISUALIZATION // V5.5</small>
+            <small>
+                ADVANCED CYBER VISUALIZATION // V6.0
+            </small>
         </div>
+
     </div>
 
     <div class="system-status">
@@ -1128,25 +1396,17 @@ main{
 
 <main>
 
-<!-- =======================================================
-     HERO
-     ======================================================= -->
-
 <section class="hero">
 
     <h2>CYBER COMMAND</h2>
 
     <p>
-        BLACK NEON GREEN // ADVANCED MONITORING INTERFACE
+        BLACK NEON GREEN // MISSION CONTROL V6.0
     </p>
 
     <div class="hero-line"></div>
 
 </section>
-
-<!-- =======================================================
-     LIVE STATS
-     ======================================================= -->
 
 <section class="stats">
 
@@ -1172,312 +1432,608 @@ main{
 
 </section>
 
-<!-- =======================================================
-     MAIN DASHBOARD
-     ======================================================= -->
-
 <section class="dashboard">
 
-    <!-- HOLOGRAM -->
+<!-- HOLOGRAM -->
 
-    <div class="panel">
+<div class="panel">
 
-        <div class="panel-header">
-            <div class="panel-title">HOLOGRAPHIC CORE</div>
-            <div class="panel-badge">LOCKED</div>
+    <div class="panel-header">
+        <div class="panel-title">HOLOGRAPHIC CORE</div>
+        <div class="panel-badge">LOCKED</div>
+    </div>
+
+    <div class="hologram">
+
+        <div class="holo-core">
+
+            <div class="holo-inner">
+                ALFA<br>
+                CORE
+            </div>
+
         </div>
 
-        <div class="hologram">
+        <div class="holo-scan"></div>
 
-            <div class="holo-core">
+    </div>
 
-                <div class="holo-inner">
-                    ALFA<br>
-                    CORE
+</div>
+
+<!-- TARGET HUD -->
+
+<div class="panel">
+
+    <div class="panel-header">
+        <div class="panel-title">DIGITAL TARGET HUD</div>
+        <div class="panel-badge">SIMULATION</div>
+    </div>
+
+    <div class="target-hud">
+
+        <div class="radar">
+            <div class="ring"></div>
+            <div class="ring two"></div>
+            <div class="sweep"></div>
+        </div>
+
+        <div class="target t1"></div>
+        <div class="target t2"></div>
+        <div class="target t3"></div>
+
+        <div class="hud-label label1">TARGET-01</div>
+        <div class="hud-label label2">TARGET-02</div>
+        <div class="hud-label label3">TARGET-03</div>
+
+    </div>
+
+</div>
+
+<!-- NETWORK -->
+
+<div class="panel">
+
+    <div class="panel-header">
+        <div class="panel-title">NETWORK NODES</div>
+        <div class="panel-badge">LIVE SIM</div>
+    </div>
+
+    <div class="network">
+
+        <div class="connection c1"></div>
+        <div class="connection c2"></div>
+        <div class="connection c3"></div>
+        <div class="connection c4"></div>
+        <div class="connection c5"></div>
+
+        <div class="node n1"></div>
+        <div class="node n2"></div>
+        <div class="node n3"></div>
+        <div class="node n4"></div>
+        <div class="node n5"></div>
+        <div class="node n6"></div>
+        <div class="node n7"></div>
+        <div class="node n8"></div>
+
+    </div>
+
+</div>
+
+<!-- MAP -->
+
+<div class="panel">
+
+    <div class="panel-header">
+        <div class="panel-title">CYBER MAP GRID</div>
+        <div class="panel-badge">SIMULATED</div>
+    </div>
+
+    <div class="map">
+
+        <div class="map-point mp1">
+            <div class="map-ping"></div>
+        </div>
+
+        <div class="map-point mp2">
+            <div class="map-ping"></div>
+        </div>
+
+        <div class="map-point mp3">
+            <div class="map-ping"></div>
+        </div>
+
+        <div class="map-point mp4">
+            <div class="map-ping"></div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- STREAM -->
+
+<div class="panel">
+
+    <div class="panel-header">
+        <div class="panel-title">LIVE CYBER STREAM</div>
+        <div class="panel-badge live-indicator">● LIVE</div>
+    </div>
+
+    <div class="stream" id="stream"></div>
+
+</div>
+
+<!-- ALERT -->
+
+<div class="panel">
+
+    <div class="panel-header">
+        <div class="panel-title">CYBER ALERT MONITOR</div>
+        <div class="panel-badge">ACTIVE</div>
+    </div>
+
+    <div class="alerts" id="alerts"></div>
+
+</div>
+
+<!-- TELEMETRY -->
+
+<div class="panel">
+
+    <div class="panel-header">
+        <div class="panel-title">SYSTEM TELEMETRY</div>
+        <div class="panel-badge">LOCAL</div>
+    </div>
+
+    <div class="telemetry">
+
+        <div class="telemetry-item">
+            <div class="telemetry-top">
+                <span>CPU LOAD</span>
+                <span id="cpuText">32%</span>
+            </div>
+            <div class="bar">
+                <div class="bar-fill" id="cpuBar"></div>
+            </div>
+        </div>
+
+        <div class="telemetry-item">
+            <div class="telemetry-top">
+                <span>MEMORY</span>
+                <span id="memText">54%</span>
+            </div>
+            <div class="bar">
+                <div class="bar-fill" id="memBar"></div>
+            </div>
+        </div>
+
+        <div class="telemetry-item">
+            <div class="telemetry-top">
+                <span>NETWORK</span>
+                <span id="netText">76%</span>
+            </div>
+            <div class="bar">
+                <div class="bar-fill" id="netBar"></div>
+            </div>
+        </div>
+
+        <div class="telemetry-item">
+            <div class="telemetry-top">
+                <span>SECURITY</span>
+                <span>ACTIVE</span>
+            </div>
+            <div class="bar">
+                <div
+                    class="bar-fill"
+                    style="width:94%"
+                ></div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================================
+     V6.0 MISSION CONTROL
+     ===================================================== -->
+
+<div class="panel mission-panel">
+
+    <div class="panel-header">
+
+        <div class="panel-title">
+            MISSION CONTROL
+        </div>
+
+        <div class="panel-badge">
+            V6.0 ACTIVE
+        </div>
+
+    </div>
+
+    <div class="mission-grid">
+
+        <div class="mission-box">
+
+            <h3>MISSION STATUS</h3>
+
+            <div class="mission-status">
+
+                <span class="big-dot"></span>
+
+                <span>
+                    SIMULATION ENGINE ACTIVE
+                </span>
+
+            </div>
+
+            <div class="mission-data">
+
+                <div>
+                    MODE
+                    <strong>LOCAL</strong>
+                </div>
+
+                <div>
+                    ENGINE
+                    <strong>ONLINE</strong>
+                </div>
+
+                <div>
+                    FEED
+                    <strong>LIVE</strong>
+                </div>
+
+                <div>
+                    SECURITY
+                    <strong>SAFE</strong>
                 </div>
 
             </div>
 
-            <div class="holo-scan"></div>
+        </div>
+
+        <div class="mission-box">
+
+            <h3>MISSION PARAMETERS</h3>
+
+            <div class="mission-data">
+
+                <div>
+                    CYCLE
+                    <strong id="missionCycle">
+                        001
+                    </strong>
+                </div>
+
+                <div>
+                    SIGNAL
+                    <strong id="missionSignal">
+                        87%
+                    </strong>
+                </div>
+
+                <div>
+                    ACTIVITY
+                    <strong id="missionActivity">
+                        HIGH
+                    </strong>
+                </div>
+
+                <div>
+                    STATUS
+                    <strong>READY</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="mission-box">
+
+            <h3>QUICK ACTIONS</h3>
+
+            <div class="action-grid">
+
+                <button
+                    class="action-btn"
+                    onclick="quickAction('SCAN')"
+                >
+                    RUN SCAN
+                </button>
+
+                <button
+                    class="action-btn"
+                    onclick="quickAction('SYNC')"
+                >
+                    SYNC NODES
+                </button>
+
+                <button
+                    class="action-btn"
+                    onclick="quickAction('ALERT')"
+                >
+                    TEST ALERT
+                </button>
+
+                <button
+                    class="action-btn"
+                    onclick="quickAction('RESET')"
+                >
+                    RESET SIM
+                </button>
+
+            </div>
 
         </div>
 
     </div>
 
-    <!-- TARGET HUD -->
+</div>
 
-    <div class="panel">
+<!-- TIMELINE -->
 
-        <div class="panel-header">
-            <div class="panel-title">DIGITAL TARGET HUD</div>
-            <div class="panel-badge">SIMULATION</div>
+<div class="panel timeline-panel">
+
+    <div class="panel-header">
+
+        <div class="panel-title">
+            CYBER EVENT TIMELINE
         </div>
 
-        <div class="target-hud">
+        <div class="panel-badge">
+            LIVE
+        </div>
 
-            <div class="radar">
-                <div class="ring"></div>
-                <div class="ring two"></div>
-                <div class="sweep"></div>
-            </div>
+    </div>
 
-            <div class="target t1"></div>
-            <div class="target t2"></div>
-            <div class="target t3"></div>
+    <div class="timeline" id="timeline"></div>
 
-            <div class="hud-label label1">TARGET-01</div>
-            <div class="hud-label label2">TARGET-02</div>
-            <div class="hud-label label3">TARGET-03</div>
+</div>
+
+<!-- CHART -->
+
+<div class="panel chart-panel">
+
+    <div class="panel-header">
+
+        <div class="panel-title">
+            ACTIVITY GRAPH
+        </div>
+
+        <div class="panel-badge">
+            REALTIME SIM
+        </div>
+
+    </div>
+
+    <div class="chart-wrap">
+
+        <canvas id="activityChart"></canvas>
+
+    </div>
+
+</div>
+
+<!-- INTELLIGENCE -->
+
+<div class="panel intel-panel">
+
+    <div class="panel-header">
+
+        <div class="panel-title">
+            INTELLIGENCE FEED
+        </div>
+
+        <div class="panel-badge">
+            LOCAL
+        </div>
+
+    </div>
+
+    <div class="intel" id="intel"></div>
+
+</div>
+
+<!-- REPLAY -->
+
+<div class="panel replay-panel">
+
+    <div class="panel-header">
+
+        <div class="panel-title">
+            ACTIVITY REPLAY
+        </div>
+
+        <div class="panel-badge">
+            VISUAL SIM
+        </div>
+
+    </div>
+
+    <div class="replay">
+
+        <div
+            class="replay-screen"
+            id="replay"
+        >
+
+            <div class="replay-line"></div>
+
+            <div class="replay-marker"></div>
+
+        </div>
+
+        <div class="replay-controls">
+
+            <button
+                class="replay-btn"
+                onclick="startReplay()"
+            >
+                ▶ PLAY
+            </button>
+
+            <button
+                class="replay-btn"
+                onclick="stopReplay()"
+            >
+                ■ STOP
+            </button>
+
+            <button
+                class="replay-btn"
+                onclick="resetReplay()"
+            >
+                ↻ RESET
+            </button>
 
         </div>
 
     </div>
 
-    <!-- NETWORK -->
+</div>
 
-    <div class="panel">
+<!-- CONSOLE -->
 
-        <div class="panel-header">
-            <div class="panel-title">NETWORK NODES</div>
-            <div class="panel-badge">LIVE SIM</div>
+<div class="panel console-panel">
+
+    <div class="panel-header">
+
+        <div class="panel-title">
+            COMMAND CONSOLE
         </div>
 
-        <div class="network">
-
-            <div class="connection c1"></div>
-            <div class="connection c2"></div>
-            <div class="connection c3"></div>
-            <div class="connection c4"></div>
-            <div class="connection c5"></div>
-
-            <div class="node n1"></div>
-            <div class="node n2"></div>
-            <div class="node n3"></div>
-            <div class="node n4"></div>
-            <div class="node n5"></div>
-            <div class="node n6"></div>
-            <div class="node n7"></div>
-            <div class="node n8"></div>
-
+        <div class="panel-badge">
+            LOCAL SIMULATION
         </div>
 
     </div>
 
-    <!-- CYBER MAP -->
+    <div class="console">
 
-    <div class="panel">
+        <div
+            class="console-output"
+            id="consoleOutput"
+        >
 
-        <div class="panel-header">
-            <div class="panel-title">CYBER MAP GRID</div>
-            <div class="panel-badge">SIMULATED</div>
-        </div>
-
-        <div class="map">
-
-            <div class="map-point mp1">
-                <div class="map-ping"></div>
+            <div class="console-line system">
+                [ALFA] CYBER COMMAND CENTER V6.0 INITIALIZED
             </div>
 
-            <div class="map-point mp2">
-                <div class="map-ping"></div>
+            <div class="console-line system">
+                [SYSTEM] Matrix visualization: ONLINE
             </div>
 
-            <div class="map-point mp3">
-                <div class="map-ping"></div>
+            <div class="console-line system">
+                [SYSTEM] Holographic core: ONLINE
             </div>
 
-            <div class="map-point mp4">
-                <div class="map-ping"></div>
+            <div class="console-line system">
+                [SYSTEM] Mission Control: ONLINE
             </div>
 
-        </div>
-
-    </div>
-
-    <!-- LIVE STREAM -->
-
-    <div class="panel">
-
-        <div class="panel-header">
-            <div class="panel-title">LIVE CYBER STREAM</div>
-            <div class="panel-badge live-indicator">● LIVE</div>
-        </div>
-
-        <div class="stream" id="stream"></div>
-
-    </div>
-
-    <!-- ALERT -->
-
-    <div class="panel">
-
-        <div class="panel-header">
-            <div class="panel-title">CYBER ALERT MONITOR</div>
-            <div class="panel-badge">ACTIVE</div>
-        </div>
-
-        <div class="alerts" id="alerts"></div>
-
-    </div>
-
-    <!-- TELEMETRY -->
-
-    <div class="panel">
-
-        <div class="panel-header">
-            <div class="panel-title">SYSTEM TELEMETRY</div>
-            <div class="panel-badge">LOCAL</div>
-        </div>
-
-        <div class="telemetry">
-
-            <div class="telemetry-item">
-                <div class="telemetry-top">
-                    <span>CPU LOAD</span>
-                    <span id="cpuText">32%</span>
-                </div>
-
-                <div class="bar">
-                    <div class="bar-fill" id="cpuBar"></div>
-                </div>
+            <div class="console-line system">
+                [SYSTEM] Activity Replay: READY
             </div>
 
-            <div class="telemetry-item">
-                <div class="telemetry-top">
-                    <span>MEMORY</span>
-                    <span id="memText">54%</span>
-                </div>
-
-                <div class="bar">
-                    <div class="bar-fill" id="memBar"></div>
-                </div>
-            </div>
-
-            <div class="telemetry-item">
-                <div class="telemetry-top">
-                    <span>NETWORK</span>
-                    <span id="netText">76%</span>
-                </div>
-
-                <div class="bar">
-                    <div class="bar-fill" id="netBar"></div>
-                </div>
-            </div>
-
-            <div class="telemetry-item">
-                <div class="telemetry-top">
-                    <span>SECURITY</span>
-                    <span>ACTIVE</span>
-                </div>
-
-                <div class="bar">
-                    <div class="bar-fill" style="width:94%"></div>
-                </div>
+            <div class="console-line system">
+                [INFO] Type "help" for available commands.
             </div>
 
         </div>
 
-    </div>
+        <form
+            class="console-form"
+            id="consoleForm"
+        >
 
-    <!-- CONSOLE -->
-
-    <div class="panel console-panel">
-
-        <div class="panel-header">
-
-            <div class="panel-title">
-                COMMAND CONSOLE
+            <div class="console-prefix">
+                ALFA@
             </div>
 
-            <div class="panel-badge">
-                LOCAL SIMULATION
-            </div>
-
-        </div>
-
-        <div class="console">
-
-            <div
-                class="console-output"
-                id="consoleOutput"
+            <input
+                id="commandInput"
+                autocomplete="off"
+                spellcheck="false"
+                placeholder="type command..."
             >
 
-                <div class="console-line system">
-                    [ALFA] CYBER COMMAND CENTER V5.5 INITIALIZED
-                </div>
+        </form>
 
-                <div class="console-line system">
-                    [SYSTEM] Matrix visualization: ONLINE
-                </div>
+        <div class="quick">
 
-                <div class="console-line system">
-                    [SYSTEM] Holographic core: ONLINE
-                </div>
+            <button
+                class="cmd-btn"
+                data-command="help"
+            >
+                HELP
+            </button>
 
-                <div class="console-line system">
-                    [SYSTEM] Network visualization: ONLINE
-                </div>
+            <button
+                class="cmd-btn"
+                data-command="status"
+            >
+                STATUS
+            </button>
 
-                <div class="console-line system">
-                    [INFO] Type "help" for available commands.
-                </div>
+            <button
+                class="cmd-btn"
+                data-command="scan"
+            >
+                SCAN
+            </button>
 
-            </div>
+            <button
+                class="cmd-btn"
+                data-command="matrix"
+            >
+                MATRIX
+            </button>
 
-            <form class="console-form" id="consoleForm">
+            <button
+                class="cmd-btn"
+                data-command="nodes"
+            >
+                NODES
+            </button>
 
-                <div class="console-prefix">
-                    ALFA@
-                </div>
+            <button
+                class="cmd-btn"
+                data-command="mission"
+            >
+                MISSION
+            </button>
 
-                <input
-                    id="commandInput"
-                    autocomplete="off"
-                    spellcheck="false"
-                    placeholder="type command..."
-                >
+            <button
+                class="cmd-btn"
+                data-command="replay"
+            >
+                REPLAY
+            </button>
 
-            </form>
-
-            <div class="quick">
-
-                <button class="cmd-btn" data-command="help">
-                    HELP
-                </button>
-
-                <button class="cmd-btn" data-command="status">
-                    STATUS
-                </button>
-
-                <button class="cmd-btn" data-command="scan">
-                    SCAN
-                </button>
-
-                <button class="cmd-btn" data-command="matrix">
-                    MATRIX
-                </button>
-
-                <button class="cmd-btn" data-command="nodes">
-                    NODES
-                </button>
-
-                <button class="cmd-btn" data-command="clear">
-                    CLEAR
-                </button>
-
-            </div>
+            <button
+                class="cmd-btn"
+                data-command="clear"
+            >
+                CLEAR
+            </button>
 
         </div>
 
     </div>
+
+</div>
 
 </section>
 
 <div class="footer">
-    ALFA OSINT COMMAND CENTER V5.5 //
+
+    ALFA OSINT COMMAND CENTER V6.0 //
     BLACK × NEON GREEN //
     VISUALIZATION & DEMO MODE //
-    NO REAL-WORLD TRACKING
+    ALL ACTIVITY IS SIMULATED LOCALLY
+
 </div>
 
 </main>
@@ -1485,29 +2041,41 @@ main{
 <script>
 
 /* =========================================================
-   MATRIX RAIN — PRESERVED / LOCKED
+   MATRIX RAIN — PRESERVED
    ========================================================= */
 
-const matrixCanvas = document.getElementById("matrix");
-const matrixCtx = matrixCanvas.getContext("2d");
+const matrixCanvas =
+    document.getElementById("matrix");
 
-let matrixWidth = matrixCanvas.width = window.innerWidth;
-let matrixHeight = matrixCanvas.height = window.innerHeight;
+const matrixCtx =
+    matrixCanvas.getContext("2d");
+
+let matrixWidth =
+    matrixCanvas.width =
+    window.innerWidth;
+
+let matrixHeight =
+    matrixCanvas.height =
+    window.innerHeight;
 
 const matrixChars =
     "01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&*+-<>[]{}";
 
 const matrixFontSize = 15;
-let matrixColumns = Math.floor(
-    matrixWidth / matrixFontSize
-);
 
-let matrixDrops = Array(matrixColumns)
-    .fill(1);
+let matrixColumns =
+    Math.floor(
+        matrixWidth / matrixFontSize
+    );
+
+let matrixDrops =
+    Array(matrixColumns).fill(1);
 
 function drawMatrix(){
 
-    matrixCtx.fillStyle = "rgba(0,0,0,0.055)";
+    matrixCtx.fillStyle =
+        "rgba(0,0,0,0.055)";
+
     matrixCtx.fillRect(
         0,
         0,
@@ -1515,11 +2083,18 @@ function drawMatrix(){
         matrixHeight
     );
 
-    matrixCtx.fillStyle = "#39ff14";
-    matrixCtx.font =
-        matrixFontSize + "px monospace";
+    matrixCtx.fillStyle =
+        "#39ff14";
 
-    for(let i=0;i<matrixDrops.length;i++){
+    matrixCtx.font =
+        matrixFontSize +
+        "px monospace";
+
+    for(
+        let i=0;
+        i<matrixDrops.length;
+        i++
+    ){
 
         const char =
             matrixChars[
@@ -1532,100 +2107,120 @@ function drawMatrix(){
         matrixCtx.fillText(
             char,
             i * matrixFontSize,
-            matrixDrops[i] * matrixFontSize
+            matrixDrops[i] *
+            matrixFontSize
         );
 
         if(
-            matrixDrops[i] * matrixFontSize >
+            matrixDrops[i] *
+            matrixFontSize >
             matrixHeight &&
-            Math.random() > 0.975
+            Math.random() > .975
         ){
+
             matrixDrops[i] = 0;
+
         }
 
         matrixDrops[i]++;
+
     }
+
 }
 
 setInterval(drawMatrix,35);
 
-window.addEventListener("resize",()=>{
+window.addEventListener(
+    "resize",
+    ()=>{
 
-    matrixWidth =
-        matrixCanvas.width =
-        window.innerWidth;
+        matrixWidth =
+            matrixCanvas.width =
+            window.innerWidth;
 
-    matrixHeight =
-        matrixCanvas.height =
-        window.innerHeight;
+        matrixHeight =
+            matrixCanvas.height =
+            window.innerHeight;
 
-    matrixColumns =
-        Math.floor(
-            matrixWidth /
-            matrixFontSize
-        );
+        matrixColumns =
+            Math.floor(
+                matrixWidth /
+                matrixFontSize
+            );
 
-    matrixDrops =
-        Array(matrixColumns).fill(1);
-});
+        matrixDrops =
+            Array(matrixColumns).fill(1);
+
+    }
+);
 
 /* =========================================================
    UPTIME
    ========================================================= */
 
-const bootTime = Date.now();
+const bootTime =
+    Date.now();
 
 function updateUptime(){
 
     const seconds =
         Math.floor(
-            (Date.now() - bootTime) / 1000
+            (Date.now()-bootTime)/1000
         );
 
     const h =
         String(
-            Math.floor(seconds / 3600)
+            Math.floor(
+                seconds/3600
+            )
         ).padStart(2,"0");
 
     const m =
         String(
             Math.floor(
-                (seconds % 3600) / 60
+                (seconds%3600)/60
             )
         ).padStart(2,"0");
 
     const s =
         String(
-            seconds % 60
+            seconds%60
         ).padStart(2,"0");
 
     document.getElementById(
         "uptime"
     ).textContent =
         `${h}:${m}:${s}`;
+
 }
 
-setInterval(updateUptime,1000);
+setInterval(
+    updateUptime,
+    1000
+);
 
 /* =========================================================
-   LIVE STATS
+   STATS
    ========================================================= */
 
 function updateStats(){
 
     const targets =
-        5 + Math.floor(
-            Math.random() * 8
+        5 +
+        Math.floor(
+            Math.random()*8
         );
 
     const nodes =
-        38 + Math.floor(
-            Math.random() * 25
+        38 +
+        Math.floor(
+            Math.random()*25
         );
 
     const events =
-        90 + Math.floor(
-            Math.random() * 90
+        90 +
+        Math.floor(
+            Math.random()*90
         );
 
     document.getElementById(
@@ -1642,9 +2237,13 @@ function updateStats(){
         "events"
     ).textContent =
         events;
+
 }
 
-setInterval(updateStats,1800);
+setInterval(
+    updateStats,
+    1800
+);
 
 /* =========================================================
    TELEMETRY
@@ -1653,59 +2252,68 @@ setInterval(updateStats,1800);
 function telemetry(){
 
     const cpu =
-        20 + Math.floor(
-            Math.random() * 65
+        20 +
+        Math.floor(
+            Math.random()*65
         );
 
     const mem =
-        35 + Math.floor(
-            Math.random() * 50
+        35 +
+        Math.floor(
+            Math.random()*50
         );
 
     const net =
-        40 + Math.floor(
-            Math.random() * 55
+        40 +
+        Math.floor(
+            Math.random()*55
         );
 
     document.getElementById(
         "cpuBar"
     ).style.width =
-        cpu + "%";
+        cpu+"%";
 
     document.getElementById(
         "memBar"
     ).style.width =
-        mem + "%";
+        mem+"%";
 
     document.getElementById(
         "netBar"
     ).style.width =
-        net + "%";
+        net+"%";
 
     document.getElementById(
         "cpuText"
     ).textContent =
-        cpu + "%";
+        cpu+"%";
 
     document.getElementById(
         "memText"
     ).textContent =
-        mem + "%";
+        mem+"%";
 
     document.getElementById(
         "netText"
     ).textContent =
-        net + "%";
+        net+"%";
+
 }
 
-setInterval(telemetry,1500);
+setInterval(
+    telemetry,
+    1500
+);
 
 /* =========================================================
-   LIVE CYBER STREAM
+   LIVE STREAM
    ========================================================= */
 
 const stream =
-    document.getElementById("stream");
+    document.getElementById(
+        "stream"
+    );
 
 const streamMessages = [
 
@@ -1720,27 +2328,27 @@ const streamMessages = [
     "visual channel synchronized",
     "command interface ready",
     "simulation heartbeat received",
-    "node animation cycle complete"
+    "mission control heartbeat",
+    "activity graph refreshed",
+    "replay buffer updated"
 
 ];
 
 function addStream(){
 
     const row =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     row.className =
         "stream-row";
 
-    const now =
-        new Date();
-
     const time =
-        now.toLocaleTimeString(
+        new Date()
+        .toLocaleTimeString(
             "id-ID",
-            {
-                hour12:false
-            }
+            {hour12:false}
         );
 
     const types =
@@ -1749,13 +2357,14 @@ function addStream(){
             "NODE",
             "HUD",
             "SYS",
-            "NET"
+            "NET",
+            "MISSION"
         ];
 
     const type =
         types[
             Math.floor(
-                Math.random() *
+                Math.random()*
                 types.length
             )
         ];
@@ -1763,7 +2372,7 @@ function addStream(){
     const msg =
         streamMessages[
             Math.floor(
-                Math.random() *
+                Math.random()*
                 streamMessages.length
             )
         ];
@@ -1784,25 +2393,35 @@ function addStream(){
 
     stream.prepend(row);
 
-    while(stream.children.length > 13){
+    while(
+        stream.children.length > 13
+    ){
+
         stream.removeChild(
             stream.lastChild
         );
+
     }
+
 }
 
 for(let i=0;i<7;i++){
     addStream();
 }
 
-setInterval(addStream,850);
+setInterval(
+    addStream,
+    850
+);
 
 /* =========================================================
-   ALERT MONITOR
+   ALERTS
    ========================================================= */
 
 const alerts =
-    document.getElementById("alerts");
+    document.getElementById(
+        "alerts"
+    );
 
 const alertMessages = [
 
@@ -1823,7 +2442,7 @@ const alertMessages = [
 
     {
         type:"INFO",
-        text:"Target HUD cycle refreshed."
+        text:"Mission Control cycle refreshed."
     },
 
     {
@@ -1843,35 +2462,35 @@ function addAlert(){
     const data =
         alertMessages[
             Math.floor(
-                Math.random() *
+                Math.random()*
                 alertMessages.length
             )
         ];
 
     const box =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     box.className =
         "alert " +
         (
-            data.type === "WARNING"
+            data.type==="WARNING"
                 ? "warning"
                 : ""
         );
 
-    const now =
+    const time =
         new Date()
         .toLocaleTimeString(
             "id-ID",
-            {
-                hour12:false
-            }
+            {hour12:false}
         );
 
     box.innerHTML = `
         <div class="alert-head">
             <span>${data.type}</span>
-            <span>${now}</span>
+            <span>${time}</span>
         </div>
 
         <div>${data.text}</div>
@@ -1879,18 +2498,645 @@ function addAlert(){
 
     alerts.prepend(box);
 
-    while(alerts.children.length > 5){
+    while(
+        alerts.children.length > 5
+    ){
+
         alerts.removeChild(
             alerts.lastChild
         );
+
     }
+
 }
 
 for(let i=0;i<3;i++){
     addAlert();
 }
 
-setInterval(addAlert,2600);
+setInterval(
+    addAlert,
+    2600
+);
+
+/* =========================================================
+   TARGET HUD
+   ========================================================= */
+
+const targetsHUD =
+    document.querySelectorAll(
+        ".target"
+    );
+
+function moveTargets(){
+
+    targetsHUD.forEach(
+        target=>{
+
+            const x =
+                25+
+                Math.random()*50;
+
+            const y =
+                20+
+                Math.random()*60;
+
+            target.style.left =
+                x+"%";
+
+            target.style.top =
+                y+"%";
+
+        }
+    );
+
+}
+
+setInterval(
+    moveTargets,
+    3500
+);
+
+/* =========================================================
+   NETWORK MOTION
+   ========================================================= */
+
+const networkNodes =
+    document.querySelectorAll(
+        ".node"
+    );
+
+function animateNetwork(){
+
+    networkNodes.forEach(
+        node=>{
+
+            const currentLeft =
+                parseFloat(
+                    node.style.left ||
+                    getComputedStyle(
+                        node
+                    ).left
+                );
+
+            const currentTop =
+                parseFloat(
+                    node.style.top ||
+                    getComputedStyle(
+                        node
+                    ).top
+                );
+
+            let newLeft =
+                currentLeft+
+                (Math.random()-.5)*4;
+
+            let newTop =
+                currentTop+
+                (Math.random()-.5)*4;
+
+            newLeft =
+                Math.max(
+                    5,
+                    Math.min(
+                        92,
+                        newLeft
+                    )
+                );
+
+            newTop =
+                Math.max(
+                    8,
+                    Math.min(
+                        90,
+                        newTop
+                    )
+                );
+
+            node.style.left =
+                newLeft+"%";
+
+            node.style.top =
+                newTop+"%";
+
+        }
+    );
+
+}
+
+setInterval(
+    animateNetwork,
+    2200
+);
+
+/* =========================================================
+   MISSION CONTROL
+   ========================================================= */
+
+let missionCycle = 1;
+
+function updateMission(){
+
+    missionCycle++;
+
+    document.getElementById(
+        "missionCycle"
+    ).textContent =
+        String(
+            missionCycle
+        ).padStart(3,"0");
+
+    const signal =
+        65+
+        Math.floor(
+            Math.random()*34
+        );
+
+    document.getElementById(
+        "missionSignal"
+    ).textContent =
+        signal+"%";
+
+    document.getElementById(
+        "missionActivity"
+    ).textContent =
+        signal>85
+            ? "HIGH"
+            : signal>70
+                ? "MED"
+                : "LOW";
+
+}
+
+setInterval(
+    updateMission,
+    2500
+);
+
+/* =========================================================
+   TIMELINE
+   ========================================================= */
+
+const timeline =
+    document.getElementById(
+        "timeline"
+    );
+
+const timelineEvents = [
+
+    [
+        "MISSION",
+        "Mission Control initialized",
+        "Simulation engine ready."
+    ],
+
+    [
+        "NETWORK",
+        "Node synchronization complete",
+        "Visual network topology refreshed."
+    ],
+
+    [
+        "HUD",
+        "Target visualization refreshed",
+        "Digital HUD cycle completed."
+    ],
+
+    [
+        "SYSTEM",
+        "Telemetry heartbeat received",
+        "Local system visualization active."
+    ],
+
+    [
+        "MATRIX",
+        "Matrix visualization running",
+        "Green data stream remains active."
+    ],
+
+    [
+        "CORE",
+        "Holographic core stable",
+        "Visual core operating normally."
+    ]
+
+];
+
+function addTimeline(){
+
+    const event =
+        timelineEvents[
+            Math.floor(
+                Math.random()*
+                timelineEvents.length
+            )
+        ];
+
+    const item =
+        document.createElement(
+            "div"
+        );
+
+    item.className =
+        "timeline-item";
+
+    const time =
+        new Date()
+        .toLocaleTimeString(
+            "id-ID",
+            {hour12:false}
+        );
+
+    item.innerHTML = `
+        <div class="timeline-time">
+            ${time}
+        </div>
+
+        <div class="timeline-title">
+            [${event[0]}] ${event[1]}
+        </div>
+
+        <div class="timeline-desc">
+            ${event[2]}
+        </div>
+    `;
+
+    timeline.prepend(item);
+
+    while(
+        timeline.children.length>10
+    ){
+
+        timeline.removeChild(
+            timeline.lastChild
+        );
+
+    }
+
+}
+
+for(let i=0;i<6;i++){
+    addTimeline();
+}
+
+setInterval(
+    addTimeline,
+    2200
+);
+
+/* =========================================================
+   ACTIVITY GRAPH
+   ========================================================= */
+
+const chartCanvas =
+    document.getElementById(
+        "activityChart"
+    );
+
+const chartCtx =
+    chartCanvas.getContext("2d");
+
+let chartData =
+    Array.from(
+        {length:30},
+        ()=>30+
+            Math.random()*55
+    );
+
+function resizeChart(){
+
+    const rect =
+        chartCanvas
+        .getBoundingClientRect();
+
+    const dpr =
+        window.devicePixelRatio ||
+        1;
+
+    chartCanvas.width =
+        rect.width*dpr;
+
+    chartCanvas.height =
+        rect.height*dpr;
+
+    chartCtx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
+
+}
+
+function drawChart(){
+
+    const w =
+        chartCanvas.clientWidth;
+
+    const h =
+        chartCanvas.clientHeight;
+
+    chartCtx.clearRect(
+        0,
+        0,
+        w,
+        h
+    );
+
+    chartCtx.strokeStyle =
+        "rgba(57,255,20,.12)";
+
+    chartCtx.lineWidth = 1;
+
+    for(
+        let y=20;
+        y<h;
+        y+=30
+    ){
+
+        chartCtx.beginPath();
+
+        chartCtx.moveTo(
+            0,
+            y
+        );
+
+        chartCtx.lineTo(
+            w,
+            y
+        );
+
+        chartCtx.stroke();
+
+    }
+
+    chartCtx.beginPath();
+
+    chartCtx.strokeStyle =
+        "#39ff14";
+
+    chartCtx.shadowColor =
+        "#39ff14";
+
+    chartCtx.shadowBlur = 8;
+
+    chartData.forEach(
+        (value,i)=>{
+
+            const x =
+                i *
+                (w/(chartData.length-1));
+
+            const y =
+                h -
+                (value/100)*h;
+
+            if(i===0){
+                chartCtx.moveTo(x,y);
+            }else{
+                chartCtx.lineTo(x,y);
+            }
+
+        }
+    );
+
+    chartCtx.stroke();
+
+    chartCtx.shadowBlur = 0;
+
+}
+
+function updateChart(){
+
+    chartData.shift();
+
+    chartData.push(
+        25+
+        Math.random()*70
+    );
+
+    drawChart();
+
+}
+
+resizeChart();
+drawChart();
+
+window.addEventListener(
+    "resize",
+    ()=>{
+        resizeChart();
+        drawChart();
+    }
+);
+
+setInterval(
+    updateChart,
+    700
+);
+
+/* =========================================================
+   INTELLIGENCE FEED
+   ========================================================= */
+
+const intel =
+    document.getElementById(
+        "intel"
+    );
+
+const intelMessages = [
+
+    [
+        "SYSTEM",
+        "Visualization modules are synchronized."
+    ],
+
+    [
+        "NETWORK",
+        "Node activity remains inside simulated parameters."
+    ],
+
+    [
+        "MISSION",
+        "Mission Control is ready for local commands."
+    ],
+
+    [
+        "CORE",
+        "Holographic core reports stable operation."
+    ],
+
+    [
+        "ANALYSIS",
+        "Activity graph updated with simulated telemetry."
+    ],
+
+    [
+        "SECURITY",
+        "No external data collection is enabled."
+    ]
+
+];
+
+function addIntel(){
+
+    const data =
+        intelMessages[
+            Math.floor(
+                Math.random()*
+                intelMessages.length
+            )
+        ];
+
+    const card =
+        document.createElement(
+            "div"
+        );
+
+    card.className =
+        "intel-card";
+
+    card.innerHTML = `
+        <span class="tag">
+            ${data[0]}
+        </span>
+
+        <p>
+            ${data[1]}
+        </p>
+    `;
+
+    intel.prepend(card);
+
+    while(
+        intel.children.length>5
+    ){
+
+        intel.removeChild(
+            intel.lastChild
+        );
+
+    }
+
+}
+
+for(let i=0;i<3;i++){
+    addIntel();
+}
+
+setInterval(
+    addIntel,
+    3000
+);
+
+/* =========================================================
+   ACTIVITY REPLAY
+   ========================================================= */
+
+const replay =
+    document.getElementById(
+        "replay"
+    );
+
+function startReplay(){
+
+    replay.classList.add(
+        "running"
+    );
+
+    printConsole(
+        "[REPLAY] Activity visualization started."
+    );
+
+}
+
+function stopReplay(){
+
+    replay.classList.remove(
+        "running"
+    );
+
+    printConsole(
+        "[REPLAY] Activity visualization stopped."
+    );
+
+}
+
+function resetReplay(){
+
+    replay.classList.remove(
+        "running"
+    );
+
+    void replay.offsetWidth;
+
+    printConsole(
+        "[REPLAY] Simulation replay reset."
+    );
+
+}
+
+/* =========================================================
+   QUICK ACTIONS
+   ========================================================= */
+
+function quickAction(action){
+
+    switch(action){
+
+        case "SCAN":
+
+            runCommand("scan");
+
+            break;
+
+        case "SYNC":
+
+            printConsole(
+                "[SYNC] Simulated network synchronization started."
+            );
+
+            setTimeout(
+                ()=>{
+                    printConsole(
+                        "[SYNC] All visual nodes synchronized."
+                    );
+                },
+                500
+            );
+
+            break;
+
+        case "ALERT":
+
+            addAlert();
+
+            printConsole(
+                "[ALERT] Test alert generated locally."
+            );
+
+            break;
+
+        case "RESET":
+
+            missionCycle = 1;
+
+            document.getElementById(
+                "missionCycle"
+            ).textContent =
+                "001";
+
+            printConsole(
+                "[RESET] Local simulation parameters reset."
+            );
+
+            break;
+
+    }
+
+}
 
 /* =========================================================
    COMMAND CONSOLE
@@ -1917,19 +3163,24 @@ function printConsole(
 ){
 
     const line =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     line.className =
-        "console-line " +
+        "console-line "+
         type;
 
     line.textContent =
         text;
 
-    consoleOutput.appendChild(line);
+    consoleOutput.appendChild(
+        line
+    );
 
     consoleOutput.scrollTop =
         consoleOutput.scrollHeight;
+
 }
 
 function runCommand(command){
@@ -1944,7 +3195,7 @@ function runCommand(command){
     }
 
     printConsole(
-        "ALFA@command: " +
+        "ALFA@command: "+
         command,
         "command"
     );
@@ -1956,12 +3207,15 @@ function runCommand(command){
             printConsole(
 `AVAILABLE COMMANDS
 ------------------
-help    - show commands
-status  - system status
-scan    - run visual simulation scan
-matrix  - matrix engine status
-nodes   - network node status
-clear   - clear console`
+help     - show commands
+status   - system status
+scan     - visual simulation scan
+matrix   - matrix engine status
+nodes    - network node status
+mission  - mission control status
+replay   - start activity replay
+intel    - intelligence feed status
+clear    - clear console`
             );
 
             break;
@@ -1974,9 +3228,11 @@ clear   - clear console`
 CORE       : ONLINE
 MATRIX     : ONLINE
 HOLOGRAM   : ONLINE
-TARGET HUD  : ONLINE
+TARGET HUD : ONLINE
 NETWORK    : SIMULATION
-TELEMETRY  : ACTIVE`
+MISSION    : ACTIVE
+TELEMETRY  : ACTIVE
+REPLAY     : READY`
             );
 
             break;
@@ -1987,22 +3243,28 @@ TELEMETRY  : ACTIVE`
                 "[SCAN] Initializing visual simulation..."
             );
 
-            setTimeout(()=>{
-                printConsole(
-                    "[SCAN] Visual nodes analyzed: " +
-                    (20 + Math.floor(
-                        Math.random()*40
-                    ))
-                );
+            setTimeout(
+                ()=>{
+                    printConsole(
+                        "[SCAN] Visual nodes analyzed: "+
+                        (
+                            20+
+                            Math.floor(
+                                Math.random()*40
+                            )
+                        )
+                    );
 
-                printConsole(
-                    "[SCAN] No real-world data collected."
-                );
+                    printConsole(
+                        "[SCAN] No real-world data collected."
+                    );
 
-                printConsole(
-                    "[SCAN] Simulation complete."
-                );
-            },500);
+                    printConsole(
+                        "[SCAN] Simulation complete."
+                    );
+                },
+                500
+            );
 
             break;
 
@@ -2035,9 +3297,38 @@ LINKS  : ANIMATED`
 
             break;
 
+        case "mission":
+
+            printConsole(
+`MISSION CONTROL
+---------------
+STATUS : ACTIVE
+MODE   : LOCAL
+ENGINE : ONLINE
+FEED   : LIVE
+SECURITY : SAFE`
+            );
+
+            break;
+
+        case "replay":
+
+            startReplay();
+
+            break;
+
+        case "intel":
+
+            printConsole(
+                "[INTEL] Local simulated intelligence feed active."
+            );
+
+            break;
+
         case "clear":
 
-            consoleOutput.innerHTML = "";
+            consoleOutput.innerHTML =
+                "";
 
             break;
 
@@ -2047,7 +3338,9 @@ LINKS  : ANIMATED`
                 "Unknown command. Type 'help'.",
                 "error"
             );
+
     }
+
 }
 
 consoleForm.addEventListener(
@@ -2060,7 +3353,8 @@ consoleForm.addEventListener(
             commandInput.value
         );
 
-        commandInput.value = "";
+        commandInput.value =
+            "";
 
     }
 );
@@ -2070,140 +3364,34 @@ consoleForm.addEventListener(
    ========================================================= */
 
 document
-    .querySelectorAll(".cmd-btn")
-    .forEach(button => {
+.querySelectorAll(".cmd-btn")
+.forEach(
+    button=>{
 
         button.addEventListener(
             "click",
-            () => {
-
+            ()=>{
                 runCommand(
                     button.dataset.command
                 );
-
             }
         );
 
-    });
-
-/* =========================================================
-   TARGET HUD RANDOM MOVEMENT
-   ========================================================= */
-
-const targetsHUD =
-    document.querySelectorAll(
-        ".target"
-    );
-
-function moveTargets(){
-
-    targetsHUD.forEach(
-        target => {
-
-            const x =
-                25 +
-                Math.random() * 50;
-
-            const y =
-                20 +
-                Math.random() * 60;
-
-            target.style.left =
-                x + "%";
-
-            target.style.top =
-                y + "%";
-
-        }
-    );
-}
-
-setInterval(
-    moveTargets,
-    3500
+    }
 );
 
 /* =========================================================
-   DYNAMIC NETWORK NODE MOTION
+   STARTUP
    ========================================================= */
 
-const networkNodes =
-    document.querySelectorAll(
-        ".node"
-    );
-
-function animateNetwork(){
-
-    networkNodes.forEach(
-        node => {
-
-            const currentLeft =
-                parseFloat(
-                    node.style.left ||
-                    getComputedStyle(
-                        node
-                    ).left
-                );
-
-            const currentTop =
-                parseFloat(
-                    node.style.top ||
-                    getComputedStyle(
-                        node
-                    ).top
-                );
-
-            let newLeft =
-                currentLeft +
-                (Math.random() - .5) * 4;
-
-            let newTop =
-                currentTop +
-                (Math.random() - .5) * 4;
-
-            newLeft =
-                Math.max(
-                    5,
-                    Math.min(
-                        92,
-                        newLeft
-                    )
-                );
-
-            newTop =
-                Math.max(
-                    8,
-                    Math.min(
-                        90,
-                        newTop
-                    )
-                );
-
-            node.style.left =
-                newLeft + "%";
-
-            node.style.top =
-                newTop + "%";
-        }
-    );
-}
-
-setInterval(
-    animateNetwork,
-    2200
+setTimeout(
+    ()=>{
+        printConsole(
+            "[V6.0] Mission Control modules loaded."
+        );
+    },
+    900
 );
-
-/* =========================================================
-   STARTUP MESSAGE
-   ========================================================= */
-
-setTimeout(()=>{
-
-    printConsole(
-        "[V5.5] Advanced visualization modules loaded."
-    );
-
-},900);
 
 </script>
 
