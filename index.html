@@ -2154,6 +2154,311 @@ console.log(
 </script>
 
 <!-- END ALFA OSINT V3.7 -->
+<!-- =========================================
+     ALFA OSINT V3.8 COMMAND CONSOLE
+     LOCAL VISUAL SIMULATION
+========================================= -->
+
+<style>
+.alfa-command-console{
+  margin:24px auto;
+  max-width:1100px;
+  padding:20px;
+  border:1px solid rgba(0,255,157,.35);
+  background:rgba(2,10,9,.82);
+  box-shadow:
+    0 0 25px rgba(0,255,157,.08),
+    inset 0 0 25px rgba(0,255,157,.025);
+  backdrop-filter:blur(8px);
+}
+
+.alfa-console-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:15px;
+  color:#00ff9d;
+  font-family:monospace;
+  letter-spacing:2px;
+}
+
+.alfa-console-status{
+  font-size:11px;
+  padding:5px 9px;
+  border:1px solid rgba(0,255,157,.35);
+}
+
+.alfa-console-box{
+  min-height:180px;
+  max-height:260px;
+  overflow:auto;
+  padding:15px;
+  background:#010605;
+  border:1px solid rgba(0,255,157,.18);
+  color:#8fffd0;
+  font:13px/1.7 monospace;
+}
+
+.alfa-console-line{
+  margin-bottom:3px;
+}
+
+.alfa-console-input{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+
+.alfa-console-input span{
+  color:#00ff9d;
+  font:bold 15px monospace;
+  padding-top:10px;
+}
+
+.alfa-console-input input{
+  flex:1;
+  min-width:0;
+  padding:11px 12px;
+  border:1px solid rgba(0,255,157,.35);
+  outline:none;
+  background:#020b08;
+  color:#00ff9d;
+  font:14px monospace;
+}
+
+.alfa-console-input button{
+  padding:10px 18px;
+  border:1px solid #00ff9d;
+  background:#00ff9d;
+  color:#00130b;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.alfa-console-input button:hover{
+  box-shadow:0 0 18px rgba(0,255,157,.45);
+}
+
+.alfa-console-help{
+  margin-top:10px;
+  color:#668f82;
+  font:11px monospace;
+}
+
+@media(max-width:700px){
+  .alfa-command-console{
+    margin:16px 10px;
+    padding:14px;
+  }
+
+  .alfa-console-input{
+    flex-wrap:wrap;
+  }
+
+  .alfa-console-input input{
+    width:100%;
+    flex-basis:100%;
+  }
+
+  .alfa-console-input span{
+    display:none;
+  }
+
+  .alfa-console-input button{
+    width:100%;
+  }
+}
+</style>
+
+<div class="alfa-command-console">
+
+  <div class="alfa-console-head">
+    <div>◉ COMMAND CONSOLE</div>
+    <div class="alfa-console-status">
+      LOCAL MODE
+    </div>
+  </div>
+
+  <div class="alfa-console-box" id="alfaCommandOutput">
+
+    <div class="alfa-console-line">
+      [SYSTEM] ALFA COMMAND CONSOLE ONLINE
+    </div>
+
+    <div class="alfa-console-line">
+      [SYSTEM] Local visual simulation active
+    </div>
+
+    <div class="alfa-console-line">
+      [SYSTEM] Public-source tools only
+    </div>
+
+    <div class="alfa-console-line">
+      [HELP] Type "help" for commands
+    </div>
+
+  </div>
+
+  <div class="alfa-console-input">
+
+    <span>ALFA&gt;</span>
+
+    <input
+      id="alfaCommandInput"
+      type="text"
+      autocomplete="off"
+      placeholder="type command..."
+    >
+
+    <button id="alfaCommandBtn">
+      EXECUTE
+    </button>
+
+  </div>
+
+  <div class="alfa-console-help">
+    Commands: help • status • radar • matrix • network • clear
+  </div>
+
+</div>
+
+<script>
+/* ALFA OSINT V3.8 COMMAND ENGINE */
+
+(function(){
+
+  const input =
+    document.getElementById("alfaCommandInput");
+
+  const button =
+    document.getElementById("alfaCommandBtn");
+
+  const output =
+    document.getElementById("alfaCommandOutput");
+
+  if(!input || !button || !output) return;
+
+  function addLine(text){
+
+    const line =
+      document.createElement("div");
+
+    line.className =
+      "alfa-console-line";
+
+    line.textContent =
+      text;
+
+    output.appendChild(line);
+
+    output.scrollTop =
+      output.scrollHeight;
+  }
+
+  function executeCommand(){
+
+    const command =
+      input.value.trim().toLowerCase();
+
+    if(!command) return;
+
+    addLine("ALFA> " + command);
+
+    if(command === "help"){
+
+      addLine("[HELP] Available commands:");
+      addLine("[HELP] status  - system status");
+      addLine("[HELP] radar   - radar simulation");
+      addLine("[HELP] matrix  - matrix stream");
+      addLine("[HELP] network - network simulation");
+      addLine("[HELP] clear   - clear console");
+
+    }
+
+    else if(command === "status"){
+
+      addLine("[STATUS] CORE ........ ONLINE");
+      addLine("[STATUS] MATRIX ...... ACTIVE");
+      addLine("[STATUS] RADAR ....... ACTIVE");
+      addLine("[STATUS] NETWORK ..... SYNC");
+      addLine("[STATUS] OSINT ....... READY");
+
+    }
+
+    else if(command === "radar"){
+
+      addLine("[RADAR] Initializing visual sweep...");
+
+      setTimeout(() => {
+        addLine("[RADAR] Sweep complete");
+        addLine("[RADAR] Visual signal detected");
+      },600);
+
+    }
+
+    else if(command === "matrix"){
+
+      addLine("[MATRIX] Stream status: ACTIVE");
+      addLine("[MATRIX] Visual data rain synchronized");
+
+    }
+
+    else if(command === "network"){
+
+      addLine("[NET] Network visualization initialized");
+      addLine("[NET] Nodes synchronized");
+      addLine("[NET] Visual routes active");
+
+    }
+
+    else if(command === "clear"){
+
+      output.innerHTML = "";
+
+      addLine(
+        "[SYSTEM] Console cleared"
+      );
+
+    }
+
+    else{
+
+      addLine(
+        "[ERROR] Unknown command: " +
+        command
+      );
+
+      addLine(
+        '[HELP] Type "help" for commands'
+      );
+
+    }
+
+    input.value = "";
+
+  }
+
+  button.addEventListener(
+    "click",
+    executeCommand
+  );
+
+  input.addEventListener(
+    "keydown",
+    function(event){
+
+      if(event.key === "Enter"){
+        executeCommand();
+      }
+
+    }
+  );
+
+})();
+</script>
+
+<!-- END ALFA OSINT V3.8 -->
 </body>
 </html>
 
