@@ -2459,6 +2459,239 @@ console.log(
 </script>
 
 <!-- END ALFA OSINT V3.8 -->
+<!-- =========================================
+     ALFA OSINT V3.9 HOLOGRAPHIC DATA CORE
+     VISUAL SIMULATION ONLY
+========================================= -->
+
+<style>
+.alfa-data-core{
+  position:relative;
+  width:180px;
+  height:180px;
+  margin:28px auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+}
+
+.alfa-core-center{
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  border:2px solid #00ff9d;
+  background:radial-gradient(
+    circle,
+    rgba(0,255,157,.35),
+    rgba(0,255,157,.05) 55%,
+    transparent 72%
+  );
+  box-shadow:
+    0 0 15px rgba(0,255,157,.8),
+    0 0 45px rgba(0,255,157,.35),
+    inset 0 0 18px rgba(0,255,157,.5);
+  animation:alfaCorePulse 1.8s ease-in-out infinite;
+  z-index:4;
+}
+
+.alfa-core-ring{
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(0,255,157,.7);
+  box-shadow:0 0 15px rgba(0,255,157,.18);
+}
+
+.alfa-core-ring.r1{
+  width:100px;
+  height:100px;
+  animation:alfaCoreSpin 5s linear infinite;
+  border-top-color:#00ff9d;
+  border-bottom-color:transparent;
+}
+
+.alfa-core-ring.r2{
+  width:135px;
+  height:135px;
+  animation:alfaCoreSpinReverse 8s linear infinite;
+  border-left-color:#00eaff;
+  border-right-color:transparent;
+}
+
+.alfa-core-ring.r3{
+  width:170px;
+  height:170px;
+  animation:alfaCoreSpin 12s linear infinite;
+  border-top-color:rgba(0,255,157,.4);
+  border-bottom-color:rgba(0,234,255,.25);
+}
+
+.alfa-core-ring::before,
+.alfa-core-ring::after{
+  content:"";
+  position:absolute;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#00ff9d;
+  box-shadow:0 0 12px #00ff9d;
+}
+
+.alfa-core-ring::before{
+  top:-3px;
+  left:50%;
+}
+
+.alfa-core-ring::after{
+  bottom:-3px;
+  right:50%;
+}
+
+.alfa-core-label{
+  position:absolute;
+  top:calc(100% + 12px);
+  left:50%;
+  transform:translateX(-50%);
+  white-space:nowrap;
+  color:#00ff9d;
+  font:11px monospace;
+  letter-spacing:3px;
+  text-shadow:0 0 8px rgba(0,255,157,.8);
+}
+
+@keyframes alfaCoreSpin{
+  from{
+    transform:rotate(0deg);
+  }
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+@keyframes alfaCoreSpinReverse{
+  from{
+    transform:rotate(360deg);
+  }
+  to{
+    transform:rotate(0deg);
+  }
+}
+
+@keyframes alfaCorePulse{
+  0%,100%{
+    transform:scale(.9);
+    opacity:.65;
+  }
+  50%{
+    transform:scale(1.08);
+    opacity:1;
+  }
+}
+
+@media(max-width:700px){
+  .alfa-data-core{
+    width:145px;
+    height:145px;
+    transform:scale(.82);
+    margin:18px auto;
+  }
+}
+</style>
+
+<div class="alfa-data-core">
+
+  <div class="alfa-core-ring r3"></div>
+  <div class="alfa-core-ring r2"></div>
+  <div class="alfa-core-ring r1"></div>
+
+  <div class="alfa-core-center"></div>
+
+  <div class="alfa-core-label">
+    DATA CORE // ONLINE
+  </div>
+
+</div>
+
+<script>
+/* ALFA OSINT V3.9 CORE ACTIVITY */
+
+(function(){
+
+  const core =
+    document.querySelector(".alfa-core-center");
+
+  if(!core) return;
+
+  setInterval(() => {
+
+    const intensity =
+      Math.floor(65 + Math.random() * 35);
+
+    core.style.boxShadow =
+      "0 0 15px rgba(0,255,157,.9)," +
+      "0 0 " + intensity +
+      "px rgba(0,255,157,.35)," +
+      "inset 0 0 18px rgba(0,255,157,.6)";
+
+  },1200);
+
+})();
+
+/* CORE TERMINAL EVENT */
+
+setInterval(() => {
+
+  const terminal =
+    document.getElementById("terminal");
+
+  if(!terminal) return;
+
+  const events = [
+
+    "[CORE] HOLOGRAPHIC CORE ONLINE",
+    "[CORE] ENERGY RING SYNCHRONIZED",
+    "[CORE] DATA CORE PULSE",
+    "[CORE] VISUAL CORE STABLE",
+    "[CORE] HOLOGRAM SIGNAL READY"
+
+  ];
+
+  const line =
+    document.createElement("div");
+
+  line.textContent =
+    "[" +
+    new Date().toLocaleTimeString("id-ID") +
+    "] " +
+    events[
+      Math.floor(Math.random() * events.length)
+    ];
+
+  line.style.color="#00eaff";
+
+  terminal.appendChild(line);
+
+  while(terminal.children.length > 26){
+
+    terminal.removeChild(
+      terminal.firstChild
+    );
+
+  }
+
+  terminal.scrollTop =
+    terminal.scrollHeight;
+
+},4200);
+
+console.log(
+  "%c ALFA OSINT V3.9 HOLOGRAPHIC DATA CORE ONLINE ",
+  "color:#00ff9d;background:#020b08;font-weight:bold;padding:6px;"
+);
+
+</script>
+
+<!-- END ALFA OSINT V3.9 -->
 </body>
 </html>
 
