@@ -1425,6 +1425,145 @@ setInterval(() => {
   terminal.scrollTop = terminal.scrollHeight;
 }, 1300);
 </script>
+<!-- ALFA OSINT V3.4 DIGITAL TARGET HUD -->
+<style>
+.alfa-target-hud{
+  position:fixed;
+  right:25px;
+  bottom:25px;
+  width:190px;
+  padding:14px;
+  background:rgba(1,8,12,.88);
+  border:1px solid rgba(0,255,157,.35);
+  border-radius:10px;
+  box-shadow:0 0 25px rgba(0,255,157,.12);
+  z-index:20;
+  pointer-events:none;
+  backdrop-filter:blur(8px);
+}
+
+.alfa-target-title{
+  color:#00eaff;
+  font-size:10px;
+  letter-spacing:2px;
+  margin-bottom:10px;
+}
+
+.alfa-target-ring{
+  width:75px;
+  height:75px;
+  margin:0 auto 10px;
+  border:1px solid #00ff9d;
+  border-radius:50%;
+  position:relative;
+  animation:targetSpin 4s linear infinite;
+  box-shadow:0 0 15px rgba(0,255,157,.2);
+}
+
+.alfa-target-ring::before,
+.alfa-target-ring::after{
+  content:"";
+  position:absolute;
+  background:#00ff9d;
+}
+
+.alfa-target-ring::before{
+  width:100%;
+  height:1px;
+  top:50%;
+  left:0;
+}
+
+.alfa-target-ring::after{
+  width:1px;
+  height:100%;
+  left:50%;
+  top:0;
+}
+
+.alfa-target-dot{
+  position:absolute;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#00eaff;
+  box-shadow:0 0 12px #00eaff;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  animation:targetPulse 1s infinite;
+}
+
+@keyframes targetSpin{
+  to{transform:rotate(360deg)}
+}
+
+@keyframes targetPulse{
+  50%{
+    transform:translate(-50%,-50%) scale(1.8);
+    opacity:.45;
+  }
+}
+
+.alfa-target-data{
+  font-size:9px;
+  line-height:1.8;
+  color:#72cfc0;
+}
+
+.alfa-target-data span{
+  color:#00ff9d;
+}
+
+@media(max-width:600px){
+  .alfa-target-hud{
+    right:10px;
+    bottom:10px;
+    width:165px;
+    transform:scale(.85);
+    transform-origin:bottom right;
+  }
+}
+</style>
+
+<div class="alfa-target-hud">
+
+  <div class="alfa-target-title">
+    ◉ DIGITAL TARGET HUD
+  </div>
+
+  <div class="alfa-target-ring">
+    <div class="alfa-target-dot"></div>
+  </div>
+
+  <div class="alfa-target-data">
+    X: <span id="hudX">074.21</span><br>
+    Y: <span id="hudY">391.08</span><br>
+    SIGNAL: <span id="hudSignal">87%</span><br>
+    STATUS: <span id="hudStatus">ONLINE</span>
+  </div>
+
+</div>
+
+<script>
+setInterval(() => {
+
+  const x =
+    (Math.random()*999).toFixed(2);
+
+  const y =
+    (Math.random()*999).toFixed(2);
+
+  const signal =
+    Math.floor(70 + Math.random()*30);
+
+  document.getElementById("hudX").textContent = x;
+  document.getElementById("hudY").textContent = y;
+  document.getElementById("hudSignal").textContent =
+    signal + "%";
+
+},1200);
+</script>
 </body>
 </html>
 
