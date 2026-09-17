@@ -1323,6 +1323,54 @@ document.getElementById("target")
   });
 
 </script>
+<!-- AUTO CYBER ACTIVITY V3.1 -->
+<script>
+const autoMessages = [
+  "[AUTO] Scanning public signal...",
+  "[AUTO] Monitoring open-source channel...",
+  "[AUTO] Network visualization refreshed...",
+  "[AUTO] Holographic radar synchronized...",
+  "[AUTO] Public-source module ready...",
+  "[AUTO] Signal pulse detected...",
+  "[AUTO] Intelligence interface online...",
+  "[AUTO] Waiting for public target..."
+];
 
+setInterval(() => {
+  const terminal = document.getElementById("terminal");
+  if (!terminal) return;
+
+  const msg =
+    autoMessages[Math.floor(Math.random() * autoMessages.length)];
+
+  const line = document.createElement("div");
+
+  line.textContent =
+    "[" + new Date().toLocaleTimeString("id-ID") + "] " + msg;
+
+  terminal.appendChild(line);
+
+  while (terminal.children.length > 18) {
+    terminal.removeChild(terminal.firstChild);
+  }
+
+  terminal.scrollTop = terminal.scrollHeight;
+
+}, 2500);
+
+
+/* AUTO HUD PULSE */
+setInterval(() => {
+
+  const status =
+    document.getElementById("signalStatus");
+
+  if (!status) return;
+
+  status.textContent =
+    Math.random() > 0.15 ? "OK" : "SCAN";
+
+}, 1800);
+</script>
 </body>
 </html>
