@@ -4,1972 +4,1325 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ALFA OSINT COMMAND CENTER V2 | Intelligence Dashboard</title>
-<meta name="description" content="ALFA OSINT Command Center V2 - Public Intelligence Analysis Dashboard">
-<meta name="theme-color" content="#020617">
+<title>ALFA OSINT COMMAND CENTER V3</title>
+<meta name="description" content="ALFA OSINT Command Center - Public Source Intelligence Dashboard">
+<meta name="robots" content="index,follow">
 
 <style>
 :root{
-    --bg:#020617;
-    --panel:#06111f;
-    --panel2:#081827;
-    --line:#12384a;
-    --cyan:#22d3ee;
-    --cyan2:#67e8f9;
-    --green:#4ade80;
-    --yellow:#facc15;
-    --red:#fb7185;
-    --muted:#64748b;
-    --text:#dbeafe;
+  --bg:#020509;
+  --panel:rgba(3,12,20,.88);
+  --line:#00ff9d;
+  --cyan:#00eaff;
+  --blue:#1677ff;
+  --purple:#9d4edd;
+  --text:#d8fff1;
+  --muted:#6d8f87;
+  --danger:#ff3864;
+  --shadow:0 0 25px rgba(0,255,157,.12);
 }
 
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 html{
-    scroll-behavior:smooth;
+  scroll-behavior:smooth;
 }
 
 body{
-    background:
-        radial-gradient(circle at 50% -10%,rgba(8,145,178,.13),transparent 35%),
-        var(--bg);
-    color:var(--text);
-    font-family:Consolas,Monaco,"Courier New",monospace;
-    min-height:100vh;
-    overflow-x:hidden;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 50% 20%,rgba(0,234,255,.08),transparent 35%),
+    radial-gradient(circle at 80% 80%,rgba(157,78,221,.08),transparent 30%),
+    var(--bg);
+  color:var(--text);
+  font-family:Consolas,Monaco,"Courier New",monospace;
+  overflow-x:hidden;
 }
 
+/* ================= MATRIX BACKGROUND ================= */
+
+#matrix{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:-5;
+  opacity:.18;
+  pointer-events:none;
+}
+
+/* ================= SCANLINES ================= */
+
 body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    opacity:.055;
-    background-image:
-        linear-gradient(rgba(34,211,238,.5) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(34,211,238,.5) 1px,transparent 1px);
-    background-size:40px 40px;
-    mask-image:linear-gradient(to bottom,black,transparent);
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:50;
+  pointer-events:none;
+  background:repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0,255,157,.025) 4px
+  );
 }
 
 body::after{
-    content:"";
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    background:repeating-linear-gradient(
-        to bottom,
-        transparent 0,
-        transparent 3px,
-        rgba(255,255,255,.012) 4px
-    );
+  content:"";
+  position:fixed;
+  left:0;
+  top:-20%;
+  width:100%;
+  height:20%;
+  z-index:49;
+  pointer-events:none;
+  background:linear-gradient(
+    transparent,
+    rgba(0,255,157,.06),
+    transparent
+  );
+  animation:screenScan 7s linear infinite;
 }
 
-/* HEADER */
-
-header{
-    position:relative;
-    z-index:2;
-    border-bottom:1px solid var(--line);
-    background:rgba(2,6,23,.94);
-    padding:18px 28px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:20px;
-    backdrop-filter:blur(12px);
+@keyframes screenScan{
+  from{top:-20%}
+  to{top:120%}
 }
 
-.brand{
-    display:flex;
-    align-items:center;
-    gap:14px;
+/* ================= NAV ================= */
+
+nav{
+  position:sticky;
+  top:0;
+  z-index:40;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 5%;
+  background:rgba(1,5,9,.88);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(0,255,157,.2);
 }
 
 .logo{
-    width:52px;
-    height:52px;
-    border:1px solid var(--cyan);
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:var(--cyan2);
-    font-size:24px;
-    box-shadow:
-        0 0 15px rgba(34,211,238,.35),
-        inset 0 0 15px rgba(34,211,238,.1);
-    position:relative;
+  color:var(--line);
+  font-weight:bold;
+  letter-spacing:2px;
+  text-shadow:0 0 12px rgba(0,255,157,.7);
 }
 
-.logo::after{
-    content:"";
-    position:absolute;
-    width:7px;
-    height:7px;
-    border-radius:50%;
-    background:var(--green);
-    box-shadow:0 0 12px var(--green);
+.nav-status{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:#8ffff0;
+  font-size:12px;
 }
 
-.brand h1{
-    color:var(--cyan2);
-    font-size:19px;
-    letter-spacing:3px;
-}
-
-.brand p{
-    color:var(--muted);
-    font-size:10px;
-    margin-top:5px;
-    letter-spacing:1px;
-}
-
-.header-right{
-    text-align:right;
-}
-
-.clock{
-    color:var(--cyan2);
-    font-size:13px;
-}
-
-.system{
-    margin-top:6px;
-    font-size:10px;
-    color:var(--green);
-}
-
-.system i{
-    display:inline-block;
-    width:7px;
-    height:7px;
-    border-radius:50%;
-    background:var(--green);
-    box-shadow:0 0 10px var(--green);
-    margin-right:6px;
-}
-
-/* NAV */
-
-nav{
-    position:sticky;
-    top:0;
-    z-index:10;
-    display:flex;
-    gap:7px;
-    padding:9px 25px;
-    background:rgba(3,11,23,.95);
-    border-bottom:1px solid var(--line);
-    overflow-x:auto;
-    backdrop-filter:blur(12px);
-}
-
-nav button{
-    background:transparent;
-    border:1px solid #164e63;
-    color:var(--muted);
-    padding:9px 13px;
-    font-family:inherit;
-    font-size:10px;
-    cursor:pointer;
-    white-space:nowrap;
-    transition:.2s;
-}
-
-nav button:hover,
-nav button.active{
-    color:var(--cyan2);
-    border-color:var(--cyan);
-    background:rgba(8,145,178,.09);
-}
-
-/* MAIN */
-
-main{
-    position:relative;
-    z-index:1;
-    max-width:1500px;
-    margin:auto;
-    padding:22px;
-}
-
-.top-grid{
-    display:grid;
-    grid-template-columns:1.15fr .85fr;
-    gap:17px;
-}
-
-.lower-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:17px;
-    margin-top:17px;
-}
-
-.panel{
-    background:linear-gradient(
-        145deg,
-        rgba(6,17,31,.96),
-        rgba(2,11,22,.96)
-    );
-    border:1px solid var(--line);
-    position:relative;
-    overflow:hidden;
-    box-shadow:0 15px 50px rgba(0,0,0,.15);
-}
-
-.panel::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:0;
-    right:0;
-    height:2px;
-    background:linear-gradient(
-        90deg,
-        transparent,
-        var(--cyan),
-        transparent
-    );
-    opacity:.7;
-}
-
-.title{
-    padding:12px 15px;
-    border-bottom:1px solid var(--line);
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    color:var(--cyan2);
-    font-size:11px;
-    letter-spacing:1px;
-}
-
-.badge{
-    border:1px solid #155e75;
-    padding:4px 7px;
-    color:var(--cyan);
-    font-size:9px;
-}
-
-.body{
-    padding:17px;
-}
-
-/* COMMAND */
-
-.command{
-    display:grid;
-    grid-template-columns:1fr 150px;
-    gap:8px;
-}
-
-input,
-select{
-    width:100%;
-    padding:12px;
-    background:#020617;
-    border:1px solid #164e63;
-    color:#e0f2fe;
-    outline:none;
-    font-family:inherit;
-    font-size:12px;
-}
-
-input:focus,
-select:focus{
-    border-color:var(--cyan);
-    box-shadow:0 0 15px rgba(34,211,238,.1);
-}
-
-.btn{
-    border:1px solid #0891b2;
-    background:#083344;
-    color:var(--cyan2);
-    padding:11px 14px;
-    font-family:inherit;
-    cursor:pointer;
-    font-size:11px;
-    transition:.2s;
-}
-
-.btn:hover{
-    background:#0e7490;
-    box-shadow:0 0 15px rgba(34,211,238,.15);
-}
-
-.btn.secondary{
-    border-color:#334155;
-    background:#0b1422;
-    color:#94a3b8;
-}
-
-.btn.green{
-    border-color:#166534;
-    background:#052e16;
-    color:var(--green);
-}
-
-/* RADAR */
-
-.radar-area{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:320px;
-}
-
-.radar{
-    width:255px;
-    height:255px;
-    border-radius:50%;
-    border:1px solid #155e75;
-    position:relative;
-    background:
-        radial-gradient(
-            circle,
-            transparent 20%,
-            rgba(34,211,238,.03) 21%,
-            transparent 22%
-        ),
-        radial-gradient(
-            circle,
-            transparent 45%,
-            rgba(34,211,238,.04) 46%,
-            transparent 47%
-        ),
-        radial-gradient(
-            circle,
-            transparent 70%,
-            rgba(34,211,238,.05) 71%,
-            transparent 72%
-        );
-    box-shadow:
-        inset 0 0 35px rgba(34,211,238,.04),
-        0 0 30px rgba(34,211,238,.05);
-}
-
-.radar::before,
-.radar::after{
-    content:"";
-    position:absolute;
-    background:#164e63;
-}
-
-.radar::before{
-    width:100%;
-    height:1px;
-    top:50%;
-}
-
-.radar::after{
-    width:1px;
-    height:100%;
-    left:50%;
-}
-
-.sweep{
-    position:absolute;
-    width:50%;
-    height:2px;
-    left:50%;
-    top:50%;
-    transform-origin:left center;
-    background:linear-gradient(90deg,var(--cyan),transparent);
-    box-shadow:0 0 12px var(--cyan);
-    animation:spin 3s linear infinite;
-}
-
-@keyframes spin{
-    from{transform:rotate(0deg)}
-    to{transform:rotate(360deg)}
-}
-
-.rdot{
-    position:absolute;
-    width:7px;
-    height:7px;
-    border-radius:50%;
-    background:var(--cyan);
-    box-shadow:0 0 12px var(--cyan);
-    animation:pulse 1.5s infinite;
+.status-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--line);
+  box-shadow:0 0 12px var(--line);
+  animation:pulse 1.2s infinite;
 }
 
 @keyframes pulse{
-    50%{opacity:.25;transform:scale(.7)}
+  50%{opacity:.3;transform:scale(.6)}
 }
 
-.r1{left:66%;top:29%}
-.r2{left:30%;top:61%}
-.r3{left:76%;top:68%}
-.r4{left:48%;top:20%}
+/* ================= HERO ================= */
 
-/* STATS */
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:9px;
-    margin-top:14px;
+.hero{
+  width:min(1400px,92%);
+  margin:35px auto 20px;
+  text-align:center;
 }
 
-.stat{
-    border:1px solid var(--line);
-    padding:12px;
-    background:#020b16;
+.hero h1{
+  font-size:clamp(25px,5vw,55px);
+  color:#fff;
+  letter-spacing:4px;
+  text-shadow:
+    0 0 8px var(--cyan),
+    0 0 25px rgba(0,234,255,.4);
 }
 
-.stat small{
-    color:var(--muted);
-    font-size:8px;
-    display:block;
-    margin-bottom:7px;
+.hero h1 span{
+  color:var(--line);
 }
 
-.stat strong{
-    color:var(--cyan2);
-    font-size:17px;
+.hero p{
+  margin-top:12px;
+  color:var(--muted);
+  font-size:13px;
 }
 
-/* TARGET */
+/* ================= MAIN GRID ================= */
 
-.target-box{
-    margin-top:14px;
-    border:1px solid #164e63;
-    padding:14px;
-    background:#020b16;
+.container{
+  width:min(1400px,92%);
+  margin:auto;
 }
 
-.target-label{
-    color:var(--muted);
-    font-size:9px;
-    margin-bottom:6px;
+.grid{
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:20px;
 }
 
-.target-value{
-    color:var(--cyan2);
-    font-size:15px;
-    word-break:break-all;
+@media(max-width:900px){
+  .grid{
+    grid-template-columns:1fr;
+  }
 }
 
-.tags{
-    display:flex;
-    flex-wrap:wrap;
-    gap:6px;
-    margin-top:10px;
+/* ================= PANEL ================= */
+
+.panel{
+  position:relative;
+  overflow:hidden;
+  background:var(--panel);
+  border:1px solid rgba(0,255,157,.25);
+  border-radius:14px;
+  padding:20px;
+  box-shadow:var(--shadow);
 }
 
-.tag{
-    padding:5px 8px;
-    border:1px solid #164e63;
-    color:#94a3b8;
-    font-size:9px;
+.panel::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--line),transparent);
+  animation:borderScan 4s linear infinite;
 }
 
-/* MODULES */
-
-.modules{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:9px;
+@keyframes borderScan{
+  to{left:100%}
 }
 
-.module{
-    padding:14px;
-    border:1px solid var(--line);
-    background:#020b16;
-    cursor:pointer;
-    transition:.2s;
+.panel-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+  color:var(--cyan);
+  font-weight:bold;
 }
 
-.module:hover{
-    border-color:#0891b2;
-    transform:translateY(-2px);
+.panel-title small{
+  color:var(--muted);
+  font-size:10px;
 }
 
-.module-icon{
-    color:var(--cyan);
-    font-size:20px;
-    margin-bottom:9px;
+/* ================= COMMAND ================= */
+
+.command-box{
+  display:flex;
+  gap:10px;
+  margin-bottom:15px;
 }
 
-.module h3{
-    color:#bae6fd;
-    font-size:11px;
+.command-box input{
+  flex:1;
+  min-width:0;
+  padding:14px;
+  border:1px solid rgba(0,255,157,.3);
+  border-radius:8px;
+  outline:none;
+  background:#01070b;
+  color:var(--line);
+  font-family:inherit;
+  box-shadow:inset 0 0 15px rgba(0,255,157,.04);
 }
 
-.module p{
-    color:var(--muted);
-    font-size:9px;
-    line-height:1.6;
-    margin-top:7px;
+button{
+  border:1px solid var(--line);
+  background:rgba(0,255,157,.08);
+  color:var(--line);
+  padding:12px 18px;
+  border-radius:8px;
+  cursor:pointer;
+  font-family:inherit;
+  font-weight:bold;
+  transition:.2s;
 }
 
-/* RESULTS */
-
-.results{
-    display:grid;
-    gap:8px;
+button:hover{
+  background:rgba(0,255,157,.18);
+  box-shadow:0 0 18px rgba(0,255,157,.25);
+  transform:translateY(-1px);
 }
 
-.result{
-    border:1px solid var(--line);
-    background:#020b16;
-    padding:12px;
+.mode-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
 }
 
-.result-head{
-    display:flex;
-    justify-content:space-between;
-    gap:10px;
+.mode-btn{
+  padding:8px 12px;
+  font-size:11px;
 }
 
-.result-name{
-    color:var(--cyan2);
-    font-size:11px;
+.mode-btn.active{
+  background:rgba(0,234,255,.15);
+  border-color:var(--cyan);
+  color:var(--cyan);
 }
 
-.result-status{
-    color:var(--green);
-    font-size:9px;
-}
-
-.result-value{
-    margin-top:8px;
-    color:#94a3b8;
-    font-size:10px;
-    line-height:1.6;
-    word-break:break-word;
-}
-
-.result a{
-    color:var(--cyan);
-    text-decoration:none;
-}
-
-.result a:hover{
-    text-decoration:underline;
-}
-
-/* TERMINAL */
+/* ================= TERMINAL ================= */
 
 .terminal{
-    height:285px;
-    overflow:auto;
-    background:#01050b;
-    padding:14px;
-    font-size:10px;
-    line-height:1.8;
+  height:180px;
+  overflow:auto;
+  padding:15px;
+  background:#010405;
+  border:1px solid rgba(0,255,157,.16);
+  border-radius:8px;
+  color:#74ffca;
+  font-size:12px;
+  line-height:1.7;
 }
 
-.log-ok{color:var(--green)}
-.log-info{color:var(--cyan)}
-.log-warn{color:var(--yellow)}
-.log-muted{color:#64748b}
-
-.cursor{
-    width:7px;
-    height:12px;
-    display:inline-block;
-    background:var(--cyan);
-    animation:blink 1s infinite;
-    vertical-align:middle;
+.terminal::-webkit-scrollbar{
+  width:5px;
 }
 
-@keyframes blink{
-    50%{opacity:0}
+.terminal::-webkit-scrollbar-thumb{
+  background:#075c48;
 }
 
-/* REPORT */
+/* ================= HOLOGRAM ================= */
 
-.report-actions{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
+.holo-wrap{
+  min-height:380px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
 }
 
-.report-box{
-    margin-top:12px;
-    min-height:170px;
-    background:#01050b;
-    border:1px solid var(--line);
-    padding:13px;
-    color:#94a3b8;
-    white-space:pre-wrap;
-    font-size:10px;
-    line-height:1.7;
-    overflow:auto;
+.hologram{
+  width:290px;
+  height:290px;
+  position:relative;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(0,234,255,.45);
+  box-shadow:
+    0 0 30px rgba(0,234,255,.15),
+    inset 0 0 35px rgba(0,234,255,.08);
+  animation:holoFloat 4s ease-in-out infinite;
 }
 
-/* NOTICE */
-
-.notice{
-    margin-top:17px;
-    border:1px solid #713f12;
-    background:rgba(120,53,15,.08);
-    color:#fbbf24;
-    padding:13px;
-    font-size:10px;
-    line-height:1.7;
+@keyframes holoFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
 }
 
-/* FOOTER */
-
-footer{
-    position:relative;
-    z-index:1;
-    margin-top:30px;
-    padding:20px;
-    text-align:center;
-    border-top:1px solid var(--line);
-    color:#475569;
-    font-size:9px;
-    letter-spacing:1px;
+.hologram::before,
+.hologram::after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(0,234,255,.28);
 }
 
-/* MOBILE */
+.hologram::before{
+  inset:25px;
+  animation:spin 8s linear infinite;
+}
 
-@media(max-width:1050px){
-    .top-grid,
-    .lower-grid{
-        grid-template-columns:1fr;
-    }
+.hologram::after{
+  inset:55px;
+  border-color:rgba(0,255,157,.35);
+  animation:spinReverse 5s linear infinite;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+@keyframes spinReverse{
+  to{transform:rotate(-360deg)}
+}
+
+.holo-grid{
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  background:
+    linear-gradient(rgba(0,234,255,.1) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,234,255,.1) 1px,transparent 1px);
+  background-size:25px 25px;
+  mask-image:radial-gradient(circle,#000 0%,transparent 72%);
+  animation:gridMove 5s linear infinite;
+}
+
+@keyframes gridMove{
+  to{transform:rotate(360deg)}
+}
+
+.holo-core{
+  width:85px;
+  height:85px;
+  border-radius:50%;
+  background:radial-gradient(
+    circle,
+    #fff,
+    var(--cyan) 15%,
+    rgba(0,234,255,.25) 45%,
+    transparent 70%
+  );
+  box-shadow:
+    0 0 20px var(--cyan),
+    0 0 60px rgba(0,234,255,.6);
+  animation:corePulse 2s infinite;
+}
+
+@keyframes corePulse{
+  50%{transform:scale(1.18);opacity:.7}
+}
+
+.radar-sweep{
+  position:absolute;
+  width:50%;
+  height:2px;
+  left:50%;
+  top:50%;
+  transform-origin:left center;
+  background:linear-gradient(90deg,var(--line),transparent);
+  box-shadow:0 0 10px var(--line);
+  animation:radar 2.5s linear infinite;
+}
+
+@keyframes radar{
+  to{transform:rotate(360deg)}
+}
+
+.holo-label{
+  position:absolute;
+  bottom:15px;
+  color:var(--line);
+  font-size:10px;
+  letter-spacing:2px;
+  text-shadow:0 0 8px var(--line);
+}
+
+/* ================= STATS ================= */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin:20px 0;
 }
 
 @media(max-width:700px){
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
 
-    header{
-        padding:15px;
-    }
+.stat{
+  background:rgba(0,255,157,.035);
+  border:1px solid rgba(0,255,157,.15);
+  border-radius:10px;
+  padding:15px;
+  text-align:center;
+}
 
-    .brand h1{
-        font-size:14px;
-        letter-spacing:1.5px;
-    }
+.stat strong{
+  display:block;
+  color:var(--cyan);
+  font-size:23px;
+  margin-bottom:5px;
+}
 
-    .brand p{
-        font-size:8px;
-    }
+.stat span{
+  color:var(--muted);
+  font-size:10px;
+}
 
-    .header-right{
-        display:none;
-    }
+/* ================= MODULES ================= */
 
-    main{
-        padding:12px;
-    }
+.modules{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
 
-    .command{
-        grid-template-columns:1fr;
-    }
+@media(max-width:800px){
+  .modules{
+    grid-template-columns:1fr 1fr;
+  }
+}
 
-    .stats{
-        grid-template-columns:repeat(2,1fr);
-    }
+@media(max-width:500px){
+  .modules{
+    grid-template-columns:1fr;
+  }
+}
 
-    .modules{
-        grid-template-columns:1fr;
-    }
+.module{
+  padding:15px;
+  border:1px solid rgba(0,234,255,.15);
+  background:rgba(0,234,255,.025);
+  border-radius:10px;
+}
 
-    .radar{
-        width:210px;
-        height:210px;
-    }
+.module h3{
+  color:var(--cyan);
+  font-size:13px;
+  margin-bottom:7px;
+}
+
+.module p{
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.5;
+}
+
+/* ================= RESULT ================= */
+
+.result{
+  margin-top:15px;
+  min-height:100px;
+  padding:15px;
+  border:1px dashed rgba(0,255,157,.22);
+  border-radius:8px;
+  background:#010608;
+  font-size:12px;
+  line-height:1.7;
+}
+
+.result .label{
+  color:var(--cyan);
+}
+
+.value{
+  color:#fff;
+  word-break:break-word;
+}
+
+/* ================= REPORT ================= */
+
+.report-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:12px;
+}
+
+footer{
+  width:min(1400px,92%);
+  margin:30px auto;
+  padding:20px;
+  text-align:center;
+  border-top:1px solid rgba(0,255,157,.12);
+  color:#48635d;
+  font-size:10px;
+  line-height:1.7;
+}
+
+.warning{
+  color:#ffbd59;
+}
+
+.hide{
+  display:none;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-
-    <div class="brand">
-
-        <div class="logo">◉</div>
-
-        <div>
-            <h1>ALFA OSINT COMMAND CENTER</h1>
-            <p>PUBLIC INTELLIGENCE // ANALYSIS PLATFORM // V2.0</p>
-        </div>
-
-    </div>
-
-    <div class="header-right">
-        <div class="clock" id="clock">--:--:--</div>
-        <div class="system">
-            <i></i>SYSTEM ONLINE
-        </div>
-    </div>
-
-</header>
+<canvas id="matrix"></canvas>
 
 <nav>
+  <div class="logo">ALFA // OSINT V3</div>
 
-    <button class="active" onclick="scrollToSection('command')">
-        COMMAND
-    </button>
-
-    <button onclick="scrollToSection('modules')">
-        INTEL MODULES
-    </button>
-
-    <button onclick="scrollToSection('results')">
-        RESULTS
-    </button>
-
-    <button onclick="scrollToSection('terminal')">
-        TERMINAL
-    </button>
-
-    <button onclick="scrollToSection('report')">
-        REPORT
-    </button>
-
+  <div class="nav-status">
+    <span class="status-dot"></span>
+    SYSTEM ONLINE
+  </div>
 </nav>
 
-<main>
+<section class="hero">
+  <h1>OSINT <span>COMMAND CENTER</span></h1>
+  <p>PUBLIC SOURCE INTELLIGENCE // CYBER ANALYSIS INTERFACE</p>
+</section>
 
-<!-- COMMAND + RADAR -->
+<main class="container">
 
-<div class="top-grid">
+  <div class="grid">
 
-    <section class="panel" id="command">
-
-        <div class="title">
-            <span>⌕ COMMAND INTERFACE</span>
-            <span class="badge">READY</span>
-        </div>
-
-        <div class="body">
-
-            <div class="command">
-
-                <input
-                    id="target"
-                    type="text"
-                    placeholder="Masukkan domain, URL, atau username publik..."
-                    autocomplete="off"
-                >
-
-                <select id="mode">
-                    <option value="auto">AUTO ANALYSIS</option>
-                    <option value="domain">DOMAIN</option>
-                    <option value="url">URL</option>
-                    <option value="username">USERNAME</option>
-                </select>
-
-            </div>
-
-            <div style="display:flex;gap:8px;margin-top:9px;flex-wrap:wrap">
-
-                <button class="btn" onclick="analyzeTarget()">
-                    ▶ START ANALYSIS
-                </button>
-
-                <button class="btn secondary" onclick="clearAll()">
-                    CLEAR
-                </button>
-
-            </div>
-
-            <div class="target-box">
-
-                <div class="target-label">
-                    CURRENT TARGET
-                </div>
-
-                <div class="target-value" id="targetDisplay">
-                    NO TARGET SELECTED
-                </div>
-
-                <div class="tags">
-
-                    <div class="tag" id="tagMode">
-                        MODE: IDLE
-                    </div>
-
-                    <div class="tag">
-                        SOURCE: PUBLIC
-                    </div>
-
-                    <div class="tag">
-                        STORAGE: LOCAL
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="stats">
-
-                <div class="stat">
-                    <small>SCANS</small>
-                    <strong id="scanCount">000</strong>
-                </div>
-
-                <div class="stat">
-                    <small>MODULES</small>
-                    <strong>06</strong>
-                </div>
-
-                <div class="stat">
-                    <small>RESULTS</small>
-                    <strong id="resultCount">000</strong>
-                </div>
-
-                <div class="stat">
-                    <small>MODE</small>
-                    <strong>LOCAL</strong>
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
+    <!-- COMMAND PANEL -->
     <section class="panel">
 
-        <div class="title">
-            <span>◉ INTELLIGENCE RADAR</span>
-            <span class="badge">LIVE</span>
-        </div>
+      <div class="panel-title">
+        <span>◈ COMMAND INTERFACE</span>
+        <small id="clock">--:--:--</small>
+      </div>
 
-        <div class="body radar-area">
+      <div class="command-box">
+        <input
+          id="target"
+          type="text"
+          placeholder="Masukkan domain / URL / username..."
+          autocomplete="off"
+        >
+        <button onclick="runScan()">SCAN</button>
+      </div>
 
-            <div class="radar">
+      <div class="mode-row">
+        <button class="mode-btn active" onclick="setMode('auto',this)">AUTO</button>
+        <button class="mode-btn" onclick="setMode('domain',this)">DOMAIN</button>
+        <button class="mode-btn" onclick="setMode('url',this)">URL</button>
+        <button class="mode-btn" onclick="setMode('username',this)">USERNAME</button>
+      </div>
 
-                <div class="sweep"></div>
+      <br>
 
-                <div class="rdot r1"></div>
-                <div class="rdot r2"></div>
-                <div class="rdot r3"></div>
-                <div class="rdot r4"></div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-</div>
-
-
-<!-- MODULES -->
-
-<section class="panel" id="modules" style="margin-top:17px">
-
-    <div class="title">
-        <span>▦ INTELLIGENCE MODULES</span>
-        <span class="badge">06 ONLINE</span>
-    </div>
-
-    <div class="body">
-
-        <div class="modules">
-
-            <div class="module" onclick="quickMode('domain')">
-                <div class="module-icon">◈</div>
-                <h3>DOMAIN INTELLIGENCE</h3>
-                <p>
-                    Analisis dasar domain dan shortcut pencarian
-                    informasi publik.
-                </p>
-            </div>
-
-            <div class="module" onclick="quickMode('url')">
-                <div class="module-icon">↗</div>
-                <h3>URL ANALYSIS</h3>
-                <p>
-                    Parsing protokol, hostname, port, path,
-                    dan parameter URL.
-                </p>
-            </div>
-
-            <div class="module" onclick="quickMode('username')">
-                <div class="module-icon">@</div>
-                <h3>USERNAME SEARCH</h3>
-                <p>
-                    Membuka pencarian username pada layanan
-                    publik melalui mesin pencari.
-                </p>
-            </div>
-
-            <div class="module" onclick="openSearch('google')">
-                <div class="module-icon">⌕</div>
-                <h3>PUBLIC WEB SEARCH</h3>
-                <p>
-                    Pencarian web publik untuk target yang
-                    sedang dianalisis.
-                </p>
-            </div>
-
-            <div class="module" onclick="openSearch('whois')">
-                <div class="module-icon">◎</div>
-                <h3>WHOIS LOOKUP</h3>
-                <p>
-                    Membuka layanan WHOIS publik untuk
-                    pemeriksaan registrasi domain.
-                </p>
-            </div>
-
-            <div class="module" onclick="openSearch('dns')">
-                <div class="module-icon">◇</div>
-                <h3>DNS LOOKUP</h3>
-                <p>
-                    Shortcut menuju layanan DNS publik
-                    untuk analisis domain.
-                </p>
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- RESULTS + TERMINAL -->
-
-<div class="lower-grid">
-
-    <section class="panel" id="results">
-
-        <div class="title">
-            <span>▣ ANALYSIS RESULTS</span>
-            <span class="badge" id="resultBadge">0 ITEMS</span>
-        </div>
-
-        <div class="body">
-
-            <div class="results" id="resultsBox">
-
-                <div class="result">
-
-                    <div class="result-head">
-
-                        <div class="result-name">
-                            SYSTEM
-                        </div>
-
-                        <div class="result-status">
-                            READY
-                        </div>
-
-                    </div>
-
-                    <div class="result-value">
-                        Masukkan target publik dan jalankan
-                        START ANALYSIS.
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
+      <div class="terminal" id="terminal">
+        <div>[BOOT] ALFA OSINT COMMAND CENTER V3</div>
+        <div>[SYS] Initializing cyber interface...</div>
+        <div>[SYS] Matrix engine: ONLINE</div>
+        <div>[SYS] Holographic radar: ONLINE</div>
+        <div>[SYS] Public-source mode: ENABLED</div>
+        <div>[READY] Waiting for target...</div>
+      </div>
 
     </section>
 
+    <!-- HOLOGRAM PANEL -->
+    <section class="panel">
 
-    <section class="panel" id="terminal">
+      <div class="panel-title">
+        <span>◉ HOLOGRAPHIC RADAR</span>
+        <small>LIVE</small>
+      </div>
 
-        <div class="title">
-            <span>▣ ANALYST TERMINAL</span>
-            <span class="badge">LOCAL</span>
-        </div>
+      <div class="holo-wrap">
 
-        <div class="terminal" id="terminalBox">
+        <div class="hologram">
 
-            <div class="log-ok">
-                [SYSTEM] ALFA OSINT COMMAND CENTER V2 INITIALIZED
-            </div>
+          <div class="holo-grid"></div>
 
-            <div class="log-info">
-                [MODULE] Domain analyzer ........ ONLINE
-            </div>
+          <div class="radar-sweep"></div>
 
-            <div class="log-info">
-                [MODULE] URL analyzer ........... ONLINE
-            </div>
+          <div class="holo-core"></div>
 
-            <div class="log-info">
-                [MODULE] Username assistant ..... ONLINE
-            </div>
-
-            <div class="log-ok">
-                [SECURITY] Local browser analysis mode active
-            </div>
-
-            <div class="log-muted">
-                [INFO] Waiting for analyst command...
-            </div>
-
-            <div>
-                <span class="cursor"></span>
-            </div>
+          <div class="holo-label">
+            PUBLIC SIGNAL MONITOR
+          </div>
 
         </div>
+
+      </div>
 
     </section>
 
-</div>
+  </div>
 
+  <!-- STATS -->
+  <div class="stats">
 
-<!-- REPORT -->
+    <div class="stat">
+      <strong id="scanCount">0</strong>
+      <span>SCANS</span>
+    </div>
 
-<section class="panel" id="report" style="margin-top:17px">
+    <div class="stat">
+      <strong id="moduleCount">06</strong>
+      <span>MODULES</span>
+    </div>
 
-    <div class="title">
+    <div class="stat">
+      <strong id="signalStatus">OK</strong>
+      <span>SIGNAL</span>
+    </div>
 
-        <span>▤ INTELLIGENCE REPORT</span>
+    <div class="stat">
+      <strong id="systemLoad">18%</strong>
+      <span>SYSTEM LOAD</span>
+    </div>
 
-        <span class="badge">
-            LOCAL REPORT
-        </span>
+  </div>
+
+  <!-- MODULES -->
+  <section class="panel">
+
+    <div class="panel-title">
+      <span>▣ INTELLIGENCE MODULES</span>
+      <small>PUBLIC DATA ONLY</small>
+    </div>
+
+    <div class="modules">
+
+      <div class="module">
+        <h3>◈ DOMAIN INTELLIGENCE</h3>
+        <p>Analisis dasar nama domain, hostname, dan informasi publik.</p>
+      </div>
+
+      <div class="module">
+        <h3>◈ URL ANALYSIS</h3>
+        <p>Memecah komponen URL secara lokal tanpa mengirim password/token.</p>
+      </div>
+
+      <div class="module">
+        <h3>◈ USERNAME SEARCH</h3>
+        <p>Membuka pencarian publik untuk username pada layanan umum.</p>
+      </div>
+
+      <div class="module">
+        <h3>◈ PUBLIC WEB SEARCH</h3>
+        <p>Pencarian menggunakan mesin pencari publik.</p>
+      </div>
+
+      <div class="module">
+        <h3>◈ WHOIS LOOKUP</h3>
+        <p>Shortcut menuju layanan WHOIS publik.</p>
+      </div>
+
+      <div class="module">
+        <h3>◈ DNS LOOKUP</h3>
+        <p>Shortcut pemeriksaan DNS melalui layanan publik.</p>
+      </div>
 
     </div>
 
-    <div class="body">
+  </section>
 
-        <div class="report-actions">
+  <br>
 
-            <button class="btn green" onclick="generateReport()">
-                GENERATE REPORT
-            </button>
+  <!-- RESULT -->
+  <section class="panel">
 
-            <button class="btn" onclick="downloadReport()">
-                EXPORT TXT
-            </button>
+    <div class="panel-title">
+      <span>▤ ANALYSIS RESULT</span>
+      <small id="resultStatus">STANDBY</small>
+    </div>
 
-            <button class="btn secondary" onclick="copyReport()">
-                COPY REPORT
-            </button>
+    <div id="result" class="result">
+      <span class="label">[INFO]</span>
+      <span class="value">
+        Masukkan target kemudian tekan SCAN.
+      </span>
+    </div>
 
-        </div>
+    <div class="report-actions">
 
-        <div class="report-box" id="reportBox">
-No report generated.
+      <button onclick="generateReport()">
+        GENERATE REPORT
+      </button>
 
-Jalankan analisis terlebih dahulu.
-        </div>
+      <button onclick="copyReport()">
+        COPY REPORT
+      </button>
+
+      <button onclick="downloadReport()">
+        EXPORT TXT
+      </button>
 
     </div>
 
-</section>
-
-
-<div class="notice">
-
-    ⚠ SECURITY NOTICE:
-    ALFA OSINT COMMAND CENTER digunakan untuk
-    lawful open-source intelligence. Sistem ini hanya
-    membantu analisis informasi yang tersedia secara publik.
-    Jangan digunakan untuk mengambil password, token,
-    membobol akun, mengakses data privat, melakukan doxxing,
-    atau melacak seseorang tanpa izin.
-
-</div>
+  </section>
 
 </main>
 
-
 <footer>
+  <div class="warning">
+    ⚠ PUBLIC-SOURCE OSINT ONLY
+  </div>
 
-    ALFA OSINT COMMAND CENTER V2
-    // PUBLIC INTELLIGENCE LAB
-    // LOCAL ANALYSIS
-    // 2026
-
+  Sistem ini hanya untuk analisis informasi yang tersedia secara publik.
+  Jangan digunakan untuk mengakses akun pribadi, password, token,
+  data privat, pelacakan diam-diam, atau aktivitas tanpa izin.
+  <br><br>
+  ALFA OSINT COMMAND CENTER V3 // LOCAL BROWSER INTERFACE
 </footer>
-
 
 <script>
 
-/* =========================
-   GLOBAL STATE
-========================= */
+/* =========================================================
+   MATRIX RAIN
+========================================================= */
 
-let scanCount = 0;
-let resultCount = 0;
-let currentTarget = "";
-let currentMode = "";
-let currentResults = [];
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+let fontSize = 15;
+let columns;
+let drops;
+
+const chars =
+"01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&*@<>[]{}:/\\\\|";
+
+function resizeMatrix(){
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  columns = Math.floor(canvas.width / fontSize);
+
+  drops = [];
+
+  for(let i=0;i<columns;i++){
+    drops[i] = Math.random() * -100;
+  }
+}
+
+function drawMatrix(){
+
+  ctx.fillStyle = "rgba(0,0,0,0.055)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  ctx.font = fontSize + "px monospace";
+
+  for(let i=0;i<drops.length;i++){
+
+    const char =
+      chars[Math.floor(Math.random()*chars.length)];
+
+    ctx.fillStyle =
+      Math.random() > .92
+      ? "#ffffff"
+      : "#00ff9d";
+
+    ctx.fillText(
+      char,
+      i * fontSize,
+      drops[i] * fontSize
+    );
+
+    if(
+      drops[i] * fontSize > canvas.height &&
+      Math.random() > .975
+    ){
+      drops[i] = 0;
+    }
+
+    drops[i] += .65;
+  }
+
+  requestAnimationFrame(drawMatrix);
+}
+
+window.addEventListener("resize",resizeMatrix);
+
+resizeMatrix();
+drawMatrix();
 
 
-/* =========================
+/* =========================================================
    CLOCK
-========================= */
+========================================================= */
 
 function updateClock(){
 
-    const now = new Date();
+  const now = new Date();
 
-    const time = now.toLocaleTimeString(
-        "id-ID",
-        {
-            hour12:false
-        }
-    );
+  document.getElementById("clock").textContent =
+    now.toLocaleTimeString("id-ID");
 
-    document.getElementById("clock").textContent =
-        time + " WIB";
 }
 
 setInterval(updateClock,1000);
 updateClock();
 
 
-/* =========================
-   TERMINAL LOG
-========================= */
+/* =========================================================
+   SYSTEM LOAD
+========================================================= */
 
-function log(message,type="muted"){
+setInterval(()=>{
 
-    const box =
-        document.getElementById("terminalBox");
+  const load =
+    Math.floor(12 + Math.random()*35);
 
-    const line =
-        document.createElement("div");
+  document.getElementById("systemLoad").textContent =
+    load + "%";
 
-    line.className =
-        "log-" + type;
+},1500);
 
-    const now =
-        new Date().toLocaleTimeString(
-            "id-ID",
-            {hour12:false}
-        );
 
-    line.textContent =
-        "[" + now + "] " + message;
+/* =========================================================
+   MODE
+========================================================= */
 
-    box.appendChild(line);
+let currentMode = "auto";
 
-    box.scrollTop =
-        box.scrollHeight;
+function setMode(mode,button){
+
+  currentMode = mode;
+
+  document.querySelectorAll(".mode-btn")
+    .forEach(btn => btn.classList.remove("active"));
+
+  button.classList.add("active");
+
+  log("[MODE] Analysis mode switched to: " + mode.toUpperCase());
+
 }
 
 
-/* =========================
-   ESCAPE
-========================= */
+/* =========================================================
+   TERMINAL
+========================================================= */
+
+function log(message){
+
+  const terminal =
+    document.getElementById("terminal");
+
+  const line =
+    document.createElement("div");
+
+  const time =
+    new Date().toLocaleTimeString("id-ID");
+
+  line.textContent =
+    "[" + time + "] " + message;
+
+  terminal.appendChild(line);
+
+  terminal.scrollTop =
+    terminal.scrollHeight;
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
 
 function escapeHTML(value){
 
-    return String(value)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
 }
 
 
-/* =========================
-   DETECT MODE
-========================= */
+/* =========================================================
+   TARGET DETECTION
+========================================================= */
 
-function detectMode(value){
+function detectTarget(value){
 
-    if(
-        value.includes("://") ||
-        value.startsWith("www.")
-    ){
-        return "url";
-    }
+  value = value.trim();
 
-    if(
-        /^[a-zA-Z0-9._-]+\.[a-zA-Z]{2,}$/.test(value)
-    ){
-        return "domain";
-    }
+  if(/^https?:\/\//i.test(value)){
+    return "url";
+  }
 
-    return "username";
+  if(
+    /^[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/i.test(value)
+  ){
+    return "domain";
+  }
+
+  return "username";
 }
 
 
-/* =========================
-   ANALYZE
-========================= */
+/* =========================================================
+   SCAN
+========================================================= */
 
-function analyzeTarget(){
+let scanCounter = 0;
+let latestReport = "";
 
-    const raw =
-        document.getElementById("target")
-        .value
-        .trim();
+function runScan(){
 
-    if(!raw){
+  const input =
+    document.getElementById("target");
 
-        alert(
-            "Masukkan domain, URL, atau username publik."
-        );
+  const raw =
+    input.value.trim();
 
-        return;
-    }
+  if(!raw){
 
-    currentTarget = raw;
+    log("[ERROR] Target kosong.");
 
-    let mode =
-        document.getElementById("mode").value;
+    document.getElementById("result").innerHTML =
+      '<span class="label">[ERROR]</span> Masukkan target terlebih dahulu.';
 
-    if(mode === "auto"){
-        mode = detectMode(raw);
-    }
+    return;
+  }
 
-    currentMode = mode;
+  let mode = currentMode;
 
-    scanCount++;
+  if(mode === "auto"){
+    mode = detectTarget(raw);
+  }
 
-    document.getElementById("scanCount")
-        .textContent =
-        String(scanCount).padStart(3,"0");
+  scanCounter++;
 
-    document.getElementById("targetDisplay")
-        .textContent = raw;
+  document.getElementById("scanCount").textContent =
+    scanCounter;
 
-    document.getElementById("tagMode")
-        .textContent =
-        "MODE: " + mode.toUpperCase();
+  document.getElementById("resultStatus").textContent =
+    "ANALYZING";
 
-    currentResults = [];
+  log("[SCAN] Target received: " + raw);
+  log("[SCAN] Module selected: " + mode.toUpperCase());
 
-    log(
-        "Target accepted: " + raw,
-        "info"
-    );
+  const result =
+    document.getElementById("result");
 
-    log(
-        "Analysis mode: " + mode.toUpperCase(),
-        "info"
-    );
+  result.innerHTML =
+    '<span class="label">[PROCESS]</span> Running public-source analysis...';
+
+  setTimeout(()=>{
 
     if(mode === "domain"){
-        analyzeDomain(raw);
+      analyzeDomain(raw);
     }
 
     else if(mode === "url"){
-        analyzeURL(raw);
+      analyzeURL(raw);
     }
 
     else{
-        analyzeUsername(raw);
+      analyzeUsername(raw);
     }
+
+  },700);
+
 }
 
 
-/* =========================
-   DOMAIN ANALYZER
-========================= */
+/* =========================================================
+   DOMAIN ANALYSIS
+========================================================= */
 
 function analyzeDomain(domain){
 
-    log(
-        "Running domain parser...",
-        "muted"
-    );
+  domain =
+    domain
+      .replace(/^https?:\/\//i,"")
+      .split("/")[0]
+      .trim();
 
-    const normalized =
-        domain
-        .replace(/^https?:\/\//i,"")
-        .split("/")[0]
-        .split(":")[0];
+  const parts =
+    domain.split(".");
 
-    const parts =
-        normalized.split(".");
+  const tld =
+    parts.length > 1
+    ? "." + parts[parts.length-1]
+    : "N/A";
 
-    const tld =
-        parts.length > 1
-        ? "." + parts[parts.length - 1]
-        : "UNKNOWN";
+  const hostname =
+    parts.slice(0,-1).join(".") || domain;
+
+  const now =
+    new Date().toISOString();
+
+  latestReport =
+`ALFA OSINT V3 REPORT
+TYPE: DOMAIN
+TARGET: ${domain}
+HOSTNAME: ${hostname}
+TLD: ${tld}
+ANALYSIS TIME: ${now}
+
+NOTE:
+Analysis performed locally.
+No private account access.
+No credential extraction.
+Public-source workflow only.`;
+
+  document.getElementById("result").innerHTML = `
+    <div><span class="label">TYPE:</span> <span class="value">DOMAIN</span></div>
+    <div><span class="label">TARGET:</span> <span class="value">${escapeHTML(domain)}</span></div>
+    <div><span class="label">HOSTNAME:</span> <span class="value">${escapeHTML(hostname)}</span></div>
+    <div><span class="label">TLD:</span> <span class="value">${escapeHTML(tld)}</span></div>
+    <div><span class="label">STATUS:</span> <span class="value">PUBLIC ANALYSIS READY</span></div>
+  `;
+
+  document.getElementById("resultStatus").textContent =
+    "COMPLETE";
+
+  log("[DONE] Domain analysis complete.");
+
+}
+
+
+/* =========================================================
+   URL ANALYSIS
+========================================================= */
+
+function analyzeURL(target){
+
+  try{
+
+    const url =
+      new URL(target);
+
+    const protocol =
+      url.protocol;
 
     const hostname =
-        normalized.toLowerCase();
+      url.hostname;
 
-    const results = [
+    const port =
+      url.port || "DEFAULT";
 
-        {
-            name:"HOSTNAME",
-            value:hostname,
-            status:"PARSED"
-        },
+    const path =
+      url.pathname || "/";
 
-        {
-            name:"TLD",
-            value:tld,
-            status:"PARSED"
-        },
+    const query =
+      url.search || "NONE";
 
-        {
-            name:"LABEL COUNT",
-            value:String(parts.length),
-            status:"PARSED"
-        },
+    latestReport =
+`ALFA OSINT V3 REPORT
+TYPE: URL
+TARGET: ${target}
+PROTOCOL: ${protocol}
+HOSTNAME: ${hostname}
+PORT: ${port}
+PATH: ${path}
+QUERY: ${query}
+TIME: ${new Date().toISOString()}
 
-        {
-            name:"PUBLIC SEARCH",
-            value:
-            "Cari informasi publik terkait domain",
-            status:"READY",
-            action:
-            "https://www.google.com/search?q=" +
-            encodeURIComponent('"' + hostname + '"')
-        },
+NOTE:
+URL parsed locally.
+Sensitive credentials are not collected.`;
 
-        {
-            name:"WHOIS",
-            value:
-            "Buka layanan WHOIS publik",
-            status:"READY",
-            action:
-            "https://www.whois.com/whois/" +
-            encodeURIComponent(hostname)
-        },
+    document.getElementById("result").innerHTML = `
+      <div><span class="label">TYPE:</span> <span class="value">URL</span></div>
+      <div><span class="label">PROTOCOL:</span> <span class="value">${escapeHTML(protocol)}</span></div>
+      <div><span class="label">HOSTNAME:</span> <span class="value">${escapeHTML(hostname)}</span></div>
+      <div><span class="label">PORT:</span> <span class="value">${escapeHTML(port)}</span></div>
+      <div><span class="label">PATH:</span> <span class="value">${escapeHTML(path)}</span></div>
+      <div><span class="label">QUERY:</span> <span class="value">${escapeHTML(query)}</span></div>
+    `;
 
-        {
-            name:"DNS",
-            value:
-            "Buka DNS lookup publik",
-            status:"READY",
-            action:
-            "https://dns.google/resolve?name=" +
-            encodeURIComponent(hostname)
-        }
+    document.getElementById("resultStatus").textContent =
+      "COMPLETE";
 
-    ];
+    log("[DONE] URL structure parsed.");
 
-    finishResults(results);
+  }
+
+  catch(error){
+
+    document.getElementById("result").innerHTML =
+      '<span class="label">[ERROR]</span> URL tidak valid.';
+
+    document.getElementById("resultStatus").textContent =
+      "ERROR";
+
+    log("[ERROR] Invalid URL.");
+
+  }
 
 }
 
 
-/* =========================
-   URL ANALYZER
-========================= */
-
-function analyzeURL(value){
-
-    log(
-        "Parsing supplied URL...",
-        "muted"
-    );
-
-    let url;
-
-    try{
-
-        url =
-            new URL(
-                value.match(/^https?:\/\//i)
-                ? value
-                : "https://" + value
-            );
-
-    }catch(error){
-
-        renderResults([
-
-            {
-                name:"URL STATUS",
-                value:"Format URL tidak valid.",
-                status:"ERROR"
-            }
-
-        ]);
-
-        log(
-            "URL parser rejected input.",
-            "warn"
-        );
-
-        return;
-    }
-
-    const results = [
-
-        {
-            name:"PROTOCOL",
-            value:url.protocol,
-            status:"PARSED"
-        },
-
-        {
-            name:"HOSTNAME",
-            value:url.hostname,
-            status:"PARSED"
-        },
-
-        {
-            name:"PORT",
-            value:url.port || "DEFAULT",
-            status:"PARSED"
-        },
-
-        {
-            name:"PATH",
-            value:url.pathname || "/",
-            status:"PARSED"
-        },
-
-        {
-            name:"PARAMETERS",
-            value:
-                url.search
-                ? url.search
-                : "NONE",
-            status:"PARSED"
-        },
-
-        {
-            name:"FRAGMENT",
-            value:
-                url.hash
-                ? url.hash
-                : "NONE",
-            status:"PARSED"
-        }
-
-    ];
-
-    finishResults(results);
-
-}
-
-
-/* =========================
-   USERNAME
-========================= */
+/* =========================================================
+   USERNAME ANALYSIS
+========================================================= */
 
 function analyzeUsername(username){
 
-    log(
-        "Preparing public username search...",
-        "muted"
-    );
+  username =
+    username.replace(/^@/,"").trim();
 
-    const clean =
-        username
-        .replace(/^@/,"")
-        .trim();
+  const safe =
+    encodeURIComponent(username);
 
-    const query =
-        encodeURIComponent(
-            '"' + clean + '"'
-        );
+  latestReport =
+`ALFA OSINT V3 REPORT
+TYPE: USERNAME
+TARGET: ${username}
+TIME: ${new Date().toISOString()}
 
-    const results = [
+PUBLIC SEARCH SHORTCUTS:
+Google
+GitHub
+Reddit
 
-        {
-            name:"USERNAME",
-            value:"@" + clean,
-            status:"PARSED"
-        },
+NOTE:
+Search is performed on publicly accessible pages only.`;
 
-        {
-            name:"PUBLIC WEB",
-            value:
-            "Search exact username on public web",
-            status:"READY",
-            action:
-            "https://www.google.com/search?q=" + query
-        },
+  document.getElementById("result").innerHTML = `
+    <div>
+      <span class="label">TYPE:</span>
+      <span class="value">USERNAME</span>
+    </div>
 
-        {
-            name:"GITHUB",
-            value:
-            "Search username on GitHub",
-            status:"READY",
-            action:
-            "https://github.com/search?q=" +
-            encodeURIComponent(clean) +
-            "&type=users"
-        },
+    <div>
+      <span class="label">TARGET:</span>
+      <span class="value">${escapeHTML(username)}</span>
+    </div>
 
-        {
-            name:"REDDIT",
-            value:
-            "Search public Reddit results",
-            status:"READY",
-            action:
-            "https://www.google.com/search?q=" +
-            encodeURIComponent(
-                'site:reddit.com "' +
-                clean +
-                '"'
-            )
-        },
+    <br>
 
-        {
-            name:"PUBLIC SOCIAL SEARCH",
-            value:
-            "Search engines only; results depend on public indexing.",
-            status:"INFO"
-        }
+    <button onclick="openSearch('https://www.google.com/search?q='+encodeURIComponent('${safe}'))">
+      GOOGLE
+    </button>
 
-    ];
+    <button onclick="openSearch('https://github.com/search?q='+encodeURIComponent('${safe}'))">
+      GITHUB
+    </button>
 
-    finishResults(results);
+    <button onclick="openSearch('https://www.reddit.com/search/?q='+encodeURIComponent('${safe}'))">
+      REDDIT
+    </button>
+  `;
+
+  document.getElementById("resultStatus").textContent =
+    "READY";
+
+  log("[DONE] Public username search shortcuts ready.");
 
 }
 
 
-/* =========================
-   RESULTS
-========================= */
+/* =========================================================
+   SAFE SEARCH
+========================================================= */
 
-function finishResults(results){
+function openSearch(url){
 
-    currentResults =
-        results;
-
-    resultCount =
-        results.length;
-
-    document.getElementById("resultCount")
-        .textContent =
-        String(resultCount).padStart(3,"0");
-
-    document.getElementById("resultBadge")
-        .textContent =
-        resultCount + " ITEMS";
-
-    renderResults(results);
-
-    log(
-        resultCount +
-        " analysis items generated.",
-        "ok"
-    );
+  window.open(
+    url,
+    "_blank",
+    "noopener,noreferrer"
+  );
 
 }
 
 
-/* =========================
-   RENDER
-========================= */
-
-function renderResults(results){
-
-    const box =
-        document.getElementById("resultsBox");
-
-    box.innerHTML = "";
-
-    results.forEach(item => {
-
-        const div =
-            document.createElement("div");
-
-        div.className =
-            "result";
-
-        let value =
-            escapeHTML(item.value);
-
-        if(item.action){
-
-            value +=
-                `<br><br>
-                <a href="${escapeHTML(item.action)}"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                   ↗ OPEN PUBLIC SOURCE
-                </a>`;
-        }
-
-        div.innerHTML = `
-
-            <div class="result-head">
-
-                <div class="result-name">
-                    ${escapeHTML(item.name)}
-                </div>
-
-                <div class="result-status">
-                    ${escapeHTML(item.status)}
-                </div>
-
-            </div>
-
-            <div class="result-value">
-                ${value}
-            </div>
-
-        `;
-
-        box.appendChild(div);
-
-    });
-
-}
-
-
-/* =========================
-   QUICK MODE
-========================= */
-
-function quickMode(mode){
-
-    document.getElementById("mode")
-        .value = mode;
-
-    document.getElementById("target")
-        .focus();
-
-    log(
-        "Module selected: " +
-        mode.toUpperCase(),
-        "info"
-    );
-
-    scrollToSection("command");
-}
-
-
-/* =========================
-   PUBLIC SEARCH
-========================= */
-
-function openSearch(type){
-
-    const target =
-        document.getElementById("target")
-        .value
-        .trim();
-
-    if(!target){
-
-        alert(
-            "Masukkan target terlebih dahulu."
-        );
-
-        return;
-    }
-
-    let url = "";
-
-    if(type === "google"){
-
-        url =
-            "https://www.google.com/search?q=" +
-            encodeURIComponent('"' + target + '"');
-
-    }
-
-    if(type === "whois"){
-
-        url =
-            "https://www.whois.com/whois/" +
-            encodeURIComponent(
-                target
-                .replace(/^https?:\/\//i,"")
-                .split("/")[0]
-            );
-
-    }
-
-    if(type === "dns"){
-
-        url =
-            "https://dns.google/resolve?name=" +
-            encodeURIComponent(
-                target
-                .replace(/^https?:\/\//i,"")
-                .split("/")[0]
-            );
-
-    }
-
-    if(url){
-
-        window.open(
-            url,
-            "_blank",
-            "noopener,noreferrer"
-        );
-
-        log(
-            "Public source opened: " + type.toUpperCase(),
-            "info"
-        );
-    }
-
-}
-
-
-/* =========================
+/* =========================================================
    REPORT
-========================= */
+========================================================= */
 
 function generateReport(){
 
-    if(!currentTarget){
+  if(!latestReport){
 
-        alert(
-            "Belum ada target yang dianalisis."
-        );
+    latestReport =
+`ALFA OSINT V3 REPORT
 
-        return;
-    }
+No analysis has been performed yet.
 
-    const now =
-        new Date()
-        .toLocaleString(
-            "id-ID"
-        );
+Please enter a public target and run SCAN.`;
 
-    let report =
-`ALFA OSINT COMMAND CENTER V2
-========================================
+  }
 
-ANALYSIS REPORT
+  document.getElementById("result").innerHTML =
+    `<pre style="
+      white-space:pre-wrap;
+      color:#74ffca;
+      font-family:inherit;
+    ">${escapeHTML(latestReport)}</pre>`;
 
-Generated : ${now}
-Target    : ${currentTarget}
-Mode      : ${currentMode.toUpperCase()}
-
-========================================
-PUBLIC INTELLIGENCE RESULTS
-========================================
-
-`;
-
-    currentResults.forEach((item,index)=>{
-
-        report +=
-`${index + 1}. ${item.name}
-Status : ${item.status}
-Value  : ${item.value}
-
-`;
-
-    });
-
-    report +=
-`========================================
-NOTICE
-========================================
-
-This report contains information generated
-from public-input analysis in the browser.
-
-Use only for lawful open-source intelligence.
-Do not use for unauthorized access, doxxing,
-credential theft, stalking, or privacy invasion.
-
-ALFA OSINT COMMAND CENTER V2
-`;
-
-    document.getElementById("reportBox")
-        .textContent =
-        report;
-
-    log(
-        "Local intelligence report generated.",
-        "ok"
-    );
+  log("[REPORT] Report generated.");
 
 }
 
 
-/* =========================
-   DOWNLOAD REPORT
-========================= */
-
-function downloadReport(){
-
-    const report =
-        document.getElementById("reportBox")
-        .textContent;
-
-    if(
-        !report ||
-        report.startsWith("No report")
-    ){
-
-        generateReport();
-
-    }
-
-    const finalReport =
-        document.getElementById("reportBox")
-        .textContent;
-
-    const blob =
-        new Blob(
-            [finalReport],
-            {
-                type:"text/plain;charset=utf-8"
-            }
-        );
-
-    const url =
-        URL.createObjectURL(blob);
-
-    const a =
-        document.createElement("a");
-
-    a.href = url;
-
-    a.download =
-        "ALFA-OSINT-REPORT.txt";
-
-    document.body.appendChild(a);
-
-    a.click();
-
-    a.remove();
-
-    URL.revokeObjectURL(url);
-
-    log(
-        "Report exported as TXT.",
-        "ok"
-    );
-
-}
-
-
-/* =========================
-   COPY REPORT
-========================= */
+/* =========================================================
+   COPY
+========================================================= */
 
 async function copyReport(){
 
-    const text =
-        document.getElementById("reportBox")
-        .textContent;
+  if(!latestReport){
+    generateReport();
+  }
 
-    if(
-        !text ||
-        text.startsWith("No report")
-    ){
+  try{
 
-        alert(
-            "Generate report terlebih dahulu."
-        );
-
-        return;
-    }
-
-    try{
-
-        await navigator.clipboard.writeText(text);
-
-        log(
-            "Report copied to clipboard.",
-            "ok"
-        );
-
-        alert(
-            "Report berhasil disalin."
-        );
-
-    }catch(error){
-
-        alert(
-            "Clipboard tidak tersedia di browser ini."
-        );
-
-    }
-
-}
-
-
-/* =========================
-   CLEAR
-========================= */
-
-function clearAll(){
-
-    currentTarget = "";
-    currentMode = "";
-    currentResults = [];
-
-    document.getElementById("target")
-        .value = "";
-
-    document.getElementById("targetDisplay")
-        .textContent =
-        "NO TARGET SELECTED";
-
-    document.getElementById("tagMode")
-        .textContent =
-        "MODE: IDLE";
-
-    document.getElementById("resultCount")
-        .textContent =
-        "000";
-
-    document.getElementById("resultBadge")
-        .textContent =
-        "0 ITEMS";
-
-    document.getElementById("resultsBox")
-        .innerHTML = `
-
-        <div class="result">
-
-            <div class="result-head">
-
-                <div class="result-name">
-                    SYSTEM
-                </div>
-
-                <div class="result-status">
-                    READY
-                </div>
-
-            </div>
-
-            <div class="result-value">
-                Target cleared. Waiting for analyst command.
-            </div>
-
-        </div>
-
-    `;
-
-    document.getElementById("reportBox")
-        .textContent =
-        "No report generated.\n\nJalankan analisis terlebih dahulu.";
-
-    log(
-        "Workspace cleared.",
-        "warn"
+    await navigator.clipboard.writeText(
+      latestReport
     );
 
+    log("[REPORT] Copied to clipboard.");
+
+  }
+
+  catch(error){
+
+    log("[ERROR] Clipboard permission unavailable.");
+
+  }
+
 }
 
 
-/* =========================
-   NAVIGATION
-========================= */
+/* =========================================================
+   DOWNLOAD TXT
+========================================================= */
 
-function scrollToSection(id){
+function downloadReport(){
 
-    const el =
-        document.getElementById(id);
+  if(!latestReport){
+    generateReport();
+  }
 
-    if(el){
+  const blob =
+    new Blob(
+      [latestReport],
+      {type:"text/plain;charset=utf-8"}
+    );
 
-        el.scrollIntoView({
-            behavior:"smooth",
-            block:"start"
-        });
+  const url =
+    URL.createObjectURL(blob);
 
+  const a =
+    document.createElement("a");
+
+  a.href = url;
+  a.download =
+    "alfa-osint-report.txt";
+
+  document.body.appendChild(a);
+
+  a.click();
+
+  a.remove();
+
+  URL.revokeObjectURL(url);
+
+  log("[REPORT] TXT exported.");
+
+}
+
+
+/* =========================================================
+   ENTER KEY
+========================================================= */
+
+document.getElementById("target")
+  .addEventListener("keydown",function(event){
+
+    if(event.key === "Enter"){
+      runScan();
     }
 
-}
+  });
 
 </script>
 
 </body>
 </html>
-```
