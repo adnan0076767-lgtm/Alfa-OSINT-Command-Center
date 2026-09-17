@@ -1,0 +1,608 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ALFA OSINT COMMAND CENTER | Intelligence Dashboard</title>
+<meta name="description" content="ALFA OSINT Command Center - Public Intelligence Analysis Dashboard">
+<meta name="theme-color" content="#020617">
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    background:#020617;
+    color:#dbeafe;
+    font-family:Consolas,Monaco,"Courier New",monospace;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+/* MATRIX BACKGROUND */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.08;
+    background:
+        linear-gradient(90deg,rgba(0,255,255,.15) 1px,transparent 1px),
+        linear-gradient(rgba(0,255,255,.15) 1px,transparent 1px);
+    background-size:40px 40px;
+    mask-image:linear-gradient(to bottom,black,transparent);
+}
+
+/* HEADER */
+header{
+    position:relative;
+    padding:22px 30px;
+    border-bottom:1px solid #164e63;
+    background:rgba(2,6,23,.92);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.logo{
+    width:48px;
+    height:48px;
+    border:1px solid #22d3ee;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#22d3ee;
+    font-size:22px;
+    box-shadow:0 0 20px rgba(34,211,238,.35);
+}
+
+.brand h1{
+    font-size:20px;
+    letter-spacing:3px;
+    color:#67e8f9;
+}
+
+.brand p{
+    font-size:11px;
+    color:#64748b;
+    margin-top:4px;
+}
+
+.status{
+    font-size:11px;
+    color:#4ade80;
+}
+
+.status span{
+    display:inline-block;
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:#4ade80;
+    box-shadow:0 0 10px #4ade80;
+    margin-right:7px;
+}
+
+/* NAV */
+nav{
+    padding:10px 30px;
+    border-bottom:1px solid #0f3440;
+    background:#030b17;
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+}
+
+nav button{
+    background:transparent;
+    color:#64748b;
+    border:1px solid #164e63;
+    padding:8px 13px;
+    font-family:inherit;
+    cursor:pointer;
+    white-space:nowrap;
+}
+
+nav button:hover,
+nav button.active{
+    color:#67e8f9;
+    border-color:#22d3ee;
+    background:rgba(8,145,178,.08);
+}
+
+/* MAIN */
+main{
+    max-width:1450px;
+    margin:auto;
+    padding:25px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1.1fr 1fr 1fr;
+    gap:18px;
+}
+
+.panel{
+    position:relative;
+    background:rgba(3,15,30,.88);
+    border:1px solid #164e63;
+    box-shadow:0 0 25px rgba(8,145,178,.06);
+    overflow:hidden;
+}
+
+.panel::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    height:2px;
+    background:linear-gradient(90deg,transparent,#22d3ee,transparent);
+    opacity:.7;
+}
+
+.panel-title{
+    padding:12px 15px;
+    border-bottom:1px solid #123444;
+    color:#67e8f9;
+    font-size:12px;
+    letter-spacing:1.5px;
+    display:flex;
+    justify-content:space-between;
+}
+
+.panel-body{
+    padding:18px;
+}
+
+/* RADAR */
+.radar-wrap{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:15px 0 20px;
+}
+
+.radar{
+    width:230px;
+    height:230px;
+    border:1px solid #155e75;
+    border-radius:50%;
+    position:relative;
+    background:
+      radial-gradient(circle,transparent 28%,rgba(34,211,238,.03) 29%,transparent 30%),
+      radial-gradient(circle,transparent 48%,rgba(34,211,238,.05) 49%,transparent 50%),
+      radial-gradient(circle,transparent 68%,rgba(34,211,238,.06) 69%,transparent 70%);
+}
+
+.radar::before,
+.radar::after{
+    content:"";
+    position:absolute;
+    background:#164e63;
+}
+
+.radar::before{
+    width:100%;
+    height:1px;
+    top:50%;
+}
+
+.radar::after{
+    height:100%;
+    width:1px;
+    left:50%;
+}
+
+.sweep{
+    position:absolute;
+    width:50%;
+    height:2px;
+    top:50%;
+    left:50%;
+    transform-origin:left center;
+    background:linear-gradient(90deg,#22d3ee,transparent);
+    animation:sweep 3s linear infinite;
+    box-shadow:0 0 10px #22d3ee;
+}
+
+@keyframes sweep{
+    from{transform:rotate(0deg)}
+    to{transform:rotate(360deg)}
+}
+
+.dot{
+    position:absolute;
+    width:6px;
+    height:6px;
+    background:#22d3ee;
+    border-radius:50%;
+    box-shadow:0 0 10px #22d3ee;
+}
+
+.dot1{left:67%;top:30%}
+.dot2{left:35%;top:62%}
+.dot3{left:76%;top:70%}
+
+/* SEARCH */
+.search{
+    display:flex;
+    gap:8px;
+}
+
+.search input{
+    flex:1;
+    background:#020617;
+    border:1px solid #164e63;
+    color:#e0f2fe;
+    padding:12px;
+    font-family:inherit;
+    outline:none;
+}
+
+.search input:focus{
+    border-color:#22d3ee;
+    box-shadow:0 0 12px rgba(34,211,238,.12);
+}
+
+.btn{
+    border:1px solid #0891b2;
+    background:#083344;
+    color:#67e8f9;
+    padding:0 16px;
+    font-family:inherit;
+    cursor:pointer;
+}
+
+.btn:hover{
+    background:#0e7490;
+}
+
+/* INTEL CARDS */
+.intel-list{
+    display:grid;
+    gap:10px;
+}
+
+.intel{
+    padding:12px;
+    border:1px solid #123444;
+    background:#020b16;
+}
+
+.intel small{
+    color:#64748b;
+    display:block;
+    margin-bottom:5px;
+}
+
+.intel strong{
+    color:#bae6fd;
+    font-size:13px;
+}
+
+/* TERMINAL */
+.terminal{
+    height:260px;
+    overflow:auto;
+    background:#01050b;
+    padding:15px;
+    font-size:12px;
+    line-height:1.7;
+}
+
+.line{
+    color:#64748b;
+}
+
+.line.ok{
+    color:#4ade80;
+}
+
+.line.info{
+    color:#22d3ee;
+}
+
+.cursor{
+    display:inline-block;
+    width:7px;
+    height:13px;
+    background:#22d3ee;
+    vertical-align:middle;
+    animation:blink 1s infinite;
+}
+
+@keyframes blink{
+    50%{opacity:0}
+}
+
+/* METRICS */
+.metrics{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
+
+.metric{
+    border:1px solid #123444;
+    padding:14px;
+    background:#020b16;
+}
+
+.metric span{
+    display:block;
+    color:#64748b;
+    font-size:10px;
+    margin-bottom:8px;
+}
+
+.metric strong{
+    color:#67e8f9;
+    font-size:21px;
+}
+
+/* FULL WIDTH */
+.full{
+    grid-column:1/-1;
+}
+
+/* DISCLAIMER */
+.notice{
+    margin-top:18px;
+    padding:13px 15px;
+    border:1px solid #713f12;
+    background:rgba(120,53,15,.08);
+    color:#fbbf24;
+    font-size:11px;
+    line-height:1.6;
+}
+
+/* FOOTER */
+footer{
+    margin-top:30px;
+    border-top:1px solid #123444;
+    padding:20px;
+    text-align:center;
+    color:#475569;
+    font-size:10px;
+    letter-spacing:1px;
+}
+
+/* RESPONSIVE */
+@media(max-width:1000px){
+    .grid{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:700px){
+    header{
+        padding:18px;
+        align-items:flex-start;
+    }
+
+    .status{
+        display:none;
+    }
+
+    main{
+        padding:15px;
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .full{
+        grid-column:auto;
+    }
+
+    .brand h1{
+        font-size:16px;
+    }
+
+    .radar{
+        width:200px;
+        height:200px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="brand">
+        <div class="logo">◉</div>
+        <div>
+            <h1>ALFA OSINT COMMAND CENTER</h1>
+            <p>OPEN-SOURCE INTELLIGENCE // PUBLIC DATA ANALYSIS</p>
+        </div>
+    </div>
+
+    <div class="status">
+        <span></span>SYSTEM ONLINE
+    </div>
+</header>
+
+<nav>
+    <button class="active">COMMAND</button>
+    <button>DOMAIN</button>
+    <button>URL ANALYSIS</button>
+    <button>PUBLIC SEARCH</button>
+    <button>REPORT</button>
+</nav>
+
+<main>
+
+<div class="grid">
+
+    <!-- RADAR -->
+    <section class="panel">
+        <div class="panel-title">
+            <span>◉ INTELLIGENCE RADAR</span>
+            <span>LIVE</span>
+        </div>
+
+        <div class="panel-body radar-wrap">
+            <div class="radar">
+                <div class="sweep"></div>
+                <div class="dot dot1"></div>
+                <div class="dot dot2"></div>
+                <div class="dot dot3"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEARCH -->
+    <section class="panel">
+        <div class="panel-title">
+            <span>⌕ PUBLIC INTELLIGENCE SEARCH</span>
+            <span>V1</span>
+        </div>
+
+        <div class="panel-body">
+
+            <div class="search">
+                <input id="target"
+                       type="text"
+                       placeholder="Masukkan domain / username publik...">
+                <button class="btn" onclick="runScan()">SCAN</button>
+            </div>
+
+            <br>
+
+            <div class="intel-list" id="results">
+
+                <div class="intel">
+                    <small>TARGET</small>
+                    <strong>NO TARGET SELECTED</strong>
+                </div>
+
+                <div class="intel">
+                    <small>ANALYSIS MODE</small>
+                    <strong>PUBLIC DATA ONLY</strong>
+                </div>
+
+                <div class="intel">
+                    <small>STATUS</small>
+                    <strong>READY FOR ANALYSIS</strong>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- METRICS -->
+    <section class="panel">
+        <div class="panel-title">
+            <span>◈ SYSTEM METRICS</span>
+            <span>LOCAL</span>
+        </div>
+
+        <div class="panel-body">
+            <div class="metrics">
+
+                <div class="metric">
+                    <span>ACTIVE MODULES</span>
+                    <strong>06</strong>
+                </div>
+
+                <div class="metric">
+                    <span>DATA SOURCES</span>
+                    <strong>00</strong>
+                </div>
+
+                <div class="metric">
+                    <span>SCANS</span>
+                    <strong id="scanCount">000</strong>
+                </div>
+
+                <div class="metric">
+                    <span>THREAT LEVEL</span>
+                    <strong>LOW</strong>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- TERMINAL -->
+    <section class="panel full">
+
+        <div class="panel-title">
+            <span>▣ COMMAND TERMINAL</span>
+            <span>ALFA-OSINT</span>
+        </div>
+
+        <div class="terminal" id="terminal">
+
+            <div class="line ok">[SYSTEM] ALFA OSINT COMMAND CENTER INITIALIZED</div>
+            <div class="line">[SYSTEM] Loading intelligence modules...</div>
+            <div class="line ok">[OK] Public-data analysis engine ready</div>
+            <div class="line">[INFO] No external target has been selected</div>
+            <div class="line info">[INFO] Awaiting analyst command...</div>
+            <div><span class="cursor"></span></div>
+
+        </div>
+
+    </section>
+
+    <!-- MODULES -->
+    <section class="panel full">
+
+        <div class="panel-title">
+            <span>▦ INTELLIGENCE MODULES</span>
+            <span>AVAILABLE</span>
+        </div>
+
+        <div class="panel-body">
+
+            <div class="intel-list">
+
+                <div class="intel">
+                    <small>MODULE 01</small>
+                    <strong>DOMAIN INTELLIGENCE</strong>
+                    <br>
+                    <small>Public domain information and basic technical metadata.</small>
+                </div>
+
+                <div class="intel">
+                    <small>MODULE 02</small>
+                    <strong>URL ANALYSIS</strong>
+                    <br>
+                    <small>Basic inspection of publicly supplied URLs.</small>
+                </div>
+
+                <div class="intel">
+                    <small>MODULE 03</small>
+                    <strong>PUBLIC USERNAME SEARCH</strong>
+                    <br>
+                    <small>Search assistance for usernames on publicly accessible services.</small>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+<div class="notice">
+    ⚠ NOTICE: ALFA OSINT COMMAND CENTER is designed for law
+```
