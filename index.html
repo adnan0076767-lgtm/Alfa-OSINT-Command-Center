@@ -1730,6 +1730,188 @@ setInterval(()=>{
 
 },5000);
 </script>
+<!-- =========================================
+     ALFA OSINT V3.6 CYBER MAP GRID
+     VISUAL EFFECT ONLY
+========================================= -->
+
+<style>
+.alfa-cyber-grid{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:-18vh;
+  height:48vh;
+  z-index:-2;
+  pointer-events:none;
+  overflow:hidden;
+  perspective:500px;
+  opacity:.38;
+  mask-image:linear-gradient(to top,black,transparent);
+  -webkit-mask-image:linear-gradient(to top,black,transparent);
+}
+
+.alfa-grid-floor{
+  position:absolute;
+  left:-50%;
+  width:200%;
+  height:100%;
+  transform:rotateX(62deg);
+  transform-origin:center bottom;
+
+  background-image:
+    linear-gradient(rgba(0,255,157,.28) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,255,157,.28) 1px,transparent 1px);
+
+  background-size:55px 55px;
+
+  animation:alfaGridMove 4s linear infinite;
+}
+
+.alfa-grid-glow{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:35%;
+  background:radial-gradient(
+    ellipse at center bottom,
+    rgba(0,255,157,.18),
+    transparent 70%
+  );
+}
+
+@keyframes alfaGridMove{
+  from{
+    background-position:0 0,0 0;
+  }
+  to{
+    background-position:0 55px,0 55px;
+  }
+}
+
+/* CYBER HORIZON */
+
+.alfa-horizon{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:28vh;
+  height:1px;
+  z-index:-1;
+  pointer-events:none;
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(0,255,157,.7),
+    rgba(0,220,255,.8),
+    rgba(0,255,157,.7),
+    transparent
+  );
+  box-shadow:
+    0 0 10px rgba(0,255,157,.6),
+    0 0 25px rgba(0,255,157,.35);
+  animation:alfaHorizonPulse 2.8s ease-in-out infinite;
+}
+
+@keyframes alfaHorizonPulse{
+  0%,100%{
+    opacity:.35;
+    transform:scaleX(.8);
+  }
+  50%{
+    opacity:1;
+    transform:scaleX(1);
+  }
+}
+
+/* MOVING SCAN BEAM */
+
+.alfa-grid-scan{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  height:3px;
+  z-index:-1;
+  pointer-events:none;
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(0,255,157,.7),
+    transparent
+  );
+  box-shadow:0 0 15px rgba(0,255,157,.8);
+  animation:alfaScanBeam 5s ease-in-out infinite;
+  opacity:.45;
+}
+
+@keyframes alfaScanBeam{
+  0%{
+    transform:translateY(0);
+  }
+  50%{
+    transform:translateY(-45vh);
+  }
+  100%{
+    transform:translateY(0);
+  }
+}
+
+@media(max-width:700px){
+  .alfa-cyber-grid{
+    height:38vh;
+    bottom:-12vh;
+    opacity:.25;
+  }
+
+  .alfa-grid-floor{
+    background-size:38px 38px;
+  }
+
+  .alfa-horizon{
+    bottom:24vh;
+  }
+}
+</style>
+
+<div class="alfa-cyber-grid">
+  <div class="alfa-grid-floor"></div>
+  <div class="alfa-grid-glow"></div>
+</div>
+
+<div class="alfa-horizon"></div>
+<div class="alfa-grid-scan"></div>
+
+<script>
+/* ALFA OSINT V3.6 GRID STATUS */
+
+setInterval(() => {
+
+  const status = document.getElementById("signalStatus");
+
+  if(status){
+
+    const states = [
+      "GRID",
+      "SYNC",
+      "OK",
+      "SCAN"
+    ];
+
+    status.textContent =
+      states[Math.floor(Math.random() * states.length)];
+  }
+
+}, 2200);
+
+console.log(
+  "%c ALFA OSINT V3.6 CYBER MAP GRID ONLINE ",
+  "color:#00ff9d;background:#020b08;font-weight:bold;padding:6px;"
+);
+</script>
+
+<!-- END ALFA OSINT V3.6 -->
 </body>
 </html>
 
